@@ -15,6 +15,7 @@ export default function Appointments({ user }: AppointmentsProps) {
     const { data, isPending, error } = useQuery({
         queryFn: () => getAppointments(user.id, user.role),
         queryKey: ['appointments'],
+        refetchOnWindowFocus: false,
     });
 
     if (isPending)

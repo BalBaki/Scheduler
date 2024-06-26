@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import Appointments from './appointments';
 import { Skeleton } from '../ui/skeleton';
 import WaitForApprove from '../wait-for-approve';
+import ProfilePicture from './profile-picture';
 
 export default function Profile() {
     const { data: session, status } = useSession();
@@ -29,7 +30,10 @@ export default function Profile() {
 
     return (
         <div className="m-2">
-            <div className="max-w-96 border-2 border-black divide-y-2 divide-black">{renderedUser}</div>
+            <div className="flex items-center gap-x-2">
+                <div className="max-w-96 border-2 border-black divide-y-2 divide-black">{renderedUser}</div>
+                <ProfilePicture />
+            </div>
             {session.user.status === 'APPROVED' ? <Appointments user={session.user} /> : <WaitForApprove />}
         </div>
     );

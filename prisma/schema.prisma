@@ -21,6 +21,7 @@ model User {
   email       String     @unique
   password    String
   phoneNumber String
+  imageUrl    String?
   role        Roles      @default(PATIENT)
   status      UserStatus @default(WAITING)
   createdAt   DateTime   @default(now())

@@ -1,19 +1,25 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useFormState } from 'react-dom';
 import Image from 'next/image';
 import { CgProfile } from 'react-icons/cg';
 import { toast } from 'react-toastify';
 import { updateProfilePicture } from '@/actions/update-profile-picture';
 import { useSession } from 'next-auth/react';
-import SubmitButton from '../submit-button';
 import { ImSpinner6 } from 'react-icons/im';
+import { useMutation } from '@tanstack/react-query';
+import { Button } from '../ui/button';
 
 export default function ProfilePicture() {
     const { data: session, update } = useSession();
-    const [result, dispatch] = useFormState(updateProfilePicture, { update: false });
     const [picture, setPicture] = useState<File | null>(null);
+    const {
+        mutate,
+        isPending,
+        data: result,
+    } = useMutation({
+        mutationFn: updateProfilePicture,
+    });
 
     const handlePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files || event.target.files.length < 1) return;
@@ -22,22 +28,18 @@ export default function ProfilePicture() {
     };
 
     useEffect(() => {
-        if (result.update) {
-            update();
+        result?.update && update();
 
-            setPicture(null);
-        }
-
-        toast(result.update ? 'Successfully Changed' : result.error, {
-            type: result.update ? 'success' : 'error',
+        toast(result?.update ? 'Successfully Changed' : result?.error, {
+            type: result?.update ? 'success' : 'error',
         });
     }, [result]);
 
     return (
         <div className="max-w-96 h-full ">
-            <form action={dispatch} className="flex flex-col items-center justify-center">
-                <label htmlFor="profilPicture">
-                    <div className="relative size-40">
+            <form action={mutate} className="flex flex-col items-center justify-center">
+                <label htmlFor={isPending ? '' : 'profilePicture'}>
+                    <div className="relative size-40 overflow-hidden">
                         {picture ? (
                             <Image
                                 src={URL.createObjectURL(picture as Blob)}
@@ -50,6 +52,7 @@ export default function ProfilePicture() {
                                 src={session.user.imageUrl}
                                 alt="profile picture"
                                 fill
+                                priority={true}
                                 className="object-cover rounded-full"
                             />
                         ) : (
@@ -59,19 +62,16 @@ export default function ProfilePicture() {
                 </label>
                 <input
                     type="file"
-                    id="profilPicture"
-                    name="profilPicture"
+                    id="profilePicture"
+                    name="profilePicture"
                     accept="image/*"
                     onChange={handlePictureChange}
                     className="hidden"
                 />
                 {picture && (
-                    <SubmitButton
-                        className="w-20 h-8 border-2 mt-1 border-black rounded-lg"
-                        pendingText={<ImSpinner6 className="w-full h-full animate-spin" />}
-                    >
-                        Save
-                    </SubmitButton>
+                    <Button disabled={isPending} className="mt-2">
+                        {isPending ? <ImSpinner6 className="w-full h-full animate-spin" /> : 'Save'}
+                    </Button>
                 )}
             </form>
         </div>

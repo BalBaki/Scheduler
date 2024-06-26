@@ -5,18 +5,12 @@ import Appointments from './appointments';
 import { Skeleton } from '../ui/skeleton';
 import WaitForApprove from '../wait-for-approve';
 import ProfilePicture from './profile-picture';
+import LoadingSpinner from '../loading-spinner';
 
 export default function Profile() {
     const { data: session, status } = useSession();
 
-    if (status === 'loading')
-        return (
-            <div className="space-y-2 mx-2">
-                {Array.from({ length: 9 }, (_, index) => (
-                    <Skeleton key={index} className="h-8 w-96" />
-                ))}
-            </div>
-        );
+    if (status === 'loading') return <LoadingSpinner />;
     if (!session) return null;
 
     const renderedUser = Object.entries(session.user).map(([key, value]) => {

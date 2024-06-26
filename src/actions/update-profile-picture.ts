@@ -8,16 +8,13 @@ import cloudinary from '@/services/picture-upload-service';
 import { ResultWithError } from '@/types';
 import type { UploadApiResponse } from 'cloudinary';
 
-export const updateProfilePicture = async (
-    prevState: ResultWithError<'update'>,
-    formData: FormData
-): Promise<ResultWithError<'update'>> => {
+export const updateProfilePicture = async (formData: FormData): Promise<ResultWithError<'update'>> => {
     try {
         const session = await auth();
 
         if (!session) return { update: false, error: 'Not sign in..!' };
 
-        const validatedPicture = profilePictureSchema.safeParse(formData.get('profilPicture'));
+        const validatedPicture = profilePictureSchema.safeParse(formData.get('profilePicture'));
 
         if (!validatedPicture.success)
             return { update: false, error: validatedPicture.error.flatten().formErrors.join(' ') };
@@ -31,8 +28,10 @@ export const updateProfilePicture = async (
                         resource_type: 'image',
                         filename_override: session.user.id,
                         use_filename: true,
-                        overwrite: true,
-                        ...(session.user.imageUrl && { public_id: extractImagePublicId(session.user.imageUrl) }),
+                        ...(session.user.imageUrl && {
+                            overwrite: true,
+                            public_id: extractImagePublicId(session.user.imageUrl),
+                        }),
                     },
                     (error, uploadResult) => {
                         if (error) return { update: false, error: error.message };

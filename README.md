@@ -31,17 +31,22 @@
 
     -   https://www.prisma.io/docs/accelerate/getting-started
 
+-   Cloudinary
+    -   https://cloudinary.com/documentation/how_to_integrate_cloudinary
+
 ### Installation
 
 -   You need to add the following variables to environment file(.env).
 
-    | Name                 | Type   | Example                                             |
-    | -------------------- | ------ | --------------------------------------------------- |
-    | DATABASE_URL         | string | prisma://accelerate.prisma-data.net/?api_key=...... |
-    | DIRECT_DATABASE_URL  | string | mongodb+srv://......                                |
-    | AUTH_SECRET          | string | authsecretdev                                       |
-    | PASSWORD_SECRET      | string | jwtRefreshTokenSecretKey                            |
-    | DB_CONNECTION_STRING | string | passworddevsecret                                   |
+    | Name                  | Type   | Example                                             |
+    | --------------------- | ------ | --------------------------------------------------- |
+    | DATABASE_URL          | string | prisma://accelerate.prisma-data.net/?api_key=...... |
+    | DIRECT_DATABASE_URL   | string | mongodb+srv://......                                |
+    | AUTH_SECRET           | string | authsecretdev                                       |
+    | PASSWORD_SECRET       | string | jwtRefreshTokenSecretKey                            |
+    | DB_CONNECTION_STRING  | string | passworddevsecret                                   |
+    | CLOUDINARY_API_KEY    | string | cloudinaryapikey                                    |
+    | CLOUDINARY_API_SECRET | string | cloudinaryapisecret                                 |
 
 ```bash
   npm install

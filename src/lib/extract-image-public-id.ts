@@ -1,7 +1,5 @@
 export const extractImagePublicId = (imageUrl: string): string => {
-    let parts = imageUrl.split('/');
+    const parts = imageUrl.split('/');
 
-    let filenameWithExtension = parts[parts.length - 1];
-
-    return filenameWithExtension.split('.')[0];
+    return parts[parts.length - 1].split('.')[0];
 };

@@ -11,10 +11,10 @@ export default function UserStatus({ children }: UserStatusProps) {
 
     if (status === 'loading') return null;
 
-    if (data?.user.status === 'WAITING')
+    if (data?.user.status === 'DECLINED')
         return (
             <div className="h-screen flex justify-center items-center text-5xl text-red-500">
-                Wait for Admin Approve Your Account.
+                This Account is Declined..!
             </div>
         );
 

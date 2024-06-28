@@ -6,6 +6,7 @@ import Providers from './providers';
 import Header from '@/components/header';
 import { ToastContainer } from 'react-toastify';
 import HomeIcon from '@/components/home-icon';
+import UserStatus from '@/components/user-status';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,9 +24,9 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className}>
                 <Providers>
-                    <div className="mx-2">
+                    <div className="flex flex-col h-screen mx-2">
                         <Header />
-                        {children}
+                        <UserStatus>{children}</UserStatus>
                         <HomeIcon />
                         <ToastContainer
                             position="bottom-right"

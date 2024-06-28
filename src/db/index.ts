@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
+import { addDummyUsers } from './dummy-user';
 
 const prismaClientSingleton = () => {
     return new PrismaClient().$extends(withAccelerate());
@@ -33,3 +34,5 @@ if (process.env.NODE_ENV !== 'production') globalThis.prisma = db;
 //     })
 //     .then(() => console.log('Admin User Created...'))
 //     .catch(() => console.log('Error at Creating Admin User'));
+
+// addDummyUsers(50);

@@ -21,7 +21,7 @@ export default function SubmitButton({
     return (
         <button
             type="submit"
-            disabled={pending}
+            disabled={disabled || pending}
             className={cn('flex justify-center items-center', pending && 'cursor-not-allowed', className)}
             {...rest}
         >

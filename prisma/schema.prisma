@@ -64,4 +64,5 @@ enum Roles {
 enum UserStatus {
   WAITING
   APPROVED
+  DECLINED
 }

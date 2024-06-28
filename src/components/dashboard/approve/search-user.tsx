@@ -41,7 +41,7 @@ export default function SearchUser({ term }: SearchUserhProps) {
                         name="term"
                         render={({ field }) => (
                             <FormItem>
-                                <Input {...field} className="w-full sm:w-80" />
+                                <Input {...field} className="w-full sm:w-80" placeholder="Search By Email..." />
                                 {result?.errors?.term && (
                                     <div className="text-red-500 text-xs">
                                         {result.errors.term.map((err) => (

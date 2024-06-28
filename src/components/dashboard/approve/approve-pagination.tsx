@@ -34,6 +34,7 @@ export default async function ApprovePagination({ page, searchParams }: ApproveP
                 <PaginationItem>
                     {page > 1 && (
                         <PaginationPrevious
+                            className="border-2 border-gray-400 w-28"
                             href={{
                                 pathname: '/dashboard/approve',
                                 query: {
@@ -54,6 +55,7 @@ export default async function ApprovePagination({ page, searchParams }: ApproveP
                                     page: page + 1,
                                 },
                             }}
+                            className="border-2 border-gray-400 w-28"
                         />
                     )}
                 </PaginationItem>

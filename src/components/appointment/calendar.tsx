@@ -16,7 +16,7 @@ type AppointmentCalendarProps = {
 
 export default function AppointmentCalendar({ user }: AppointmentCalendarProps) {
     return (
-        <div>
+        <div className="overflow-auto">
             <FullCalendar
                 locale={moment.locale()}
                 plugins={[dayGridPlugin, intercetionPlugin]}

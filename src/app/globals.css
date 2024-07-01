@@ -76,6 +76,11 @@
 }
 
 .fc {
+    &.fc-media-screen {
+        min-width: 75rem;
+        height: 37.5rem;
+    }
+
     .fc-daygrid-day-top {
         justify-content: center;
     }

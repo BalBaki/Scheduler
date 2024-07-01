@@ -30,7 +30,7 @@ export default function DoctorCalendar({ appointments }: DoctorCalendarProps) {
     };
 
     return (
-        <div>
+        <div className="overflow-auto">
             <FullCalendar
                 locale={moment.locale()}
                 ref={calendarRef}

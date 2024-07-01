@@ -1,4 +1,5 @@
 import db from '@/db';
+import Image from 'next/image';
 import Link from 'next/link';
 import { IoPersonCircle } from 'react-icons/io5';
 
@@ -13,8 +14,19 @@ export default async function Doctor() {
         return (
             <div key={doctor.id}>
                 <Link href={`/doctor/${doctor.id}`}>
-                    <div className="grid grid-cols-[1fr_4fr] border-2 border-black px-2 py-1 gap-x-2 items-center">
-                        <IoPersonCircle className="w-full h-full" />
+                    <div className="grid grid-cols-[1fr_4fr] border-2 border-black px-2 py-1 gap-x-2 items-center grid-r">
+                        <div className="relative h-16">
+                            {doctor.imageUrl ? (
+                                <Image
+                                    src={doctor.imageUrl}
+                                    alt="profile photo"
+                                    fill
+                                    className="rounded-full object-cover"
+                                />
+                            ) : (
+                                <IoPersonCircle className="w-full h-full" />
+                            )}
+                        </div>
                         <div className="truncate">
                             <div className="truncate">{`${doctor.name} ${doctor.surname}`}</div>
                             <div className="truncate">{doctor.email}</div>

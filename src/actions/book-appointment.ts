@@ -7,6 +7,7 @@ import type { ResultWithError } from '@/types';
 import { checkAppointmentOverlap } from '@/lib/check-appointment-overlap';
 import type { BookAppointmentPayload } from '@/types';
 
+//TODO tek id kalacak. payload komple silinecek
 export const bookAppointment = async ({
     id,
     startDate,

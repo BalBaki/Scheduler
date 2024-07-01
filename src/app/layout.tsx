@@ -24,7 +24,7 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className}>
                 <Providers>
-                    <div className="flex flex-col h-screen mx-2">
+                    <div className="mx-2">
                         <Header />
                         <UserStatus>{children}</UserStatus>
                         <HomeIcon />

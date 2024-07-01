@@ -5,6 +5,7 @@ import db from '@/db';
 import { revalidatePath } from 'next/cache';
 import type { ResultWithError } from '@/types';
 
+//TODO tek appointmentId kalacak. update whereine patientid === session.user.id control ekle.
 export const cancelAppointment = async ({
     appointmentId,
     doctorId,

@@ -7,6 +7,7 @@ import { profilePictureSchema } from '@/schemas';
 import cloudinary from '@/services/picture-upload-service';
 import { ResultWithError } from '@/types';
 import type { UploadApiResponse } from 'cloudinary';
+import { revalidatePath } from 'next/cache';
 
 export const updateProfilePicture = async (formData: FormData): Promise<ResultWithError<'update'>> => {
     try {
@@ -52,6 +53,9 @@ export const updateProfilePicture = async (formData: FormData): Promise<ResultWi
                 },
             });
         }
+
+        //TODO will delete after doctor page new design
+        if (session.user.role === 'DOCTOR') revalidatePath('/doctor');
 
         return { update: true };
     } catch (error) {

@@ -88,14 +88,19 @@
         position: static;
     }
 
+    .fc-daygrid-day-top > a {
+        text-align: center;
+        padding: 2px;
+        width: 1.9rem;
+        font-size: 14px;
+    }
+
     .fc-day-today {
         background-color: white !important;
 
         .fc-daygrid-day-top > .fc-daygrid-day-number {
             border: 2px solid green;
             border-radius: 100%;
-            padding: 0 3px;
-            text-align: center;
         }
 
         .fc-daygrid-day-events {

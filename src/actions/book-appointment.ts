@@ -5,18 +5,12 @@ import { auth } from '@/auth';
 import db from '@/db';
 import type { ResultWithError } from '@/types';
 import { checkAppointmentOverlap } from '@/lib/check-appointment-overlap';
-import type { BookAppointmentPayload } from '@/types';
 
-//TODO tek id kalacak. payload komple silinecek
-export const bookAppointment = async ({
-    id,
-    startDate,
-    endDate,
-}: BookAppointmentPayload): Promise<ResultWithError<'book'>> => {
+export const bookAppointment = async (id: string): Promise<ResultWithError<'book'>> => {
     try {
         const session = await auth();
 
-        if (!session) throw new Error('Please Sign In..!');
+        if (!session) throw new Error('You have no authorization..!');
 
         const appointment = await db.appointment.findFirst({
             where: {
@@ -24,16 +18,17 @@ export const bookAppointment = async ({
             },
         });
 
-        if (!appointment || appointment.patientId || session.user.role !== 'PATIENT')
-            return { book: false, error: 'Invalid User...' };
-        if (!startDate || !endDate) return { book: false, error: 'Enter Start or End Date' };
-        if (appointment.start < new Date()) return { book: false, error: 'Outdated Appointment' };
+        if (!appointment) return { book: false, error: 'Not exists appointment..!' };
+        if (appointment.patientId)
+            return { book: false, error: 'This appointment has been bookmarked by another user..!' };
+        if (appointment.start < new Date()) return { book: false, error: 'Outdated appointment..!' };
+        if (session.user.role === 'DOCTOR') return { book: false, error: "You can't book this event..!" };
 
         const isAppointmentOverlap = await checkAppointmentOverlap({
             userId: session.user.id,
             userRole: session.user.role,
-            startDate,
-            endDate,
+            startDate: appointment.start,
+            endDate: appointment.end,
         });
 
         if (isAppointmentOverlap) return { book: false, error: 'This event hours are overlaping another event..!' };
@@ -51,6 +46,6 @@ export const bookAppointment = async ({
 
         return { book: true };
     } catch (error) {
-        return { book: false, error: 'Something went wrong' };
+        return { book: false, error: 'Something went wrong..!' };
     }
 };

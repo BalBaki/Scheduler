@@ -68,9 +68,7 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
                                 </div>
                             </DialogHeader>
                             <DialogFooter className="flex flex-row justify-end space-x-2">
-                                <BookAppoinment
-                                    appointment={{ id: event.id, startDate: event.start, endDate: event.end }}
-                                />
+                                <BookAppoinment id={event.id} />
                             </DialogFooter>
                         </>
                     )

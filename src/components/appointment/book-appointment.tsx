@@ -17,14 +17,10 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
 type BookAppoinmentProps = {
-    appointment: {
-        id: string;
-        startDate: Date | null;
-        endDate: Date | null;
-    };
+    id: string;
 };
 
-export default function BookAppoinment({ appointment: { id, startDate, endDate } }: BookAppoinmentProps) {
+export default function BookAppoinment({ id }: BookAppoinmentProps) {
     const { mutate, isPending } = useMutation({
         mutationFn: bookAppointment,
         onSuccess({ book, error }) {
@@ -35,7 +31,7 @@ export default function BookAppoinment({ appointment: { id, startDate, endDate }
     });
 
     const handleContinueClick = () => {
-        mutate({ id, startDate, endDate });
+        mutate(id);
     };
 
     return (

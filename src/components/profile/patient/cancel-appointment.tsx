@@ -18,10 +18,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type CancelAppointmentProps = {
     appointmentId: string;
-    doctorId: string;
 };
 
-export default function CancelAppointment({ appointmentId, doctorId }: CancelAppointmentProps) {
+export default function CancelAppointment({ appointmentId }: CancelAppointmentProps) {
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: cancelAppointment,
@@ -35,7 +34,7 @@ export default function CancelAppointment({ appointmentId, doctorId }: CancelApp
     });
 
     const handleContinueClick = () => {
-        mutate({ appointmentId, doctorId });
+        mutate(appointmentId);
     };
 
     return (

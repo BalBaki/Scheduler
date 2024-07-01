@@ -5,30 +5,29 @@ import db from '@/db';
 import { revalidatePath } from 'next/cache';
 import type { ResultWithError } from '@/types';
 
-//TODO tek appointmentId kalacak. update whereine patientid === session.user.id control ekle.
-export const cancelAppointment = async ({
-    appointmentId,
-    doctorId,
-}: {
-    appointmentId: string;
-    doctorId: string;
-}): Promise<ResultWithError<'cancel'>> => {
+export const cancelAppointment = async (appointmentId: string): Promise<ResultWithError<'cancel'>> => {
     try {
         const session = await auth();
+        const appointment = await db.appointment.findFirst({
+            where: {
+                id: appointmentId,
+                patientId: session?.user.id,
+            },
+        });
 
-        if (!session) return { cancel: false, error: 'Authorization error..!' };
+        if (!session || !appointment) return { cancel: false, error: 'You have no authorization..!' };
 
         await db.appointment.update({
             where: {
-                id: appointmentId,
-                doctorId,
+                id: appointment.id,
+                patientId: session.user.id,
             },
             data: {
                 patientId: null,
             },
         });
 
-        revalidatePath(`/doctor/${doctorId}`);
+        revalidatePath(`/doctor/${appointment.doctorId}`);
 
         return { cancel: true };
     } catch (error) {

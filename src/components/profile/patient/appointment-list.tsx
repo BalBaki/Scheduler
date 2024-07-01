@@ -55,7 +55,7 @@ export default function AppointmentList({ appointments }: AppointmentListProps) 
                         )}`}</TableCell>
                         <TableCell>
                             {new Date(appointment.start) > new Date() && (
-                                <CancelAppointment appointmentId={appointment.id} doctorId={appointment.doctorId} />
+                                <CancelAppointment appointmentId={appointment.id} />
                             )}
                         </TableCell>
                     </TableRow>

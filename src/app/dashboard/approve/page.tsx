@@ -4,6 +4,7 @@ import { ITEM_COUNT_PER_PAGE } from '@/lib/constants';
 import ApprovePagination from '@/components/dashboard/approve/approve-pagination';
 import SearchUser from '@/components/dashboard/approve/search-user';
 import UserList from '@/components/dashboard/approve/user-list';
+import ApproveAll from '@/components/dashboard/approve/approve-all';
 
 type ApprovePageProps = {
     searchParams: {
@@ -31,7 +32,10 @@ export default async function ApprovePage({ searchParams }: ApprovePageProps) {
 
     return (
         <div className="mt-2">
-            <SearchUser term={searchParams.term} />
+            <div className="flex justify-between flex-wrap max-sm:flex-col">
+                <SearchUser term={searchParams.term} />
+                <ApproveAll />
+            </div>
             <UserList users={users} page={page} />
             <ApprovePagination page={page} searchParams={searchParams} />
         </div>

@@ -76,7 +76,7 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
                                         <Input placeholder="title" {...field} />
                                     </FormControl>
                                     <FormMessage />
-                                    {result?.errors?.title && <FormValidationError errors={result.errors?.title} />}
+                                    {result?.errors?.title && <FormValidationError errors={result.errors.title} />}
                                 </FormItem>
                             )}
                         />
@@ -90,7 +90,7 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
                                         <Input type="time" {...field} />
                                     </FormControl>
                                     <FormMessage />
-                                    {result?.errors?.start && <FormValidationError errors={result.errors?.start} />}
+                                    {result?.errors?.start && <FormValidationError errors={result.errors.start} />}
                                 </FormItem>
                             )}
                         />
@@ -104,7 +104,7 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
                                         <Input type="time" {...field} />
                                     </FormControl>
                                     <FormMessage />
-                                    {result?.errors?.end && <FormValidationError errors={result.errors?.end} />}
+                                    {result?.errors?.end && <FormValidationError errors={result.errors.end} />}
                                 </FormItem>
                             )}
                         />
@@ -129,7 +129,7 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
                                 {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Save'}
                             </Button>
                         </DialogFooter>
-                        {result?.errors?._form && <FormValidationError errors={result.errors?._form} />}
+                        {result?.errors?._form && <FormValidationError errors={result.errors._form} />}
                     </form>
                 </Form>
             </DialogContent>

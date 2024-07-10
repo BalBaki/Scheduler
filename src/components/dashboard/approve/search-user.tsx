@@ -10,6 +10,7 @@ import { userSearchSchema } from '@/schemas';
 import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem } from '@/components/ui/form';
 import { useMutation } from '@tanstack/react-query';
+import FormValidationError from '@/components/form-validation-error';
 
 type SearchUserhProps = {
     term: string | string[] | undefined;
@@ -42,13 +43,7 @@ export default function SearchUser({ term }: SearchUserhProps) {
                         render={({ field }) => (
                             <FormItem>
                                 <Input {...field} className="w-full sm:w-80" placeholder="Search By Email..." />
-                                {result?.errors?.term && (
-                                    <div className="text-red-500 text-xs">
-                                        {result.errors.term.map((err) => (
-                                            <div key={err}>{err}</div>
-                                        ))}
-                                    </div>
-                                )}
+                                {result?.errors?.term && <FormValidationError errors={result.errors.term} />}
                             </FormItem>
                         )}
                     />

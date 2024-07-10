@@ -10,6 +10,7 @@ import type { SignInForm } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import FormValidationError from '../form-validation-error';
 
 export default function CredentialsSignIn() {
     const form = useForm<SignInForm>({
@@ -48,11 +49,7 @@ export default function CredentialsSignIn() {
                                 </FormControl>
                                 <FormMessage />
                                 {loginResult?.errors?.email && (
-                                    <div className="text-red-500 text-xs">
-                                        {loginResult.errors.email.map((err) => (
-                                            <div key={err}>{err}</div>
-                                        ))}
-                                    </div>
+                                    <FormValidationError errors={loginResult.errors.email} />
                                 )}
                             </FormItem>
                         )}
@@ -68,11 +65,7 @@ export default function CredentialsSignIn() {
                                 </FormControl>
                                 <FormMessage />
                                 {loginResult?.errors?.password && (
-                                    <div className="text-red-500 text-xs">
-                                        {loginResult.errors.password.map((err) => (
-                                            <div key={err}>{err}</div>
-                                        ))}
-                                    </div>
+                                    <FormValidationError errors={loginResult.errors.password} />
                                 )}
                             </FormItem>
                         )}
@@ -87,7 +80,7 @@ export default function CredentialsSignIn() {
                     </div>
                 </form>
             </Form>
-            {loginResult?.errors?._form && <div className="text-red-500 text-sm mt-1">{loginResult.errors._form}</div>}
+            {loginResult?.errors?._form && <FormValidationError className="mt-1" errors={loginResult.errors._form} />}
         </div>
     );
 }

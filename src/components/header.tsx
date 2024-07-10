@@ -4,11 +4,13 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import SignOut from './session/sign-out';
 import { Button } from './ui/button';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
     const session = useSession();
+    const pathname = usePathname();
 
-    if (session.status === 'loading') return null;
+    if (session.status === 'loading' || pathname.startsWith('/login') || pathname.startsWith('/register')) return null;
 
     if (!session.data)
         return (

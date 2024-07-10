@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import FormValidationError from '../form-validation-error';
 
 export default function SignUp() {
     const form = useForm<SignUpForm>({
@@ -76,13 +77,7 @@ export default function SignUp() {
                                     <Input type="email" {...field} />
                                 </FormControl>
                                 <FormMessage />
-                                {result?.errors?.email && (
-                                    <div className="text-red-500 text-xs">
-                                        {result.errors.email.map((err) => (
-                                            <div key={err}>{err}</div>
-                                        ))}
-                                    </div>
-                                )}
+                                {result?.errors?.email && <FormValidationError errors={result.errors.email} />}
                             </FormItem>
                         )}
                     />
@@ -100,13 +95,7 @@ export default function SignUp() {
                                     />
                                 </FormControl>
                                 <FormMessage />
-                                {result?.errors?.password && (
-                                    <div className="text-red-500 text-xs">
-                                        {result.errors.password.map((err) => (
-                                            <div key={err}>{err}</div>
-                                        ))}
-                                    </div>
-                                )}
+                                {result?.errors?.password && <FormValidationError errors={result.errors.password} />}
                             </FormItem>
                         )}
                     />
@@ -121,11 +110,7 @@ export default function SignUp() {
                                 </FormControl>
                                 <FormMessage />
                                 {result?.errors?.confirmPassword && (
-                                    <div className="text-red-500 text-xs">
-                                        {result.errors.confirmPassword.map((err) => (
-                                            <div key={err}>{err}</div>
-                                        ))}
-                                    </div>
+                                    <FormValidationError errors={result.errors.confirmPassword} />
                                 )}
                             </FormItem>
                         )}
@@ -140,13 +125,7 @@ export default function SignUp() {
                                     <Input type="text" {...field} />
                                 </FormControl>
                                 <FormMessage />
-                                {result?.errors?.name && (
-                                    <div className="text-red-500 text-xs">
-                                        {result.errors.name.map((err) => (
-                                            <div key={err}>{err}</div>
-                                        ))}
-                                    </div>
-                                )}
+                                {result?.errors?.name && <FormValidationError errors={result.errors.name} />}
                             </FormItem>
                         )}
                     />
@@ -160,13 +139,7 @@ export default function SignUp() {
                                     <Input type="text" {...field} />
                                 </FormControl>
                                 <FormMessage />
-                                {result?.errors?.surname && (
-                                    <div className="text-red-500 text-xs">
-                                        {result.errors.surname.map((err) => (
-                                            <div key={err}>{err}</div>
-                                        ))}
-                                    </div>
-                                )}
+                                {result?.errors?.surname && <FormValidationError errors={result.errors.surname} />}
                             </FormItem>
                         )}
                     />
@@ -181,11 +154,7 @@ export default function SignUp() {
                                 </FormControl>
                                 <FormMessage />
                                 {result?.errors?.phoneNumber && (
-                                    <div className="text-red-500 text-xs">
-                                        {result.errors.phoneNumber.map((err) => (
-                                            <div key={err}>{err}</div>
-                                        ))}
-                                    </div>
+                                    <FormValidationError errors={result.errors.phoneNumber} />
                                 )}
                             </FormItem>
                         )}
@@ -208,13 +177,7 @@ export default function SignUp() {
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />
-                                {result?.errors?.role && (
-                                    <div className="text-red-500 text-xs">
-                                        {result.errors.role.map((err) => (
-                                            <div key={err}>{err}</div>
-                                        ))}
-                                    </div>
-                                )}
+                                {result?.errors?.role && <FormValidationError errors={result.errors.role} />}
                             </FormItem>
                         )}
                     />
@@ -228,7 +191,7 @@ export default function SignUp() {
                     </div>
                 </form>
             </Form>
-            {result?.errors?._form && <div className="text-red-500 text-sm mt-1">{result.errors._form}</div>}
+            {result?.errors?._form && <FormValidationError className="mt-1" errors={result.errors._form} />}
         </div>
     );
 }

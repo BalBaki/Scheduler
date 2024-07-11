@@ -12,6 +12,7 @@ import { userDetail } from '@/schemas';
 import { useSession } from 'next-auth/react';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
+import Languages from './languages';
 
 export default function Details() {
     const { data: session, update: sessionUpdate } = useSession();
@@ -21,11 +22,14 @@ export default function Details() {
         mode: 'all',
         defaultValues: {
             description: session?.user.description || '',
+            languages: session?.user.languages || [],
         },
     });
     const { mutate, isPending } = useMutation({
         mutationFn: updateUserDetail,
         onSuccess({ update }) {
+            form.reset();
+
             update && sessionUpdate();
         },
     });
@@ -59,6 +63,7 @@ export default function Details() {
                         </FormItem>
                     )}
                 />
+                <Languages />
                 <Button
                     type="submit"
                     className="bg-green-500"

@@ -4,11 +4,10 @@ import { useSession } from 'next-auth/react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Appointments from './appointments';
 import WaitForApprove from '../wait-for-approve';
-import LoadingSpinner from '../loading-spinner';
 import Account from './account';
 
 export default function Profile() {
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
 
     if (!session) return null;
 

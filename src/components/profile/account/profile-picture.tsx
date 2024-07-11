@@ -8,7 +8,7 @@ import { updateProfilePicture } from '@/actions/update-profile-picture';
 import { useSession } from 'next-auth/react';
 import { ImSpinner6 } from 'react-icons/im';
 import { useMutation } from '@tanstack/react-query';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 
 export default function ProfilePicture() {
     const { data: session, update } = useSession();

@@ -1,21 +1,22 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import type { UserWithoutPassword } from '@/types';
 import DoctorCalendar from '@/components/profile/doctor/calendar';
 import AppointmentList from '@/components/profile/patient/appointment-list';
 import { getAppointments } from '@/queries/get-appointment';
 import { Skeleton } from '../ui/skeleton';
+import { useSession } from 'next-auth/react';
 
-type AppointmentsProps = {
-    user: UserWithoutPassword;
-};
+export default function Appointments() {
+    const { data: session } = useSession();
 
-export default function Appointments({ user }: AppointmentsProps) {
+    if (!session) return null;
+
     const { data, isPending, error } = useQuery({
-        queryFn: () => getAppointments(user.id, user.role),
+        queryFn: () => getAppointments(),
         queryKey: ['appointments'],
         refetchOnWindowFocus: false,
+        staleTime: Infinity,
     });
 
     if (isPending)
@@ -31,7 +32,7 @@ export default function Appointments({ user }: AppointmentsProps) {
 
     return (
         <>
-            {user.role === 'DOCTOR' ? (
+            {session.user.role === 'DOCTOR' ? (
                 <DoctorCalendar appointments={data.appointments} />
             ) : (
                 <AppointmentList appointments={data.appointments} />

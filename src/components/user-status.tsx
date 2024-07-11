@@ -7,9 +7,7 @@ type UserStatusProps = {
 import { useSession } from 'next-auth/react';
 
 export default function UserStatus({ children }: UserStatusProps) {
-    const { data, status } = useSession();
-
-    if (status === 'loading') return null;
+    const { data } = useSession();
 
     if (data?.user.status === 'DECLINED')
         return (

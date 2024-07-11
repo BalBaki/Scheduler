@@ -1,34 +1,29 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Appointments from './appointments';
-import { Skeleton } from '../ui/skeleton';
 import WaitForApprove from '../wait-for-approve';
-import ProfilePicture from './profile-picture';
 import LoadingSpinner from '../loading-spinner';
+import Account from './account';
 
 export default function Profile() {
     const { data: session, status } = useSession();
 
-    if (status === 'loading') return <LoadingSpinner />;
     if (!session) return null;
 
-    const renderedUser = Object.entries(session.user).map(([key, value]) => {
-        return (
-            <div key={key} className="grid grid-cols-[1fr,2fr] text-wrap px-1">
-                <div className="capitalize">{key}</div>
-                <div className="border-l-2 border-l-black pl-1 truncate">{value}</div>
-            </div>
-        );
-    });
-
     return (
-        <div className="m-2">
-            <div className="flex items-center gap-x-2">
-                <div className="max-w-96 border-2 border-black divide-y-2 divide-black">{renderedUser}</div>
-                <ProfilePicture />
-            </div>
-            {session.user.status === 'APPROVED' ? <Appointments user={session.user} /> : <WaitForApprove />}
-        </div>
+        <Tabs defaultValue="account" className="flex mt-2 " orientation="vertical">
+            <TabsList className="flex-col h-20 mr-2 [&_button]:justify-normal [&_button]:w-48">
+                <TabsTrigger value="account">Account</TabsTrigger>
+                <TabsTrigger value="appoinment">Appoinments</TabsTrigger>
+            </TabsList>
+            <TabsContent value="account" className="mt-0">
+                <Account />
+            </TabsContent>
+            <TabsContent value="appoinment" className="mt-0">
+                {session.user.status === 'APPROVED' ? <Appointments /> : <WaitForApprove />}
+            </TabsContent>
+        </Tabs>
     );
 }

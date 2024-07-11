@@ -77,7 +77,8 @@
 
 .fc {
     &.fc-media-screen {
-        min-width: 75rem;
+        width: 100%;
+        min-width: 60rem;
         height: 37.5rem;
     }
 

@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 
 type EditableTextProps = {
     text?: {
-        main?: string;
+        main?: string | null;
         edit?: string;
         save?: string;
         cancel?: string;
@@ -16,7 +16,7 @@ type EditableTextProps = {
         text?: string;
         buttonContainter?: string;
         edit?: string;
-        save?: string;
+        finish?: string;
         cancel?: string;
     };
     cancel?: () => void;
@@ -35,14 +35,26 @@ export default function EditableText({
 }: EditableTextProps) {
     const [isEdit, setIsEdit] = useState(false);
 
-    const handleSaveButtonClick = () => setIsEdit(false);
-    const handleEditButtonClick = () => setIsEdit(true);
-    const handleCancelButtonClick = () => {
+    const handleSaveButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+
+        setIsEdit(false);
+    };
+    const handleEditButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+
+        setIsEdit(true);
+    };
+    const handleCancelButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+
         cancel && cancel();
 
         setIsEdit(false);
     };
     const handleTextClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.preventDefault();
+
         event.detail === 2 && setIsEdit(true);
     };
 
@@ -60,19 +72,25 @@ export default function EditableText({
                         )}
                     >
                         {cancel && isEdit && (
-                            <Button className={cn('min-w-16 px-3', schema?.cancel)} onClick={handleCancelButtonClick}>
+                            <Button
+                                className={cn('min-w-16 px-3 bg-red-500 hover:bg-red-500', schema?.cancel)}
+                                onClick={handleCancelButtonClick}
+                            >
                                 {text?.cancel || 'Cancel'}
                             </Button>
                         )}
-                        <Button className={cn('min-w-16 px-3', schema?.save)} onClick={handleSaveButtonClick}>
-                            {text?.save || 'Save'}
+                        <Button
+                            className={cn('min-w-16 px-3 bg-green-500 hover:bg-green-500', schema?.finish)}
+                            onClick={handleSaveButtonClick}
+                        >
+                            {text?.save || 'Finish'}
                         </Button>
                     </div>
                 </>
             ) : (
                 <>
                     <div
-                        className={cn('flex-1 border-2 rounded-md', schema?.text)}
+                        className={cn('flex-1 border rounded-md', schema?.text)}
                         onClick={editOnDoubleClick ? handleTextClick : undefined}
                     >
                         {text?.main}

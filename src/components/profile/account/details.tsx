@@ -20,7 +20,7 @@ export default function Details() {
     const form = useForm<UserDetailForm>({
         resolver: zodResolver(userDetail),
         mode: 'all',
-        defaultValues: {
+        values: {
             description: session?.user.description || '',
             languages: session?.user.languages || [],
         },
@@ -28,8 +28,6 @@ export default function Details() {
     const { mutate, isPending } = useMutation({
         mutationFn: updateUserDetail,
         onSuccess({ update }) {
-            form.reset();
-
             update && sessionUpdate();
         },
     });

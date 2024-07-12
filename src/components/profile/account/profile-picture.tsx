@@ -17,11 +17,10 @@ export default function ProfilePicture() {
         mutate,
         isPending,
         data: result,
-        ...rest
     } = useMutation({
         mutationFn: updateProfilePicture,
     });
-    console.log(rest);
+
     const handlePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files || event.target.files.length < 1) return;
 

@@ -11,16 +11,17 @@ import { useMutation } from '@tanstack/react-query';
 import { Button } from '../../ui/button';
 
 export default function ProfilePicture() {
-    const { data: session, update } = useSession();
+    const { data: session, update: updateSession } = useSession();
     const [picture, setPicture] = useState<File | null>(null);
     const {
         mutate,
         isPending,
         data: result,
+        ...rest
     } = useMutation({
         mutationFn: updateProfilePicture,
     });
-
+    console.log(rest);
     const handlePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files || event.target.files.length < 1) return;
 
@@ -28,7 +29,7 @@ export default function ProfilePicture() {
     };
 
     useEffect(() => {
-        result?.update && update();
+        result?.update && updateSession();
 
         toast(result?.update ? 'Successfully Changed' : result?.error, {
             type: result?.update ? 'success' : 'error',

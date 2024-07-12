@@ -10,9 +10,10 @@ export default function Profile() {
     const { data: session } = useSession();
 
     if (!session) return null;
+    if (session?.user.status !== 'APPROVED') return <WaitForApprove />;
 
     return (
-        <Tabs defaultValue="account" className="flex mt-2 " orientation="vertical">
+        <Tabs defaultValue="account" className="flex my-2 max-sm:flex-col" orientation="vertical">
             <TabsList className="flex-col h-20 mr-2 [&_button]:justify-normal [&_button]:w-48">
                 <TabsTrigger value="account">Account</TabsTrigger>
                 <TabsTrigger value="appoinment">Appoinments</TabsTrigger>
@@ -21,7 +22,7 @@ export default function Profile() {
                 <Account />
             </TabsContent>
             <TabsContent value="appoinment" className="mt-0">
-                {session.user.status === 'APPROVED' ? <Appointments /> : <WaitForApprove />}
+                <Appointments />
             </TabsContent>
         </Tabs>
     );

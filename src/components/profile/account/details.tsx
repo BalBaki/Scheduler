@@ -15,7 +15,7 @@ import { Loader2 } from 'lucide-react';
 import Languages from './languages';
 
 export default function Details() {
-    const { data: session, update: sessionUpdate } = useSession();
+    const { data: session, update: updateSession } = useSession();
 
     const form = useForm<UserDetailForm>({
         resolver: zodResolver(userDetail),
@@ -28,7 +28,7 @@ export default function Details() {
     const { mutate, isPending } = useMutation({
         mutationFn: updateUserDetail,
         onSuccess({ update }) {
-            update && sessionUpdate();
+            update && updateSession();
         },
     });
     const onSubmit: SubmitHandler<UserDetailForm> = (data) => mutate(data);

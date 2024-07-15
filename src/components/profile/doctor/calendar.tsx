@@ -4,11 +4,11 @@ import { useRef, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import intercetionPlugin, { type DateClickArg } from '@fullcalendar/interaction';
-import moment from 'moment';
 import type { Appointment } from '@prisma/client';
 import AddAppointmentPopup from '../doctor/add-appointment-popup';
 import EditAppointmentPopup from '../doctor/edit-appointment-popup';
 import { UserWithoutPassword } from '@/types';
+import { useLocale } from '@/hooks/use-locale';
 
 type DoctorCalendarProps = {
     appointments: (Appointment & {
@@ -18,6 +18,7 @@ type DoctorCalendarProps = {
 };
 
 export default function DoctorCalendar({ appointments }: DoctorCalendarProps) {
+    const locale = useLocale();
     const [isShowDialog, setIsShowDialog] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | undefined>();
     const calendarRef = useRef<FullCalendar | null>(null);
@@ -32,7 +33,7 @@ export default function DoctorCalendar({ appointments }: DoctorCalendarProps) {
     return (
         <div className="overflow-auto">
             <FullCalendar
-                locale={moment.locale()}
+                locale={locale}
                 ref={calendarRef}
                 plugins={[dayGridPlugin, intercetionPlugin]}
                 initialView="dayGridMonth"

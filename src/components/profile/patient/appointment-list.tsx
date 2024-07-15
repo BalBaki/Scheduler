@@ -1,6 +1,5 @@
 'use client';
 
-import moment from 'moment';
 import {
     Table,
     TableBody,
@@ -15,6 +14,7 @@ import UserDetailPopover from '@/components/user-detail-popover';
 import CancelAppointment from './cancel-appointment';
 import type { Appointment } from '@prisma/client';
 import type { UserWithoutPassword } from '@/types';
+import { useLocale } from '@/hooks/use-locale';
 
 type AppointmentListProps = {
     appointments: (Appointment & {
@@ -24,6 +24,8 @@ type AppointmentListProps = {
 };
 
 export default function AppointmentList({ appointments }: AppointmentListProps) {
+    const locale = useLocale();
+
     if (appointments.length < 1) return <div>No Appointments...</div>;
 
     return (
@@ -49,10 +51,20 @@ export default function AppointmentList({ appointments }: AppointmentListProps) 
                                 user={appointment?.doctor}
                             />
                         </TableCell>
-                        <TableCell>{moment(appointment.start).format('MMM Do YYYY')}</TableCell>
-                        <TableCell>{`${moment(appointment.start).format('LT')} - ${moment(appointment.end).format(
-                            'LT'
-                        )}`}</TableCell>
+                        <TableCell>
+                            {new Date(appointment.start).toLocaleDateString(locale, {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })}
+                        </TableCell>
+                        <TableCell>{`${new Date(appointment.start).toLocaleTimeString(locale, {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                        })} - ${new Date(appointment.end).toLocaleTimeString(locale, {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                        })}`}</TableCell>
                         <TableCell>
                             {new Date(appointment.start) > new Date() && (
                                 <CancelAppointment appointmentId={appointment.id} />

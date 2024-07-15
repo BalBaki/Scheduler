@@ -1,6 +1,5 @@
 'use client';
 
-import moment from 'moment';
 import type { EventContentArg } from '@fullcalendar/core/index.js';
 import { useSession } from 'next-auth/react';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
@@ -8,6 +7,7 @@ import { Label } from '../ui/label';
 import BookAppoinment from './book-appointment';
 import Link from 'next/link';
 import WaitForApprove from '../wait-for-approve';
+import { useLocale } from '@/hooks/use-locale';
 
 type BookAppoinmentPopupProps = {
     arg: EventContentArg;
@@ -15,13 +15,20 @@ type BookAppoinmentPopupProps = {
 
 export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
     const { data: session } = useSession();
+    const locale = useLocale();
     const { event } = arg;
 
     if (event.extendedProps.patientId)
         return (
             <div>
                 {event.start && event.end
-                    ? `${moment(event.start).format('LT')} : ${moment(event.end).format('LT')}`
+                    ? `${event.start.toLocaleTimeString(locale, {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                      })} : ${event.end.toLocaleTimeString(locale, {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                      })}`
                     : event.title}
             </div>
         );
@@ -31,7 +38,13 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
             <DialogTrigger asChild className="w-full">
                 <div>
                     {event.start && event.end
-                        ? `${moment(event.start).format('LT')} : ${moment(event.end).format('LT')}`
+                        ? `${event.start.toLocaleTimeString(locale, {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                          })} : ${event.end.toLocaleTimeString(locale, {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                          })}`
                         : event.title}
                 </div>
             </DialogTrigger>
@@ -46,7 +59,11 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
                                     <div className="flex flex-col gap-y-1">
                                         <Label>Date:</Label>
                                         <div className="border-2 rounded-md p-2 text-sm">
-                                            {moment(event.start).format('LL')}
+                                            {event.start?.toLocaleDateString(locale, {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                            })}
                                         </div>
                                     </div>
                                     <div className="flex flex-col gap-y-1">
@@ -56,13 +73,19 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
                                     <div>
                                         <Label>Start Hour:</Label>
                                         <div className="border-2 rounded-md p-2 text-sm">
-                                            {moment(event.start).format('hh:mm')}
+                                            {event.start?.toLocaleTimeString(locale, {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                            })}
                                         </div>
                                     </div>
                                     <div>
                                         <Label>End Hour:</Label>
                                         <div className="border-2 rounded-md p-2 text-sm">
-                                            {moment(event.end).format('hh:mm')}
+                                            {event.end?.toLocaleTimeString(locale, {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                            })}
                                         </div>
                                     </div>
                                 </div>

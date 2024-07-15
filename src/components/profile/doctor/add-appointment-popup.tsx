@@ -1,7 +1,6 @@
 'use client';
 
 import { type Dispatch, type SetStateAction } from 'react';
-import moment from 'moment';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
@@ -16,6 +15,7 @@ import { ImSpinner6 } from 'react-icons/im';
 import { addAppointment } from '@/actions/add-appointment';
 import { addAppointmentSchema } from '@/schemas';
 import type { AddAppointmentForm } from '@/types';
+import { useLocale } from '@/hooks/use-locale';
 
 type AddAppointmentPopupProps = {
     date?: Date;
@@ -24,6 +24,7 @@ type AddAppointmentPopupProps = {
 };
 
 export default function AddAppointmentPopup({ date, show, setShow }: AddAppointmentPopupProps) {
+    const locale = useLocale();
     const form = useForm<AddAppointmentForm>({
         mode: 'all',
         resolver: zodResolver(addAppointmentSchema),
@@ -31,9 +32,10 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
             title: '',
             start: '',
             end: '',
-            date: moment(date).format('YYYY-MM-DD'),
+            date: date?.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }),
         },
     });
+
     const queryClient = useQueryClient();
     const {
         mutate,
@@ -64,7 +66,13 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div className="flex flex-col gap-y-1">
                             <Label htmlFor="startstr">Date</Label>
-                            <div className="border-2 rounded-md p-2 text-sm">{moment(date).format('LL')}</div>
+                            <div className="border-2 rounded-md p-2 text-sm">
+                                {date?.toLocaleDateString(locale, {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                })}
+                            </div>
                         </div>
                         <FormField
                             control={form.control}

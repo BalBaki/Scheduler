@@ -1,20 +1,19 @@
 'use client';
 
 import type { EventContentArg } from '@fullcalendar/core/index.js';
-import moment from 'moment';
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SubmitButton from '@/components/submit-button';
-import { ImSpinner6 } from 'react-icons/im';
 import RemoveAppointment from './remove-appointment';
 import UserDetailPopover from '@/components/user-detail-popover';
+import { useLocale } from '@/hooks/use-locale';
 
 type EditAppointmentPopupProps = {
     arg: EventContentArg;
 };
 
 export default function EditAppointmentPopup({ arg }: EditAppointmentPopupProps) {
+    const locale = useLocale();
     const { event } = arg;
 
     return (
@@ -22,7 +21,13 @@ export default function EditAppointmentPopup({ arg }: EditAppointmentPopupProps)
             <DialogTrigger asChild className="w-full">
                 <div>
                     {event.start && event.end
-                        ? `${moment(event.start).format('LT')} : ${moment(event.end).format('LT')}`
+                        ? `${event.start.toLocaleTimeString(locale, {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                          })} : ${event.end.toLocaleTimeString(locale, {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                          })}`
                         : event.title}
                 </div>
             </DialogTrigger>
@@ -31,7 +36,13 @@ export default function EditAppointmentPopup({ arg }: EditAppointmentPopupProps)
                     <div className="flex flex-col gap-y-2">
                         <div className="flex flex-col gap-y-1">
                             <Label htmlFor="startstr">Date</Label>
-                            <div className="border-2 rounded-md p-2 text-sm">{moment(event.start).format('LL')}</div>
+                            <div className="border-2 rounded-md p-2 text-sm">
+                                {event.start?.toLocaleDateString(locale, {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                })}
+                            </div>
                         </div>
                         <div className="flex flex-col gap-y-1">
                             <Label htmlFor="title">Title</Label>
@@ -43,7 +54,10 @@ export default function EditAppointmentPopup({ arg }: EditAppointmentPopupProps)
                                 type="time"
                                 name="start"
                                 id="startHour"
-                                defaultValue={moment(event.start).format('hh:mm')}
+                                defaultValue={event.start?.toLocaleTimeString(locale, {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                })}
                             />
                         </div>
                         <div>
@@ -52,14 +66,17 @@ export default function EditAppointmentPopup({ arg }: EditAppointmentPopupProps)
                                 type="time"
                                 name="end"
                                 id="endHour"
-                                defaultValue={moment(event.end).format('hh:mm')}
+                                defaultValue={event.end?.toLocaleTimeString(locale, {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                })}
                             />
                         </div>
                         {event.extendedProps.patient && (
                             <UserDetailPopover triggerText="Patient Detail" user={event.extendedProps.patient} />
                         )}
 
-                        <Input type="hidden" name="date" value={moment(event.start).format('YYYY-MM-DD')} />
+                        <Input type="hidden" name="date" value={event.start?.toISOString().split('T')[0]} />
                     </div>
                     <DialogFooter className="flex flex-row justify-end mt-3 space-x-2">
                         <RemoveAppointment appointmentId={event.id} />

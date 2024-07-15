@@ -3,10 +3,10 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import intercetionPlugin from '@fullcalendar/interaction';
-import moment from 'moment';
 import BookAppoinmentPopup from './book-appointment-popup';
 import type { Appointment } from '@prisma/client';
 import type { UserWithoutPassword } from '@/types';
+import { useLocale } from '@/hooks/use-locale';
 
 type AppointmentCalendarProps = {
     user: UserWithoutPassword & {
@@ -15,10 +15,12 @@ type AppointmentCalendarProps = {
 };
 
 export default function AppointmentCalendar({ user }: AppointmentCalendarProps) {
+    const locale = useLocale();
+
     return (
         <div className="overflow-auto">
             <FullCalendar
-                locale={moment.locale()}
+                locale={locale}
                 plugins={[dayGridPlugin, intercetionPlugin]}
                 initialView="dayGridMonth"
                 events={user.doctorAppointments}

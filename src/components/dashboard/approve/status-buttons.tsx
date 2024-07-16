@@ -32,7 +32,6 @@
 
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
 import { FcApproval, FcCancel } from 'react-icons/fc';
 import { ImSpinner6 } from 'react-icons/im';
 import { updateUserStatus } from '@/actions/update-user-status';
@@ -44,9 +43,6 @@ type StatusButtonsProps = {
 };
 
 export default function StatusButtons({ user }: StatusButtonsProps) {
-    const { mutate: updateStatus } = useMutation({
-        mutationFn: updateUserStatus,
-    });
     const [isPending, startTransition] = useTransition();
 
     return (
@@ -55,7 +51,7 @@ export default function StatusButtons({ user }: StatusButtonsProps) {
                 className="size-6"
                 onClick={() =>
                     startTransition(() => {
-                        updateStatus({ id: user.id, status: 'APPROVED' });
+                        updateUserStatus({ id: user.id, status: 'APPROVED' });
                     })
                 }
                 disabled={isPending}
@@ -67,7 +63,7 @@ export default function StatusButtons({ user }: StatusButtonsProps) {
                     className="size-6"
                     onClick={() =>
                         startTransition(() => {
-                            updateStatus({ id: user.id, status: 'DECLINED' });
+                            updateUserStatus({ id: user.id, status: 'DECLINED' });
                         })
                     }
                     disabled={isPending}

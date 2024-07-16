@@ -15,9 +15,11 @@ export const removeAppointment = async (appointmentId: string): Promise<ResultWi
             },
         });
 
-        if (!session || !appointment) return { remove: false, error: 'You have no authorization..!' };
+        if (!appointment) return { remove: false, error: 'Not exists appointment..!' };
+        if (!session || appointment.doctorId !== session.user.id)
+            return { remove: false, error: 'You have no authorization..!' };
         if (appointment.patientId)
-            return { remove: false, error: 'You cannot remove this event. It is booked by a patient..!' };
+            return { remove: false, error: 'You cannot remove this event. It booked by a patient..!' };
 
         await db.appointment.delete({
             where: {

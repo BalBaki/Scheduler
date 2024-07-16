@@ -35,4 +35,4 @@ if (process.env.NODE_ENV !== 'production') globalThis.prisma = db;
 //     .then(() => console.log('Admin User Created...'))
 //     .catch(() => console.log('Error at Creating Admin User'));
 
-// addDummyUsers(50);
+// addDummyUsers(5);

@@ -2,21 +2,29 @@
 
 import { auth } from '@/auth';
 import db from '@/db';
+import type { ResultWithError } from '@/types';
 import { revalidatePath } from 'next/cache';
 
-export const approveAllUsers = async () => {
-    const session = await auth();
+export const approveAllUsers = async (): Promise<ResultWithError<'approve'>> => {
+    try {
+        const session = await auth();
 
-    if (session?.user.role !== 'ADMIN') throw new Error('You are not admin..!');
+        if (!session || session.user.role !== 'ADMIN')
+            return { approve: false, error: 'You have no authorization..!' };
 
-    await db.user.updateMany({
-        data: {
-            status: 'APPROVED',
-        },
-        where: {
-            status: 'WAITING',
-        },
-    });
+        await db.user.updateMany({
+            data: {
+                status: 'APPROVED',
+            },
+            where: {
+                status: 'WAITING',
+            },
+        });
 
-    revalidatePath('/dashboard/approve');
+        revalidatePath('/dashboard/approve');
+
+        return { approve: true };
+    } catch (error) {
+        return { approve: false, error: 'Someting went wrong..!' };
+    }
 };

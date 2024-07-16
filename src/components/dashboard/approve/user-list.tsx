@@ -11,10 +11,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import SubmitButton from '@/components/submit-button';
-import { FcApproval, FcCancel } from 'react-icons/fc';
-import { ImSpinner6 } from 'react-icons/im';
-import { userApprove } from '@/actions/user-approve';
+import StatusButtons from './status-buttons';
 import type { UserWithoutPassword } from '@/types';
 
 type UserListProps = {
@@ -65,24 +62,7 @@ export default function UserList({ users, page }: UserListProps) {
                         <TableCell>{user.role}</TableCell>
                         <TableCell>{user.status}</TableCell>
                         <TableCell className="flex gap-x-1">
-                            <form action={userApprove.bind(null, { user, status: 'APPROVED' })}>
-                                <SubmitButton
-                                    className="size-6"
-                                    pendingText={<ImSpinner6 className="w-full h-full animate-spin" />}
-                                >
-                                    <FcApproval className="w-full h-full" />
-                                </SubmitButton>
-                            </form>
-                            {user.status !== 'DECLINED' && (
-                                <form action={userApprove.bind(null, { user, status: 'DECLINED' })}>
-                                    <SubmitButton
-                                        className="size-6"
-                                        pendingText={<ImSpinner6 className="w-full h-full animate-spin" />}
-                                    >
-                                        <FcCancel className="w-full h-full" />
-                                    </SubmitButton>
-                                </form>
-                            )}
+                            <StatusButtons user={user} />
                         </TableCell>
                     </TableRow>
                 ))}

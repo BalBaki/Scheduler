@@ -60,8 +60,6 @@ export const signUp = async (formData: SignUpForm): Promise<FormState<'register'
             });
         }
 
-        if (newUser.role === 'DOCTOR') revalidatePath('/doctor');
-
         revalidatePath('/dashboard/approve');
 
         return { register: true };

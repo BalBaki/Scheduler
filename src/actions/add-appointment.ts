@@ -11,8 +11,8 @@ export const addAppointment = async (form: AddAppointmentForm): Promise<FormStat
     try {
         const session = await auth();
 
-        if (!session?.user) return { add: false, errors: { _form: 'No sign in...' } };
-        if (session.user.role !== 'DOCTOR') return { add: false, errors: { _form: 'You have no authorization..!' } };
+        if (!session || session.user.role !== 'DOCTOR')
+            return { add: false, errors: { _form: 'You have no authorization..!' } };
 
         const validatedForm = addAppointmentSchema.safeParse(form);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import Image from 'next/image';
 import { CgProfile } from 'react-icons/cg';
 import { toast } from 'react-toastify';
@@ -13,12 +13,17 @@ import { Button } from '../../ui/button';
 export default function ProfilePicture() {
     const { data: session, update: updateSession } = useSession();
     const [picture, setPicture] = useState<File | null>(null);
-    const {
-        mutate,
-        isPending,
-        data: result,
-    } = useMutation({
+    const { mutate: uploadPicture, isPending } = useMutation({
         mutationFn: updateProfilePicture,
+        onSuccess({ update, error }) {
+            if (update) {
+                updateSession().then(() => setPicture(null));
+            }
+
+            toast(update ? 'Successfully Changed' : error, {
+                type: update ? 'success' : 'error',
+            });
+        },
     });
 
     const handlePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,33 +32,19 @@ export default function ProfilePicture() {
         setPicture(event.target.files[0]);
     };
 
-    useEffect(() => {
-        result?.update && updateSession();
-
-        toast(result?.update ? 'Successfully Changed' : result?.error, {
-            type: result?.update ? 'success' : 'error',
-        });
-    }, [result]);
-
     return (
-        <div className="max-w-96 h-full ">
-            <form action={mutate} className="flex flex-col items-center justify-center">
+        <div className="max-w-96 h-56">
+            <form action={uploadPicture} className="flex flex-col items-center justify-center">
                 <label htmlFor={isPending ? '' : 'profilePicture'}>
                     <div className="relative size-40 overflow-hidden">
-                        {picture ? (
+                        {picture || session?.user.imageUrl ? (
                             <Image
-                                src={URL.createObjectURL(picture as Blob)}
+                                src={picture ? URL.createObjectURL(picture as Blob) : session?.user.imageUrl || ''}
                                 alt="profile picture"
                                 fill
                                 className="object-cover rounded-full"
-                            />
-                        ) : session?.user.imageUrl ? (
-                            <Image
-                                src={session.user.imageUrl}
-                                alt="profile picture"
-                                fill
+                                sizes="10rem, 10rem"
                                 priority={true}
-                                className="object-cover rounded-full"
                             />
                         ) : (
                             <CgProfile className="w-full h-full" />

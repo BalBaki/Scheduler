@@ -10,7 +10,8 @@ export default function Header() {
     const session = useSession();
     const pathname = usePathname();
 
-    if (session.status === 'loading' || pathname.startsWith('/login') || pathname.startsWith('/register')) return null;
+    if (pathname.startsWith('/login') || pathname.startsWith('/register')) return null;
+    if (session.status === 'loading') return <div className="mt-2 h-10">Loading...</div>;
 
     if (!session.data)
         return (
@@ -29,7 +30,7 @@ export default function Header() {
         );
 
     return (
-        <div className="mt-2">
+        <div className="mt-2 h-10">
             <div className="flex items-center gap-x-2">
                 <div className="mr-auto capitalize truncate">{`${session.data.user.name} ${session.data.user.surname}`}</div>
                 {session.data.user.role === 'ADMIN' && (

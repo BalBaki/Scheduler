@@ -19,12 +19,16 @@ export default function Account() {
     });
 
     return (
-        <>
+        <div>
             <div className="flex items-center gap-x-2 max-md:flex-col">
                 <div className="max-w-96 border-2 border-black divide-y-2 divide-black">{renderedUser}</div>
                 <ProfilePicture />
             </div>
-            {session.user.role === 'DOCTOR' && <Details />}
-        </>
+            {session.user.role === 'DOCTOR' && (
+                <div className="max-w-md">
+                    <Details />
+                </div>
+            )}
+        </div>
     );
 }

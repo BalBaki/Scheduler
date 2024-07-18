@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useTransition } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { CgProfile } from 'react-icons/cg';
 import { toast } from 'react-toastify';

@@ -22,6 +22,7 @@ export default async function Doctor() {
                                     alt="profile photo"
                                     fill
                                     className="rounded-full object-cover"
+                                    sizes="100%, 100%"
                                 />
                             ) : (
                                 <IoPersonCircle className="w-full h-full" />

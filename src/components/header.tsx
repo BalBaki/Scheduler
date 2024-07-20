@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import SignOut from './session/sign-out';
+import SignOut from './auth/sign-out';
 import { ImSpinner6 } from 'react-icons/im';
 import { CgProfile } from 'react-icons/cg';
 import { Button } from './ui/button';

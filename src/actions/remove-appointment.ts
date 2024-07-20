@@ -16,7 +16,7 @@ export const removeAppointment = async (appointmentId: string): Promise<ResultWi
         });
 
         if (!appointment) return { remove: false, error: 'Not exists appointment..!' };
-        if (!session || appointment.doctorId !== session.user.id)
+        if (!session || session.user.status !== 'APPROVED' || appointment.doctorId !== session.user.id)
             return { remove: false, error: 'You have no authorization..!' };
         if (appointment.patientId)
             return { remove: false, error: 'You cannot remove this event. It booked by a patient..!' };

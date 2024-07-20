@@ -10,7 +10,8 @@ export const updateUserDetail = async (formData: UserDetailForm): Promise<FormSt
     try {
         const session = await auth();
 
-        if (!session) return { update: false, errors: { _form: 'You have no authorization..!' } };
+        if (!session || session.user.status !== 'APPROVED')
+            return { update: false, errors: { _form: 'You have no authorization..!' } };
 
         const validatedForm = userDetail.safeParse(formData);
 

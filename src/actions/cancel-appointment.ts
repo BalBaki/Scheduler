@@ -16,7 +16,7 @@ export const cancelAppointment = async (appointmentId: string): Promise<ResultWi
         });
 
         if (!appointment) return { cancel: false, error: 'Not exists appointment..!' };
-        if (!session || appointment.patientId !== session.user.id)
+        if (!session || session.user.status !== 'APPROVED' || appointment.patientId !== session.user.id)
             return { cancel: false, error: 'You have no authorization..!' };
 
         await db.appointment.update({

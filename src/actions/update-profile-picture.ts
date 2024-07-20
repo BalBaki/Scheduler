@@ -13,7 +13,8 @@ export const updateProfilePicture = async (formData: FormData): Promise<ResultWi
     try {
         const session = await auth();
 
-        if (!session) return { update: false, error: 'You have no authorization..!' };
+        if (!session || session.user.status !== 'APPROVED')
+            return { update: false, error: 'You have no authorization..!' };
 
         const validatedPicture = profilePictureSchema.safeParse(formData.get('profilePicture'));
 

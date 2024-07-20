@@ -11,7 +11,7 @@ export const addAppointment = async (form: AddAppointmentForm): Promise<FormStat
     try {
         const session = await auth();
 
-        if (!session || session.user.role !== 'DOCTOR')
+        if (!session || session.user.status !== 'APPROVED' || session.user.role !== 'DOCTOR')
             return { add: false, errors: { _form: 'You have no authorization..!' } };
 
         const validatedForm = addAppointmentSchema.safeParse(form);

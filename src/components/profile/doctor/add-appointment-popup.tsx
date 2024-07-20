@@ -5,8 +5,17 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Dialog, DialogContent, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -61,85 +70,90 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
         <Dialog open={show} onOpenChange={setShow}>
             <DialogTrigger className="absolute inset-0"></DialogTrigger>
             <DialogContent className="max-w-[425px]" onOpenAutoFocus={(e) => e.preventDefault()}>
-                <DialogTitle className="uppercase">Create Appointment</DialogTitle>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <div className="flex flex-col gap-y-1">
-                            <Label htmlFor="startstr">Date</Label>
-                            <div className="border-2 rounded-md p-2 text-sm">
-                                {date?.toLocaleDateString(locale, {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                })}
+                <DialogHeader>
+                    <DialogTitle className="uppercase">Add Appointment</DialogTitle>
+                    <VisuallyHidden.Root>
+                        <DialogDescription>Add Appointment</DialogDescription>
+                    </VisuallyHidden.Root>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <div className="flex flex-col gap-y-1">
+                                <Label htmlFor="startstr">Date</Label>
+                                <div className="border-2 rounded-md p-2 text-sm">
+                                    {date?.toLocaleDateString(locale, {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                    })}
+                                </div>
                             </div>
-                        </div>
-                        <FormField
-                            control={form.control}
-                            name="title"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Title</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="title" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                    {result?.errors?.title && <FormValidationError errors={result.errors.title} />}
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="start"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Start Hour</FormLabel>
-                                    <FormControl>
-                                        <Input type="time" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                    {result?.errors?.start && <FormValidationError errors={result.errors.start} />}
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="end"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>End Hour</FormLabel>
-                                    <FormControl>
-                                        <Input type="time" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                    {result?.errors?.end && <FormValidationError errors={result.errors.end} />}
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="date"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel></FormLabel>
-                                    <FormControl>
-                                        <Input type="hidden" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <DialogFooter className="flex flex-row justify-end mt-3 space-x-2">
-                            <Button
-                                className="border-2 w-20 h-10 rounded-md"
-                                disabled={isPending || !form.formState.isValid}
-                            >
-                                {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Save'}
-                            </Button>
-                        </DialogFooter>
-                        {result?.errors?._form && <FormValidationError errors={result.errors._form} />}
-                    </form>
-                </Form>
+                            <FormField
+                                control={form.control}
+                                name="title"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Title</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="title" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                        {result?.errors?.title && <FormValidationError errors={result.errors.title} />}
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="start"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Start Hour</FormLabel>
+                                        <FormControl>
+                                            <Input type="time" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                        {result?.errors?.start && <FormValidationError errors={result.errors.start} />}
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="end"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>End Hour</FormLabel>
+                                        <FormControl>
+                                            <Input type="time" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                        {result?.errors?.end && <FormValidationError errors={result.errors.end} />}
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="date"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel></FormLabel>
+                                        <FormControl>
+                                            <Input type="hidden" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <DialogFooter className="flex flex-row justify-end mt-3 space-x-2">
+                                <Button
+                                    className="border-2 w-20 h-10 rounded-md"
+                                    disabled={isPending || !form.formState.isValid}
+                                >
+                                    {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Save'}
+                                </Button>
+                            </DialogFooter>
+                            {result?.errors?._form && <FormValidationError errors={result.errors._form} />}
+                        </form>
+                    </Form>
+                </DialogHeader>
             </DialogContent>
         </Dialog>
     );

@@ -6,7 +6,6 @@ import SignOut from './auth/sign-out';
 import { ImSpinner6 } from 'react-icons/im';
 import { CgProfile } from 'react-icons/cg';
 import { Button } from './ui/button';
-import { usePathname } from 'next/navigation';
 import {
     Sheet,
     SheetContent,
@@ -40,9 +39,6 @@ const routes = [
 
 export default function Header() {
     const session = useSession();
-    const pathname = usePathname();
-
-    if (pathname.startsWith('/login') || pathname.startsWith('/register')) return null;
 
     return (
         <header className="flex items-center mt-3 h-10">

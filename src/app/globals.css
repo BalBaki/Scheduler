@@ -127,3 +127,7 @@
         }
     }
 }
+
+.ReactCrop--circular-crop .ReactCrop__crop-selection.ReactCrop__crop-selection:after {
+    border: unset;
+}

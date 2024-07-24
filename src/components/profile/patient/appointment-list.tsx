@@ -29,7 +29,7 @@ export default function AppointmentList({ appointments }: AppointmentListProps) 
     if (appointments.length < 1) return <div>No Appointments...</div>;
 
     return (
-        <Table className="max-w-[55rem]">
+        <Table className="max-w-[55rem]" aria-label="Booked appointment list">
             <TableCaption></TableCaption>
             <TableHeader>
                 <TableRow>

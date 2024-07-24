@@ -36,10 +36,12 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
 
     return (
         <AlertDialog>
-            <AlertDialogTrigger disabled={isPending}>
-                <div className="flex justify-center items-center w-20 h-10 bg-green-500 rounded-md text-white">
-                    {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Book'}
-                </div>
+            <AlertDialogTrigger
+                className="flex justify-center items-center w-20 h-10 bg-green-500 rounded-md text-white"
+                disabled={isPending}
+                aria-label="Confirmation of book appointment"
+            >
+                {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Book'}
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
@@ -47,9 +49,13 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
                     <AlertDialogDescription>Book Appointment...</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleContinueClick} disabled={isPending}>
-                        {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Continue'}
+                    <AlertDialogCancel aria-label="Cancel book appointment">Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                        onClick={handleContinueClick}
+                        disabled={isPending}
+                        aria-label="Confirm book appointment"
+                    >
+                        {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Confirm'}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

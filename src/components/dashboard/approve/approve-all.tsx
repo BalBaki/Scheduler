@@ -34,6 +34,7 @@ export default function ApproveAll() {
             <AlertDialogTrigger
                 className="w-28 h-10 border border-black rounded-md text-sm max-sm:w-full max-sm:mt-1"
                 disabled={isPending}
+                aria-label="Approve all waiting users"
             >
                 {isPending ? <ImSpinner6 className="size-full animate-spin py-2" /> : 'Approve All'}
             </AlertDialogTrigger>
@@ -42,8 +43,10 @@ export default function ApproveAll() {
                     <AlertDialogTitle>Are you sure to approve all users?</AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => approveAll()} disabled={isPending}>
+                    <AlertDialogCancel disabled={isPending} aria-label="Cancel approve">
+                        Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction onClick={() => approveAll()} disabled={isPending} aria-label="Confirm approve">
                         Approve
                     </AlertDialogAction>
                 </AlertDialogFooter>

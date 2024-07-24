@@ -66,6 +66,7 @@ export default function Details() {
                     type="submit"
                     className="bg-green-500"
                     disabled={isPending || !form.formState.isValid || !form.formState.isDirty}
+                    aria-label="Save user details"
                 >
                     {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     Save

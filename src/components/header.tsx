@@ -44,7 +44,7 @@ export default function Header() {
             <div className="flex items-center mr-auto text-xl font-semibold">
                 <span className="text-2xl text-white bg-[#a5c422] px-1 rounded-md font-bold">S</span>cheduler
             </div>
-            <nav className="flex text-sm" role="navigation">
+            <nav className="flex text-sm" role="navigation" aria-label="Main navigation">
                 <div className="hidden lg:flex [&>a]:before:transition-all [&>a]:before:absolute [&>a]:before:w-0 [&>a]:before:h-[1px] [&>a]:before:bg-black [&>a]:before:bottom-0 [&>a]:before:left-0 [&>a]:before:origin-left">
                     {routes.map((router) => {
                         return (

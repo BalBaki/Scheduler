@@ -37,6 +37,7 @@ export default function UserList({ users, page }: UserListProps) {
         <Table
             containerClassname="h-fit max-h-[calc(100vh-205px)] sm:max-h-[calc(100vh-157px)] overflow-y-auto relative mt-1"
             ref={tableRef}
+            aria-label="List of users waiting for approval"
         >
             <TableCaption></TableCaption>
             <TableHeader className="sticky top-0 bg-gray-600">

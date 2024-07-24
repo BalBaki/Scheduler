@@ -37,18 +37,16 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
 
     return (
         <Dialog>
-            <DialogTrigger asChild className="w-full">
-                <div>
-                    {event.start && event.end
-                        ? `${event.start.toLocaleTimeString(locale, {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                          })} : ${event.end.toLocaleTimeString(locale, {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                          })}`
-                        : event.title}
-                </div>
+            <DialogTrigger className="w-full" aria-label="Open book appointment pop-up">
+                {event.start && event.end
+                    ? `${event.start.toLocaleTimeString(locale, {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                      })} : ${event.end.toLocaleTimeString(locale, {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                      })}`
+                    : event.title}
             </DialogTrigger>
             <DialogContent className="max-w-[425px]" onOpenAutoFocus={(e) => e.preventDefault()}>
                 {session?.user ? (

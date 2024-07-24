@@ -55,6 +55,7 @@ export default function StatusButtons({ user }: StatusButtonsProps) {
                     })
                 }
                 disabled={isPending}
+                aria-label="Approve user"
             >
                 {isPending ? <ImSpinner6 className="size-full animate-spin" /> : <FcApproval className="size-full" />}
             </button>
@@ -67,6 +68,7 @@ export default function StatusButtons({ user }: StatusButtonsProps) {
                         })
                     }
                     disabled={isPending}
+                    aria-label="Decline user"
                 >
                     {isPending ? (
                         <ImSpinner6 className="size-full animate-spin" />

@@ -39,7 +39,7 @@ export default function CancelAppointment({ appointmentId }: CancelAppointmentPr
 
     return (
         <AlertDialog>
-            <AlertDialogTrigger disabled={isPending}>
+            <AlertDialogTrigger disabled={isPending} aria-label="Cancel appointment">
                 {isPending ? (
                     <ImSpinner6 className="size-6 animate-spin" />
                 ) : (
@@ -51,8 +51,12 @@ export default function CancelAppointment({ appointmentId }: CancelAppointmentPr
                     <AlertDialogTitle>Are you sure you want to cancel the appointment?</AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction disabled={isPending} onClick={handleContinueClick}>
+                    <AlertDialogCancel aria-label="Cancel process">Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                        aria-label="Confrim cancel appointment"
+                        disabled={isPending}
+                        onClick={handleContinueClick}
+                    >
                         {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Continue'}
                     </AlertDialogAction>
                 </AlertDialogFooter>

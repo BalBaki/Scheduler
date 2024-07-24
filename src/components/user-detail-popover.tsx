@@ -12,7 +12,9 @@ export default function UserDetailPopover({ triggerText, user }: UserDetailPopov
 
     return (
         <Popover>
-            <PopoverTrigger className="text-left w-fit">{triggerText}</PopoverTrigger>
+            <PopoverTrigger className="text-left w-fit" aria-label="Open user detail">
+                {triggerText}
+            </PopoverTrigger>
             <PopoverContent className="flex flex-col gap-y-1 w-[22rem]">
                 <div className="grid grid-cols-[2fr,5fr] place-content-center">
                     <div>Email</div>

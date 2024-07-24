@@ -39,10 +39,12 @@ export default function RemoveAppointment({ appointmentId }: RemoveAppointmentPr
 
     return (
         <AlertDialog>
-            <AlertDialogTrigger className="flex" disabled={isPending}>
-                <div className="flex justify-center items-center w-20 h-10 bg-red-500 rounded-md text-white">
-                    {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Delete'}
-                </div>
+            <AlertDialogTrigger
+                className="flex justify-center items-center w-20 h-10 bg-red-500 rounded-md text-white"
+                disabled={isPending}
+                aria-label="Confirmation of delete appointment"
+            >
+                {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Delete'}
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
@@ -52,9 +54,13 @@ export default function RemoveAppointment({ appointmentId }: RemoveAppointmentPr
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleContinueClick} disabled={isPending}>
-                        {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Continue'}
+                    <AlertDialogCancel aria-label="Cancel remove appointment">Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                        onClick={handleContinueClick}
+                        disabled={isPending}
+                        aria-label="Confirm remove appointment"
+                    >
+                        {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Delete'}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

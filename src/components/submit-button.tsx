@@ -23,6 +23,7 @@ export default function SubmitButton({
             type="submit"
             disabled={disabled || pending}
             className={cn('flex justify-center items-center', pending && 'cursor-not-allowed', className)}
+            aria-label="Submit form"
             {...rest}
         >
             {pending ? pendingText : children || 'submit'}

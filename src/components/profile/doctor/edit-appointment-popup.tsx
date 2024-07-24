@@ -20,18 +20,16 @@ export default function EditAppointmentPopup({ arg }: EditAppointmentPopupProps)
 
     return (
         <Dialog>
-            <DialogTrigger asChild className="w-full">
-                <div>
-                    {event.start && event.end
-                        ? `${event.start.toLocaleTimeString(locale, {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                          })} : ${event.end.toLocaleTimeString(locale, {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                          })}`
-                        : event.title}
-                </div>
+            <DialogTrigger className="w-full" aria-label="Open edit appointment pop-up">
+                {event.start && event.end
+                    ? `${event.start.toLocaleTimeString(locale, {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                      })} : ${event.end.toLocaleTimeString(locale, {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                      })}`
+                    : event.title}
             </DialogTrigger>
             <DialogHeader>
                 <VisuallyHidden.Root>

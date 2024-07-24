@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/sheet';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Button } from './ui/button';
 
 const routes = [
     {
@@ -41,11 +40,11 @@ export default function Header() {
     const session = useSession();
 
     return (
-        <header className="flex items-center mt-3 h-10">
+        <header className="flex items-center mt-3 h-10" role="banner">
             <div className="flex items-center mr-auto text-xl font-semibold">
                 <span className="text-2xl text-white bg-[#a5c422] px-1 rounded-md font-bold">S</span>cheduler
             </div>
-            <nav className="flex text-sm">
+            <nav className="flex text-sm" role="navigation">
                 <div className="hidden lg:flex [&>a]:before:transition-all [&>a]:before:absolute [&>a]:before:w-0 [&>a]:before:h-[1px] [&>a]:before:bg-black [&>a]:before:bottom-0 [&>a]:before:left-0 [&>a]:before:origin-left">
                     {routes.map((router) => {
                         return (
@@ -72,14 +71,14 @@ export default function Header() {
                           )}
                 </div>
                 <Sheet>
-                    <SheetTrigger>
+                    <SheetTrigger aria-label="Open hamburger menu">
                         <div className="hidden lg:block">
                             {session.status === 'loading'
                                 ? null
                                 : session.data &&
                                   (session.data.user.imageUrl ? (
                                       <Avatar>
-                                          <AvatarImage src={session.data.user.imageUrl} />
+                                          <AvatarImage src={session.data.user.imageUrl} alt="Profile picture" />
                                           <AvatarFallback>PP</AvatarFallback>
                                       </Avatar>
                                   ) : (
@@ -105,12 +104,18 @@ export default function Header() {
                                         })}
                                         {!session.data && (
                                             <div className="absolute right-6 bottom-6 space-x-2">
-                                                <Button className="w-20 border-black" aria-label="Sign Up">
-                                                    <Link href="/register"> Sign Up</Link>
-                                                </Button>
-                                                <Button className="w-20 border-black" aria-label="Sign In">
-                                                    <Link href="/login">Sign In</Link>
-                                                </Button>
+                                                <Link
+                                                    href="/register"
+                                                    className="px-3 py-2 bg-[#a5c422] text-white rounded-sm mr-2"
+                                                >
+                                                    Sign Up
+                                                </Link>
+                                                <Link
+                                                    href="/login"
+                                                    className="px-3 py-2 bg-[#a5c422] text-white rounded-sm"
+                                                >
+                                                    Sign In
+                                                </Link>
                                             </div>
                                         )}
                                     </div>
@@ -149,7 +154,6 @@ export default function Header() {
                                                 type="submit"
                                                 variant="outline"
                                                 className="absolute right-6 bottom-6"
-                                                aria-label="Sign Out"
                                             />
                                         </>
                                     )}

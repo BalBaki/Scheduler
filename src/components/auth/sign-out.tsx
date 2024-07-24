@@ -16,7 +16,7 @@ export default function SignOut({ type, className, ...rest }: ButtonProps) {
 
     return (
         <form action={dispatch} className="inline">
-            <Button className={cn('w-20 border-black', className)} {...rest}>
+            <Button className={cn('w-20 border-black', className)} aria-label="Sign Out" {...rest}>
                 Sign Out
             </Button>
         </form>

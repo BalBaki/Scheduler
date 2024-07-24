@@ -26,7 +26,9 @@ export default function RootLayout({
                 <Providers>
                     <div className="mx-2">
                         <Header />
-                        <UserStatus>{children}</UserStatus>
+                        <UserStatus>
+                            <main>{children}</main>
+                        </UserStatus>
                         <HomeIcon />
                         <ToastContainer
                             position="bottom-right"

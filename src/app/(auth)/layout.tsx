@@ -24,7 +24,9 @@ export default function RootLayout({
             <body className={inter.className}>
                 <Providers>
                     <div className="mx-2">
-                        <UserStatus>{children}</UserStatus>
+                        <UserStatus>
+                            <main>{children}</main>
+                        </UserStatus>
                         <HomeIcon />
                         <ToastContainer
                             position="bottom-right"

@@ -79,7 +79,7 @@ export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: Image
     return (
         <Dialog open={isShowDialog} onOpenChange={setIsShowDialog}>
             <DialogTrigger asChild>
-                <Button className="text-center" disabled={disabled}>
+                <Button className="text-center" disabled={disabled} aria-label="Open Crop Modal">
                     Crop
                 </Button>
             </DialogTrigger>
@@ -110,7 +110,9 @@ export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: Image
                                 </div>
                             </ReactCrop>
                             <div>
-                                <Button onClick={handleCropClick}>Crop</Button>
+                                <Button aria-label="Complete The Cropping" onClick={handleCropClick}>
+                                    Crop
+                                </Button>
                             </div>
                         </div>
                     </DialogDescription>

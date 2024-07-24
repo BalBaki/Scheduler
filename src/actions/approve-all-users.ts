@@ -22,6 +22,7 @@ export const approveAllUsers = async (): Promise<ResultWithError<'approve'>> => 
         });
 
         revalidatePath('/dashboard/approve');
+        revalidatePath('/doctor');
 
         return { approve: true };
     } catch (error) {

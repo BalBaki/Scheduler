@@ -83,6 +83,7 @@ export default function ProfilePicture() {
                         <Button
                             disabled={isPending}
                             className="w-16"
+                            aria-label="Save Profile Picture"
                             onClick={() => {
                                 if (!image) return;
 
@@ -95,7 +96,11 @@ export default function ProfilePicture() {
                         >
                             {isPending ? <ImSpinner6 className="w-full h-full animate-spin" /> : 'Save'}
                         </Button>
-                        <Button onClick={handleCancelClick} disabled={isPending}>
+                        <Button
+                            disabled={isPending}
+                            aria-label="Cancel Editing Profile Photo"
+                            onClick={handleCancelClick}
+                        >
                             Cancel
                         </Button>
                     </div>

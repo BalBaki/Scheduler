@@ -16,11 +16,11 @@ export const credentialsSignIn = async (formData: SignInForm): Promise<FormState
 
         const user = await getUserByEmail(validatedFormData.data.email);
 
-        if (!user) return { login: false, errors: { _form: 'Invalid email/password!' } };
+        if (!user) return { login: false, errors: { _form: 'Invalid email or password!' } };
 
         const isPasswordMatch = await compare(validatedFormData.data.password, user.password);
 
-        if (!isPasswordMatch) return { login: false, errors: { _form: 'Invalid email/password!' } };
+        if (!isPasswordMatch) return { login: false, errors: { _form: 'Invalid email or password!' } };
 
         const { password, ...rest } = user;
 
@@ -36,7 +36,7 @@ export const credentialsSignIn = async (formData: SignInForm): Promise<FormState
             switch (error.type) {
                 case 'CredentialsSignin':
                 case 'CallbackRouteError':
-                    return { login: false, errors: { _form: 'Invalid email/password!' } };
+                    return { login: false, errors: { _form: 'Invalid email or password!' } };
                 default:
                     return { login: false, errors: { _form: 'Something went wrong while logging in!' } };
             }

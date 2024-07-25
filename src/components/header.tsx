@@ -87,7 +87,7 @@ export default function Header() {
                         </div>
                         <FiMenu className="size-8 lg:hidden" />
                     </SheetTrigger>
-                    <SheetContent>
+                    <SheetContent className="overflow-y-auto">
                         <SheetHeader>
                             <SheetTitle className="capitalize truncate">
                                 {session.data ? `${session.data?.user.name} ${session.data?.user.surname}` : ''}
@@ -103,7 +103,7 @@ export default function Header() {
                                             );
                                         })}
                                         {!session.data && (
-                                            <div className="absolute right-6 bottom-6 space-x-2">
+                                            <div className="ml-auto space-x-2">
                                                 <Link
                                                     href="/register"
                                                     className="px-3 py-2 bg-[#a5c422] text-white rounded-sm mr-2"
@@ -150,11 +150,9 @@ export default function Header() {
                                                     </AccordionItem>
                                                 </Accordion>
                                             )}
-                                            <SignOut
-                                                type="submit"
-                                                variant="outline"
-                                                className="absolute right-6 bottom-6"
-                                            />
+                                            <div className="ml-auto">
+                                                <SignOut type="submit" variant="outline" />
+                                            </div>
                                         </>
                                     )}
                                 </div>

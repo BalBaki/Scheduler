@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import FormValidationError from '../form-validation-error';
+import Link from 'next/link';
 
 export default function SignUp() {
     const form = useForm<SignUpForm>({
@@ -64,134 +65,153 @@ export default function SignUp() {
     };
 
     return (
-        <div className="w-full max-w-96 rounded-xl border-2 px-3 py-6 border-black my-4 mx-auto">
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input type="email" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                {result?.errors?.email && <FormValidationError errors={result.errors.email} />}
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Password</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="password"
-                                        {...field}
-                                        onChange={(e) => handlePasswordChange(e, field.onChange)}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                                {result?.errors?.password && <FormValidationError errors={result.errors.password} />}
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="confirmPassword"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Confirm Password</FormLabel>
-                                <FormControl>
-                                    <Input type="password" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                {result?.errors?.confirmPassword && (
-                                    <FormValidationError errors={result.errors.confirmPassword} />
-                                )}
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Name</FormLabel>
-                                <FormControl>
-                                    <Input type="text" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                {result?.errors?.name && <FormValidationError errors={result.errors.name} />}
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="surname"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Surname</FormLabel>
-                                <FormControl>
-                                    <Input type="text" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                {result?.errors?.surname && <FormValidationError errors={result.errors.surname} />}
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="phoneNumber"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Phone Number</FormLabel>
-                                <FormControl>
-                                    <Input type="text" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                                {result?.errors?.phoneNumber && (
-                                    <FormValidationError errors={result.errors.phoneNumber} />
-                                )}
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="role"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Role</FormLabel>
-                                <Select onValueChange={field.onChange}>
+        <div className="flex justify-center h-full">
+            <div className="flex-1 bg-register bg-cover max-md:hidden"></div>
+            <div className="flex flex-col items-center w-1/2 max-w-[35rem] my-auto px-14 py-2 max-md:w-full max-md:px-[10%] max-md:max-w-full">
+                <h1 id="signUpForm" className="text-3xl mb-6">
+                    Sign Up to continue
+                </h1>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} aria-labelledby="signUpForm" className="w-full">
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <SelectTrigger className="w-36">
-                                            <SelectValue placeholder="Role" />
-                                        </SelectTrigger>
+                                        <Input type="email" {...field} />
                                     </FormControl>
-                                    <SelectContent>
-                                        <SelectItem value="PATIENT">Patient</SelectItem>
-                                        <SelectItem value="DOCTOR">Doctor</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                <FormMessage />
-                                {result?.errors?.role && <FormValidationError errors={result.errors.role} />}
-                            </FormItem>
-                        )}
-                    />
-                    <div className="grid place-content-center mt-3">
+                                    <FormMessage />
+                                    {result?.errors?.email && <FormValidationError errors={result.errors.email} />}
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="password"
+                                            {...field}
+                                            onChange={(e) => handlePasswordChange(e, field.onChange)}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                    {result?.errors?.password && (
+                                        <FormValidationError errors={result.errors.password} />
+                                    )}
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="confirmPassword"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Confirm Password</FormLabel>
+                                    <FormControl>
+                                        <Input type="password" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    {result?.errors?.confirmPassword && (
+                                        <FormValidationError errors={result.errors.confirmPassword} />
+                                    )}
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Name</FormLabel>
+                                    <FormControl>
+                                        <Input type="text" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    {result?.errors?.name && <FormValidationError errors={result.errors.name} />}
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="surname"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Surname</FormLabel>
+                                    <FormControl>
+                                        <Input type="text" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    {result?.errors?.surname && <FormValidationError errors={result.errors.surname} />}
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="phoneNumber"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Phone Number</FormLabel>
+                                    <FormControl>
+                                        <Input type="text" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    {result?.errors?.phoneNumber && (
+                                        <FormValidationError errors={result.errors.phoneNumber} />
+                                    )}
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="role"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Role</FormLabel>
+                                    <Select onValueChange={field.onChange}>
+                                        <FormControl>
+                                            <SelectTrigger className="w-36">
+                                                <SelectValue placeholder="Role" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent
+                                            ref={(ref) => {
+                                                if (!ref) return;
+
+                                                ref.ontouchstart = (e) => e.preventDefault();
+                                            }}
+                                        >
+                                            <SelectItem value="PATIENT">Patient</SelectItem>
+                                            <SelectItem value="DOCTOR">Doctor</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                    {result?.errors?.role && <FormValidationError errors={result.errors.role} />}
+                                </FormItem>
+                            )}
+                        />
                         <Button
-                            className="flex justify-center items-center border-2 w-20 h-9 rounded-md border-black"
+                            type="submit"
+                            className="w-full h-12 rounded-md border-black mt-4 bg-[#6675df] uppercase text-xs tracking-widest"
                             disabled={isPending || !form.formState.isValid}
                         >
                             {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Register'}
                         </Button>
-                    </div>
-                </form>
-            </Form>
-            {result?.errors?._form && <FormValidationError className="mt-1" errors={result.errors._form} />}
+                    </form>
+                </Form>
+                {result?.errors?._form && <FormValidationError className="mt-3" errors={result.errors._form} />}
+                <div className="mt-3 text-center">
+                    Do you have an account?
+                    <Link href="/login" className="text-[#6675df] ml-1">
+                        Sign In
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 }

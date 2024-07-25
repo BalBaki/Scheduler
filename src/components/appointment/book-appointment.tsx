@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { bookAppointment } from '@/actions/book-appointment';
 import { ImSpinner6 } from 'react-icons/im';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
 type BookAppoinmentProps = {
@@ -21,9 +21,12 @@ type BookAppoinmentProps = {
 };
 
 export default function BookAppoinment({ id }: BookAppoinmentProps) {
+    const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: bookAppointment,
         onSuccess({ book, error }) {
+            book && queryClient.invalidateQueries({ queryKey: ['appointments'] });
+
             toast(book ? 'Successfully Booked' : error, {
                 type: book ? 'success' : 'error',
             });

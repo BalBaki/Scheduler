@@ -1,5 +1,6 @@
 'use client';
 
+import CancelAppointment from './cancel-appointment';
 import {
     Table,
     TableBody,
@@ -11,10 +12,9 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import UserDetailPopover from '@/components/user-detail-popover';
-import CancelAppointment from './cancel-appointment';
-import type { Appointment } from '@prisma/client';
-import type { UserWithoutPassword } from '@/types';
 import { useLocale } from '@/hooks/use-locale';
+import type { UserWithoutPassword } from '@/types';
+import type { Appointment } from '@prisma/client';
 
 type AppointmentListProps = {
     appointments: (Appointment & {
@@ -23,7 +23,9 @@ type AppointmentListProps = {
     })[];
 };
 
-export default function AppointmentList({ appointments }: AppointmentListProps) {
+export default function AppointmentList({
+    appointments,
+}: AppointmentListProps) {
     const locale = useLocale();
 
     if (appointments.length < 1) return <div>No Appointments...</div>;
@@ -52,22 +54,32 @@ export default function AppointmentList({ appointments }: AppointmentListProps) 
                             />
                         </TableCell>
                         <TableCell>
-                            {new Date(appointment.start).toLocaleDateString(locale, {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                            })}
+                            {new Date(appointment.start).toLocaleDateString(
+                                locale,
+                                {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                },
+                            )}
                         </TableCell>
-                        <TableCell>{`${new Date(appointment.start).toLocaleTimeString(locale, {
+                        <TableCell>{`${new Date(
+                            appointment.start,
+                        ).toLocaleTimeString(locale, {
                             hour: '2-digit',
                             minute: '2-digit',
-                        })} - ${new Date(appointment.end).toLocaleTimeString(locale, {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                        })}`}</TableCell>
+                        })} - ${new Date(appointment.end).toLocaleTimeString(
+                            locale,
+                            {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                            },
+                        )}`}</TableCell>
                         <TableCell>
                             {new Date(appointment.start) > new Date() && (
-                                <CancelAppointment appointmentId={appointment.id} />
+                                <CancelAppointment
+                                    appointmentId={appointment.id}
+                                />
                             )}
                         </TableCell>
                     </TableRow>

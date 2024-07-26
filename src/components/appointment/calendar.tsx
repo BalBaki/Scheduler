@@ -1,12 +1,12 @@
 'use client';
 
-import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import intercetionPlugin from '@fullcalendar/interaction';
+import FullCalendar from '@fullcalendar/react';
 import BookAppoinmentPopup from './book-appointment-popup';
-import type { Appointment } from '@prisma/client';
-import type { UserWithoutPassword } from '@/types';
 import { useLocale } from '@/hooks/use-locale';
+import type { UserWithoutPassword } from '@/types';
+import type { Appointment } from '@prisma/client';
 
 type AppointmentCalendarProps = {
     user: UserWithoutPassword & {
@@ -14,7 +14,9 @@ type AppointmentCalendarProps = {
     };
 };
 
-export default function AppointmentCalendar({ user }: AppointmentCalendarProps) {
+export default function AppointmentCalendar({
+    user,
+}: AppointmentCalendarProps) {
     const locale = useLocale();
 
     return (

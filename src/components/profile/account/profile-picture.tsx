@@ -2,14 +2,14 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { CgProfile } from 'react-icons/cg';
-import { toast } from 'react-toastify';
-import { updateProfilePicture } from '@/actions/update-profile-picture';
-import { useSession } from 'next-auth/react';
-import { ImSpinner6 } from 'react-icons/im';
 import { useMutation } from '@tanstack/react-query';
-import { Button } from '../../ui/button';
+import { useSession } from 'next-auth/react';
+import { CgProfile } from 'react-icons/cg';
+import { ImSpinner6 } from 'react-icons/im';
+import { toast } from 'react-toastify';
 import ImageCrop from './image-crop';
+import { updateProfilePicture } from '@/actions/update-profile-picture';
+import { Button } from '../../ui/button';
 
 export default function ProfilePicture() {
     const { data: session, update: updateSession } = useSession();
@@ -33,7 +33,9 @@ export default function ProfilePicture() {
             });
         },
     });
-    const handlePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePictureChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
         if (!event.target.files || event.target.files.length < 1) return;
 
         setImage(event.target.files[0]);
@@ -47,25 +49,27 @@ export default function ProfilePicture() {
     }, [image]);
 
     return (
-        <div className="max-w-96 flex flex-col justify-center gap-y-1">
+        <div className="flex max-w-96 flex-col justify-center gap-y-1">
             <div className="flex flex-col items-center justify-center">
                 <label htmlFor={isPending ? '' : 'profilePicture'}>
-                    <div className="relative size-[200px]  overflow-hidden">
+                    <div className="relative size-[200px] overflow-hidden">
                         {image || session?.user.imageUrl ? (
                             <Image
                                 src={
                                     image || croppedImage
-                                        ? URL.createObjectURL((croppedImage || image) as Blob)
+                                        ? URL.createObjectURL(
+                                              (croppedImage || image) as Blob,
+                                          )
                                         : session?.user.imageUrl || ''
                                 }
                                 alt="profile picture"
                                 fill
                                 sizes="10rem, 10rem"
-                                className="rounded-full aspect-square"
+                                className="aspect-square rounded-full"
                                 priority={true}
                             />
                         ) : (
-                            <CgProfile className="w-full h-full" />
+                            <CgProfile className="h-full w-full" />
                         )}
                     </div>
                 </label>
@@ -78,8 +82,12 @@ export default function ProfilePicture() {
                     className="hidden"
                 />
                 {image && (
-                    <div className="flex items-center gap-x-1 mt-2">
-                        <ImageCrop imageUrl={imageUrl} setCroppedImage={setCroppedImage} disabled={isPending} />
+                    <div className="mt-2 flex items-center gap-x-1">
+                        <ImageCrop
+                            imageUrl={imageUrl}
+                            setCroppedImage={setCroppedImage}
+                            disabled={isPending}
+                        />
                         <Button
                             disabled={isPending}
                             className="w-16"
@@ -89,12 +97,19 @@ export default function ProfilePicture() {
 
                                 const formData = new FormData();
 
-                                formData.append('profilePicture', croppedImage || image);
+                                formData.append(
+                                    'profilePicture',
+                                    croppedImage || image,
+                                );
 
                                 uploadPicture(formData);
                             }}
                         >
-                            {isPending ? <ImSpinner6 className="w-full h-full animate-spin" /> : 'Save'}
+                            {isPending ? (
+                                <ImSpinner6 className="h-full w-full animate-spin" />
+                            ) : (
+                                'Save'
+                            )}
                         </Button>
                         <Button
                             disabled={isPending}

@@ -1,10 +1,10 @@
-import db from '@/db';
-import { prismaExclude } from '@/lib/prisma-exclude';
-import { ITEM_COUNT_PER_PAGE } from '@/lib/constants';
+import ApproveAll from '@/components/dashboard/approve/approve-all';
 import ApprovePagination from '@/components/dashboard/approve/approve-pagination';
 import SearchUser from '@/components/dashboard/approve/search-user';
 import UserList from '@/components/dashboard/approve/user-list';
-import ApproveAll from '@/components/dashboard/approve/approve-all';
+import db from '@/db';
+import { ITEM_COUNT_PER_PAGE } from '@/lib/constants';
+import { prismaExclude } from '@/lib/prisma-exclude';
 
 type ApprovePageProps = {
     searchParams: {
@@ -20,7 +20,9 @@ export default async function ApprovePage({ searchParams }: ApprovePageProps) {
             NOT: {
                 status: 'APPROVED',
             },
-            ...(searchParams.term && { email: { contains: searchParams.term.toString() } }),
+            ...(searchParams.term && {
+                email: { contains: searchParams.term.toString() },
+            }),
         },
         select: prismaExclude('User', ['password']),
         orderBy: {
@@ -32,7 +34,7 @@ export default async function ApprovePage({ searchParams }: ApprovePageProps) {
 
     return (
         <div className="mt-2">
-            <div className="flex justify-between flex-wrap max-sm:flex-col">
+            <div className="flex flex-wrap justify-between max-sm:flex-col">
                 <SearchUser term={searchParams.term} />
                 <ApproveAll />
             </div>

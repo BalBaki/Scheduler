@@ -1,12 +1,29 @@
-import languages from '@/languages.json';
 import { useFormContext } from 'react-hook-form';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import type { UserDetailForm } from '@/types';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { FaCheck } from 'react-icons/fa';
+import { Button } from '@/components/ui/button';
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from '@/components/ui/command';
+import {
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
+import languages from '@/languages.json';
+import { cn } from '@/lib/utils';
+import type { UserDetailForm } from '@/types';
 
 export default function Languages() {
     const form = useFormContext<UserDetailForm>();
@@ -26,7 +43,7 @@ export default function Languages() {
                                     role="combobox"
                                     className={cn(
                                         'w-[200px] justify-between',
-                                        !field.value && 'text-muted-foreground'
+                                        !field.value && 'text-muted-foreground',
                                     )}
                                 >
                                     Select language
@@ -35,7 +52,10 @@ export default function Languages() {
                         </PopoverTrigger>
                         <PopoverContent className="w-[200px] p-0" side="bottom">
                             <Command>
-                                <CommandInput placeholder="Search language..." className="h-9" />
+                                <CommandInput
+                                    placeholder="Search language..."
+                                    className="h-9"
+                                />
                                 <CommandEmpty>No language found.</CommandEmpty>
                                 <CommandGroup>
                                     <CommandList>
@@ -46,17 +66,34 @@ export default function Languages() {
                                                 onSelect={() => {
                                                     form.setValue(
                                                         'languages',
-                                                        field.value?.includes(code)
-                                                            ? field.value.filter((value) => value !== code)
-                                                            : [...(field.value || []), code],
-                                                        { shouldDirty: true }
+                                                        field.value?.includes(
+                                                            code,
+                                                        )
+                                                            ? field.value.filter(
+                                                                  (value) =>
+                                                                      value !==
+                                                                      code,
+                                                              )
+                                                            : [
+                                                                  ...(field.value ||
+                                                                      []),
+                                                                  code,
+                                                              ],
+                                                        { shouldDirty: true },
                                                     );
                                                 }}
                                             >
-                                                <div className="text-sm font-normal flex items-center w-full">
+                                                <div className="flex w-full items-center text-sm font-normal">
                                                     {name}
-                                                    {field.value?.some((value) => value === code) && (
-                                                        <FaCheck className={'ml-auto h-4 w-4'} />
+                                                    {field.value?.some(
+                                                        (value) =>
+                                                            value === code,
+                                                    ) && (
+                                                        <FaCheck
+                                                            className={
+                                                                'ml-auto h-4 w-4'
+                                                            }
+                                                        />
                                                     )}
                                                 </div>
                                             </CommandItem>

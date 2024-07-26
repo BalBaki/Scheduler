@@ -1,9 +1,10 @@
-import NextAuth, { type DefaultSession } from 'next-auth';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import db from './db';
-import Credentials from '@auth/core/providers/credentials';
-import { v4 as randomUUID } from 'uuid';
 import { encode as encodeParam } from '@auth/core/jwt';
+import Credentials from '@auth/core/providers/credentials';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import NextAuth from 'next-auth';
+import { v4 as randomUUID } from 'uuid';
+import db from './db';
+import type { DefaultSession } from 'next-auth';
 import type { UserWithoutPassword } from './types';
 
 declare module 'next-auth' {
@@ -52,7 +53,6 @@ export const {
                     userId: user.id,
                     expires: new Date(Date.now() + MAX_TOKEN_AGE * 1000),
                 };
-
                 const session = currentSession
                     ? await db.session.update({
                           where: {

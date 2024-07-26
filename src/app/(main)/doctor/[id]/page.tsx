@@ -23,7 +23,7 @@ export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
 
     if (!user || user.role !== 'DOCTOR')
         return (
-            <div className="h-screen flex justify-center items-center text-red-500 text-4xl">
+            <div className="flex h-screen items-center justify-center text-4xl text-red-500">
                 This User is not Doctor..!
             </div>
         );

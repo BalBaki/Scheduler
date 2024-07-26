@@ -2,7 +2,6 @@ import {
     Pagination,
     PaginationContent,
     PaginationItem,
-    PaginationLink,
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination';
@@ -17,13 +16,18 @@ type ApprovePaginationProps = {
     };
 };
 
-export default async function ApprovePagination({ page, searchParams }: ApprovePaginationProps) {
+export default async function ApprovePagination({
+    page,
+    searchParams,
+}: ApprovePaginationProps) {
     const userCount = await db.user.count({
         where: {
             NOT: {
                 status: 'APPROVED',
             },
-            ...(searchParams.term && { email: { contains: searchParams.term.toString() } }),
+            ...(searchParams.term && {
+                email: { contains: searchParams.term.toString() },
+            }),
         },
     });
     const lastPage = Math.ceil(userCount / ITEM_COUNT_PER_PAGE);
@@ -34,7 +38,7 @@ export default async function ApprovePagination({ page, searchParams }: ApproveP
                 <PaginationItem>
                     {page > 1 && (
                         <PaginationPrevious
-                            className="border-2 border-gray-400 w-28"
+                            className="w-28 border-2 border-gray-400"
                             href={{
                                 pathname: '/dashboard/approve',
                                 query: {
@@ -55,7 +59,7 @@ export default async function ApprovePagination({ page, searchParams }: ApproveP
                                     page: page + 1,
                                 },
                             }}
-                            className="border-2 border-gray-400 w-28"
+                            className="w-28 border-2 border-gray-400"
                         />
                     )}
                 </PaginationItem>

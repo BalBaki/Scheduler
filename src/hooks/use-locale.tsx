@@ -6,7 +6,8 @@ export const useLocale = () => {
     useEffect(() => {
         if (!navigator) return;
 
-        const language = (navigator.languages || [])[0] || navigator.language || '';
+        const language =
+            (navigator.languages || [])[0] || navigator.language || '';
 
         language && setLocale(language);
     }, []);

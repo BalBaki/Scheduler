@@ -1,18 +1,31 @@
 'use client';
 
+import Link from 'next/link';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ImSpinner6 } from 'react-icons/im';
 import { signUp } from '@/actions/sign-up';
-import type { SignUpForm } from '@/types';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { signUpSchema } from '@/schemas';
-import { useMutation } from '@tanstack/react-query';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
 import FormValidationError from '../form-validation-error';
-import Link from 'next/link';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import type { SignUpForm } from '@/types';
 
 export default function SignUp() {
     const form = useForm<SignUpForm>({
@@ -42,7 +55,7 @@ export default function SignUp() {
     const onSubmit: SubmitHandler<SignUpForm> = (data) => mutate(data);
     const handlePasswordChange = (
         event: React.ChangeEvent<HTMLInputElement>,
-        formChange: (...event: any[]) => void
+        formChange: (...event: any[]) => void,
     ) => {
         const {
             formState: {
@@ -53,9 +66,15 @@ export default function SignUp() {
             clearErrors,
         } = form;
 
-        if (isConfirmPasswordDirty && (!confirmPasswordError || confirmPasswordError?.type === 'custom')) {
+        if (
+            isConfirmPasswordDirty &&
+            (!confirmPasswordError || confirmPasswordError?.type === 'custom')
+        ) {
             if (event.target.value !== form.getValues('confirmPassword')) {
-                setError('confirmPassword', { type: 'custom', message: "Passwords don't match" });
+                setError('confirmPassword', {
+                    type: 'custom',
+                    message: "Passwords don't match",
+                });
             } else {
                 clearErrors('confirmPassword');
             }
@@ -65,14 +84,18 @@ export default function SignUp() {
     };
 
     return (
-        <div className="flex justify-center h-full">
+        <div className="flex h-full justify-center">
             <div className="flex-1 bg-register bg-cover max-md:hidden"></div>
-            <div className="flex flex-col items-center w-1/2 max-w-[35rem] my-auto px-14 py-2 max-md:w-full max-md:px-[10%] max-md:max-w-full">
-                <h1 id="signUpForm" className="text-3xl mb-6">
+            <div className="my-auto flex w-1/2 max-w-[35rem] flex-col items-center px-14 py-2 max-md:w-full max-md:max-w-full max-md:px-[10%]">
+                <h1 id="signUpForm" className="mb-6 text-3xl">
                     Sign Up to continue
                 </h1>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} aria-labelledby="signUpForm" className="w-full">
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        aria-labelledby="signUpForm"
+                        className="w-full"
+                    >
                         <FormField
                             control={form.control}
                             name="email"
@@ -83,7 +106,11 @@ export default function SignUp() {
                                         <Input type="email" {...field} />
                                     </FormControl>
                                     <FormMessage />
-                                    {result?.errors?.email && <FormValidationError errors={result.errors.email} />}
+                                    {result?.errors?.email && (
+                                        <FormValidationError
+                                            errors={result.errors.email}
+                                        />
+                                    )}
                                 </FormItem>
                             )}
                         />
@@ -97,12 +124,19 @@ export default function SignUp() {
                                         <Input
                                             type="password"
                                             {...field}
-                                            onChange={(e) => handlePasswordChange(e, field.onChange)}
+                                            onChange={(e) =>
+                                                handlePasswordChange(
+                                                    e,
+                                                    field.onChange,
+                                                )
+                                            }
                                         />
                                     </FormControl>
                                     <FormMessage />
                                     {result?.errors?.password && (
-                                        <FormValidationError errors={result.errors.password} />
+                                        <FormValidationError
+                                            errors={result.errors.password}
+                                        />
                                     )}
                                 </FormItem>
                             )}
@@ -118,7 +152,11 @@ export default function SignUp() {
                                     </FormControl>
                                     <FormMessage />
                                     {result?.errors?.confirmPassword && (
-                                        <FormValidationError errors={result.errors.confirmPassword} />
+                                        <FormValidationError
+                                            errors={
+                                                result.errors.confirmPassword
+                                            }
+                                        />
                                     )}
                                 </FormItem>
                             )}
@@ -133,7 +171,11 @@ export default function SignUp() {
                                         <Input type="text" {...field} />
                                     </FormControl>
                                     <FormMessage />
-                                    {result?.errors?.name && <FormValidationError errors={result.errors.name} />}
+                                    {result?.errors?.name && (
+                                        <FormValidationError
+                                            errors={result.errors.name}
+                                        />
+                                    )}
                                 </FormItem>
                             )}
                         />
@@ -147,7 +189,11 @@ export default function SignUp() {
                                         <Input type="text" {...field} />
                                     </FormControl>
                                     <FormMessage />
-                                    {result?.errors?.surname && <FormValidationError errors={result.errors.surname} />}
+                                    {result?.errors?.surname && (
+                                        <FormValidationError
+                                            errors={result.errors.surname}
+                                        />
+                                    )}
                                 </FormItem>
                             )}
                         />
@@ -162,7 +208,9 @@ export default function SignUp() {
                                     </FormControl>
                                     <FormMessage />
                                     {result?.errors?.phoneNumber && (
-                                        <FormValidationError errors={result.errors.phoneNumber} />
+                                        <FormValidationError
+                                            errors={result.errors.phoneNumber}
+                                        />
                                     )}
                                 </FormItem>
                             )}
@@ -183,31 +231,50 @@ export default function SignUp() {
                                             ref={(ref) => {
                                                 if (!ref) return;
 
-                                                ref.ontouchstart = (e) => e.preventDefault();
+                                                ref.ontouchstart = (e) =>
+                                                    e.preventDefault();
                                             }}
                                         >
-                                            <SelectItem value="PATIENT">Patient</SelectItem>
-                                            <SelectItem value="DOCTOR">Doctor</SelectItem>
+                                            <SelectItem value="PATIENT">
+                                                Patient
+                                            </SelectItem>
+                                            <SelectItem value="DOCTOR">
+                                                Doctor
+                                            </SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
-                                    {result?.errors?.role && <FormValidationError errors={result.errors.role} />}
+                                    {result?.errors?.role && (
+                                        <FormValidationError
+                                            errors={result.errors.role}
+                                        />
+                                    )}
                                 </FormItem>
                             )}
                         />
                         <Button
                             type="submit"
-                            className="w-full h-12 rounded-md border-black mt-4 bg-[#6675df] uppercase text-xs tracking-widest"
+                            className="mt-4 h-12 w-full rounded-md border-black bg-[#6675df] text-xs uppercase tracking-widest"
                             disabled={isPending || !form.formState.isValid}
+                            aria-label={isPending ? 'Registering' : 'Register'}
                         >
-                            {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Register'}
+                            {isPending ? (
+                                <ImSpinner6 className="size-6 animate-spin" />
+                            ) : (
+                                'Register'
+                            )}
                         </Button>
                     </form>
                 </Form>
-                {result?.errors?._form && <FormValidationError className="mt-3" errors={result.errors._form} />}
+                {result?.errors?._form && (
+                    <FormValidationError
+                        className="mt-3"
+                        errors={result.errors._form}
+                    />
+                )}
                 <div className="mt-3 text-center">
                     Do you have an account?
-                    <Link href="/login" className="text-[#6675df] ml-1">
+                    <Link href="/login" className="ml-1 text-[#6675df]">
                         Sign In
                     </Link>
                 </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GiCancel } from 'react-icons/gi';
 import { ImSpinner6 } from 'react-icons/im';
 import { toast } from 'react-toastify';
@@ -14,18 +15,20 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type CancelAppointmentProps = {
     appointmentId: string;
 };
 
-export default function CancelAppointment({ appointmentId }: CancelAppointmentProps) {
+export default function CancelAppointment({
+    appointmentId,
+}: CancelAppointmentProps) {
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: cancelAppointment,
         onSuccess: ({ cancel, error }) => {
-            cancel && queryClient.invalidateQueries({ queryKey: ['appointments'] });
+            cancel &&
+                queryClient.invalidateQueries({ queryKey: ['appointments'] });
 
             toast(cancel ? 'Successfully Cancelled' : error, {
                 type: cancel ? 'success' : 'error',
@@ -39,7 +42,10 @@ export default function CancelAppointment({ appointmentId }: CancelAppointmentPr
 
     return (
         <AlertDialog>
-            <AlertDialogTrigger disabled={isPending} aria-label="Cancel appointment">
+            <AlertDialogTrigger
+                disabled={isPending}
+                aria-label="Cancel appointment"
+            >
                 {isPending ? (
                     <ImSpinner6 className="size-6 animate-spin" />
                 ) : (
@@ -48,16 +54,24 @@ export default function CancelAppointment({ appointmentId }: CancelAppointmentPr
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure you want to cancel the appointment?</AlertDialogTitle>
+                    <AlertDialogTitle>
+                        Are you sure you want to cancel the appointment?
+                    </AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel aria-label="Cancel process">Cancel</AlertDialogCancel>
+                    <AlertDialogCancel aria-label="Cancel process">
+                        Cancel
+                    </AlertDialogCancel>
                     <AlertDialogAction
                         aria-label="Confrim cancel appointment"
                         disabled={isPending}
                         onClick={handleContinueClick}
                     >
-                        {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Continue'}
+                        {isPending ? (
+                            <ImSpinner6 className="size-6 animate-spin" />
+                        ) : (
+                            'Continue'
+                        )}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

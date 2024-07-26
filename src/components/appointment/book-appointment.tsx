@@ -1,5 +1,9 @@
 'use client';
 
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ImSpinner6 } from 'react-icons/im';
+import { toast } from 'react-toastify';
+import { bookAppointment } from '@/actions/book-appointment';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -11,10 +15,6 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { bookAppointment } from '@/actions/book-appointment';
-import { ImSpinner6 } from 'react-icons/im';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 
 type BookAppoinmentProps = {
     id: string;
@@ -25,7 +25,8 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
     const { mutate, isPending } = useMutation({
         mutationFn: bookAppointment,
         onSuccess({ book, error }) {
-            book && queryClient.invalidateQueries({ queryKey: ['appointments'] });
+            book &&
+                queryClient.invalidateQueries({ queryKey: ['appointments'] });
 
             toast(book ? 'Successfully Booked' : error, {
                 type: book ? 'success' : 'error',
@@ -40,25 +41,39 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
     return (
         <AlertDialog>
             <AlertDialogTrigger
-                className="flex justify-center items-center w-20 h-10 bg-green-500 rounded-md text-white"
+                className="flex h-10 w-20 items-center justify-center rounded-md bg-green-500 text-white"
                 disabled={isPending}
                 aria-label="Confirmation of book appointment"
             >
-                {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Book'}
+                {isPending ? (
+                    <ImSpinner6 className="size-6 animate-spin" />
+                ) : (
+                    'Book'
+                )}
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription>Book Appointment...</AlertDialogDescription>
+                    <AlertDialogTitle>
+                        Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                        Book Appointment...
+                    </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel aria-label="Cancel book appointment">Cancel</AlertDialogCancel>
+                    <AlertDialogCancel aria-label="Cancel book appointment">
+                        Cancel
+                    </AlertDialogCancel>
                     <AlertDialogAction
                         onClick={handleContinueClick}
                         disabled={isPending}
                         aria-label="Confirm book appointment"
                     >
-                        {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Confirm'}
+                        {isPending ? (
+                            <ImSpinner6 className="size-6 animate-spin" />
+                        ) : (
+                            'Confirm'
+                        )}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

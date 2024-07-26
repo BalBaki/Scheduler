@@ -1,14 +1,15 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import intercetionPlugin, { type DateClickArg } from '@fullcalendar/interaction';
-import type { Appointment } from '@prisma/client';
+import intercetionPlugin from '@fullcalendar/interaction';
+import FullCalendar from '@fullcalendar/react';
+import { useLocale } from '@/hooks/use-locale';
 import AddAppointmentPopup from '../doctor/add-appointment-popup';
 import EditAppointmentPopup from '../doctor/edit-appointment-popup';
-import { UserWithoutPassword } from '@/types';
-import { useLocale } from '@/hooks/use-locale';
+import type { UserWithoutPassword } from '@/types';
+import type { DateClickArg } from '@fullcalendar/interaction';
+import type { Appointment } from '@prisma/client';
 
 type DoctorCalendarProps = {
     appointments: (Appointment & {
@@ -51,7 +52,11 @@ export default function DoctorCalendar({ appointments }: DoctorCalendarProps) {
             />
             <div className="relative">
                 {isShowDialog && (
-                    <AddAppointmentPopup date={selectedDate} show={isShowDialog} setShow={setIsShowDialog} />
+                    <AddAppointmentPopup
+                        date={selectedDate}
+                        show={isShowDialog}
+                        setShow={setIsShowDialog}
+                    />
                 )}
             </div>
         </div>

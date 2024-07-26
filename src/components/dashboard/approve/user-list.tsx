@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import StatusButtons from './status-buttons';
 import {
     Table,
     TableBody,
@@ -11,7 +12,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import StatusButtons from './status-buttons';
 import type { UserWithoutPassword } from '@/types';
 
 type UserListProps = {

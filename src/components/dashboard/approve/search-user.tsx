@@ -1,16 +1,16 @@
 'use client';
 
-import { ImSpinner6 } from 'react-icons/im';
-import { Input } from '@/components/ui/input';
-import { searchUser } from '@/actions/search-user';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import type { UserSearchForm } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { userSearchSchema } from '@/schemas';
+import { useMutation } from '@tanstack/react-query';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { ImSpinner6 } from 'react-icons/im';
+import { searchUser } from '@/actions/search-user';
+import FormValidationError from '@/components/form-validation-error';
 import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem } from '@/components/ui/form';
-import { useMutation } from '@tanstack/react-query';
-import FormValidationError from '@/components/form-validation-error';
+import { Input } from '@/components/ui/input';
+import { userSearchSchema } from '@/schemas';
+import type { UserSearchForm } from '@/types';
 
 type SearchUserhProps = {
     term: string | string[] | undefined;
@@ -36,20 +36,39 @@ export default function SearchUser({ term }: SearchUserhProps) {
     return (
         <div className="w-full sm:max-w-md">
             <Form {...form}>
-                <form className="flex items-start gap-x-1 max-sm:block" onSubmit={form.handleSubmit(onSubmit)}>
+                <form
+                    className="flex items-start gap-x-1 max-sm:block"
+                    onSubmit={form.handleSubmit(onSubmit)}
+                >
                     <FormField
                         control={form.control}
                         name="term"
                         render={({ field }) => (
                             <FormItem>
-                                <Input {...field} className="w-full sm:w-80" placeholder="Search By Email..." />
-                                {result?.errors?.term && <FormValidationError errors={result.errors.term} />}
+                                <Input
+                                    {...field}
+                                    className="w-full sm:w-80"
+                                    placeholder="Search By Email..."
+                                />
+                                {result?.errors?.term && (
+                                    <FormValidationError
+                                        errors={result.errors.term}
+                                    />
+                                )}
                             </FormItem>
                         )}
                     />
-                    <div className="flex justify-center items-center max-sm:mt-1">
-                        <Button type="submit" disabled={isPending || !form.formState.isValid} className="w-20">
-                            {isPending ? <ImSpinner6 className="size-full animate-spin" /> : 'Search'}
+                    <div className="flex items-center justify-center max-sm:mt-1">
+                        <Button
+                            type="submit"
+                            disabled={isPending || !form.formState.isValid}
+                            className="w-20"
+                        >
+                            {isPending ? (
+                                <ImSpinner6 className="size-full animate-spin" />
+                            ) : (
+                                'Search'
+                            )}
                         </Button>
                     </div>
                 </form>

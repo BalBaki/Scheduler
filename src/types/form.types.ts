@@ -1,8 +1,11 @@
 import * as z from 'zod';
-import { addAppointmentSchema, userSearchSchema } from '@/schemas';
-import { signInSchema } from '@/schemas';
-import { signUpSchema } from '@/schemas';
-import { userDetail } from '@/schemas';
+import {
+    addAppointmentSchema,
+    signInSchema,
+    signUpSchema,
+    userDetail,
+    userSearchSchema,
+} from '@/schemas';
 
 export type AddAppointmentForm = z.infer<typeof addAppointmentSchema>;
 export type SignInForm = z.infer<typeof signInSchema>;

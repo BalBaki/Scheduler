@@ -1,18 +1,26 @@
 'use client';
 
-import EditableText from '../../editable-text';
-import { Textarea } from '../../ui/textarea';
-import { updateUserDetail } from '@/actions/update-user-detail';
-import { Button } from '@/components/ui/button';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { UserDetailForm } from '@/types';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { userDetail } from '@/schemas';
-import { useSession } from 'next-auth/react';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Languages from './languages';
+import { updateUserDetail } from '@/actions/update-user-detail';
+import { Button } from '@/components/ui/button';
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
+import { userDetail } from '@/schemas';
+import { UserDetailForm } from '@/types';
+import EditableText from '../../editable-text';
+import { Textarea } from '../../ui/textarea';
 
 export default function Details() {
     const { data: session, update: updateSession } = useSession();
@@ -44,9 +52,13 @@ export default function Details() {
                             <FormLabel>Description</FormLabel>
                             <FormControl>
                                 <EditableText
-                                    text={{ main: form.getValues('description') }}
+                                    text={{
+                                        main: form.getValues('description'),
+                                    }}
                                     schema={{ text: 'px-3 py-2 text-sm' }}
-                                    cancel={() => form.resetField('description')}
+                                    cancel={() =>
+                                        form.resetField('description')
+                                    }
                                 >
                                     <Textarea
                                         {...field}
@@ -65,10 +77,16 @@ export default function Details() {
                 <Button
                     type="submit"
                     className="bg-green-500"
-                    disabled={isPending || !form.formState.isValid || !form.formState.isDirty}
+                    disabled={
+                        isPending ||
+                        !form.formState.isValid ||
+                        !form.formState.isDirty
+                    }
                     aria-label="Save user details"
                 >
-                    {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {isPending && (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     Save
                 </Button>
             </form>

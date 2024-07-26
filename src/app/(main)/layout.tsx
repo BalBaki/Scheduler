@@ -1,12 +1,12 @@
 import '../globals.css';
 import 'react-toastify/ReactToastify.css';
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Providers from '../providers';
-import Header from '@/components/header';
 import { ToastContainer } from 'react-toastify';
+import Header from '@/components/header';
 import HomeIcon from '@/components/home-icon';
 import UserStatus from '@/components/user-status';
+import Providers from '../providers';
+import type { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });
 

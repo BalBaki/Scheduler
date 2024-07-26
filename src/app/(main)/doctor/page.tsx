@@ -1,7 +1,7 @@
-import db from '@/db';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoPersonCircle } from 'react-icons/io5';
+import db from '@/db';
 
 export default async function Doctor() {
     const doctors = await db.user.findMany({
@@ -14,7 +14,7 @@ export default async function Doctor() {
         return (
             <div key={doctor.id}>
                 <Link href={`/doctor/${doctor.id}`}>
-                    <div className="grid grid-cols-[1fr_4fr] border-2 border-black px-2 py-1 gap-x-2 items-center grid-r">
+                    <div className="grid-r grid grid-cols-[1fr_4fr] items-center gap-x-2 border-2 border-black px-2 py-1">
                         <div className="relative h-16">
                             {doctor.imageUrl ? (
                                 <Image
@@ -25,7 +25,7 @@ export default async function Doctor() {
                                     sizes="100%, 100%"
                                 />
                             ) : (
-                                <IoPersonCircle className="w-full h-full" />
+                                <IoPersonCircle className="h-full w-full" />
                             )}
                         </div>
                         <div className="truncate">
@@ -38,5 +38,9 @@ export default async function Doctor() {
         );
     });
 
-    return <div className="grid gap-2 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] mt-2">{renderedDoctors}</div>;
+    return (
+        <div className="mt-2 grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-2">
+            {renderedDoctors}
+        </div>
+    );
 }

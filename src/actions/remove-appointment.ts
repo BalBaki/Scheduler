@@ -1,11 +1,13 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import db from '@/db';
 import { auth } from '@/auth';
+import db from '@/db';
 import type { ResultWithError } from '@/types';
 
-export const removeAppointment = async (appointmentId: string): Promise<ResultWithError<'remove'>> => {
+export const removeAppointment = async (
+    appointmentId: string,
+): Promise<ResultWithError<'remove'>> => {
     try {
         const session = await auth();
         const appointment = await db.appointment.findFirst({
@@ -15,11 +17,19 @@ export const removeAppointment = async (appointmentId: string): Promise<ResultWi
             },
         });
 
-        if (!appointment) return { remove: false, error: 'Not exists appointment..!' };
-        if (!session || session.user.status !== 'APPROVED' || appointment.doctorId !== session.user.id)
+        if (!appointment)
+            return { remove: false, error: 'Not exists appointment..!' };
+        if (
+            !session ||
+            session.user.status !== 'APPROVED' ||
+            appointment.doctorId !== session.user.id
+        )
             return { remove: false, error: 'You have no authorization..!' };
         if (appointment.patientId)
-            return { remove: false, error: 'You cannot remove this event. It booked by a patient..!' };
+            return {
+                remove: false,
+                error: 'You cannot remove this event. It booked by a patient..!',
+            };
 
         await db.appointment.delete({
             where: {

@@ -1,11 +1,11 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
 import DoctorCalendar from '@/components/profile/doctor/calendar';
 import AppointmentList from '@/components/profile/patient/appointment-list';
 import { getAppointments } from '@/queries/get-appointment';
 import { Skeleton } from '../ui/skeleton';
-import { useSession } from 'next-auth/react';
 
 export default function Appointments() {
     const { data: session } = useSession();
@@ -21,7 +21,7 @@ export default function Appointments() {
 
     if (isPending)
         return (
-            <div className="max-w-[55rem] space-y-4 mt-3">
+            <div className="mt-3 max-w-[55rem] space-y-4">
                 <Skeleton className="h-12 w-full rounded-md" />
                 <Skeleton className="h-12 w-full rounded-md" />
                 <Skeleton className="h-12 w-full rounded-md" />

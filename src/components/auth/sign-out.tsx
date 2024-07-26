@@ -1,10 +1,10 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import { signout } from '@/actions/sign-out';
-import { useEffect } from 'react';
-import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
+import { Button } from '../ui/button';
 import type { ButtonProps } from '../ui/button';
 
 export default function SignOut({ type, className, ...rest }: ButtonProps) {
@@ -16,7 +16,11 @@ export default function SignOut({ type, className, ...rest }: ButtonProps) {
 
     return (
         <form action={dispatch} className="inline">
-            <Button className={cn('w-20 border-black', className)} aria-label="Sign Out" {...rest}>
+            <Button
+                className={cn('w-20 border-black', className)}
+                aria-label="Sign Out"
+                {...rest}
+            >
                 Sign Out
             </Button>
         </form>

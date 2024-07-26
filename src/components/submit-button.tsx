@@ -1,8 +1,8 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
 import { useFormStatus } from 'react-dom';
 import { cn } from '@/lib/utils';
+import type { PropsWithChildren } from 'react';
 
 type SubmitButtonProps = {
     pendingText?: string | React.ReactNode;
@@ -22,7 +22,11 @@ export default function SubmitButton({
         <button
             type="submit"
             disabled={disabled || pending}
-            className={cn('flex justify-center items-center', pending && 'cursor-not-allowed', className)}
+            className={cn(
+                'flex items-center justify-center',
+                pending && 'cursor-not-allowed',
+                className,
+            )}
             aria-label="Submit form"
             {...rest}
         >

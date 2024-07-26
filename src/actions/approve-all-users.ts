@@ -1,11 +1,13 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
 import type { ResultWithError } from '@/types';
-import { revalidatePath } from 'next/cache';
 
-export const approveAllUsers = async (): Promise<ResultWithError<'approve'>> => {
+export const approveAllUsers = async (): Promise<
+    ResultWithError<'approve'>
+> => {
     try {
         const session = await auth();
 

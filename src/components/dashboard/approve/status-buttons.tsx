@@ -32,11 +32,11 @@
 
 'use client';
 
+import { useTransition } from 'react';
 import { FcApproval, FcCancel } from 'react-icons/fc';
 import { ImSpinner6 } from 'react-icons/im';
 import { updateUserStatus } from '@/actions/update-user-status';
 import type { UserWithoutPassword } from '@/types';
-import { useTransition } from 'react';
 
 type StatusButtonsProps = {
     user: UserWithoutPassword;
@@ -57,14 +57,21 @@ export default function StatusButtons({ user }: StatusButtonsProps) {
                 disabled={isPending}
                 aria-label="Approve user"
             >
-                {isPending ? <ImSpinner6 className="size-full animate-spin" /> : <FcApproval className="size-full" />}
+                {isPending ? (
+                    <ImSpinner6 className="size-full animate-spin" />
+                ) : (
+                    <FcApproval className="size-full" />
+                )}
             </button>
             {user.status !== 'DECLINED' && (
                 <button
                     className="size-6"
                     onClick={() =>
                         startTransition(() => {
-                            updateUserStatus({ id: user.id, status: 'DECLINED' });
+                            updateUserStatus({
+                                id: user.id,
+                                status: 'DECLINED',
+                            });
                         })
                     }
                     disabled={isPending}

@@ -14,7 +14,7 @@ const routes = [
 export default function Tabs() {
     return (
         <nav
-            className="flex flex-col min-w-48 h-min border-2 border-black rounded-md px-2 divide-y divide-black"
+            className="flex h-min min-w-48 flex-col divide-y divide-black rounded-md border-2 border-black px-2"
             role="navigation"
             aria-label="Profile page's tab navigation"
         >

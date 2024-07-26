@@ -1,8 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { approveAllUsers } from '@/actions/approve-all-users';
+import { useMutation } from '@tanstack/react-query';
 import { ImSpinner6 } from 'react-icons/im';
+import { toast } from 'react-toastify';
+import { approveAllUsers } from '@/actions/approve-all-users';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,17 +15,18 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 
 export default function ApproveAll() {
     const router = useRouter();
     const { mutate: approveAll, isPending } = useMutation({
         mutationFn: approveAllUsers,
         onSuccess({ approve, error }) {
-            toast(approve ? 'Successfully approved all waiting users.' : error, {
-                type: approve ? 'success' : 'error',
-            });
+            toast(
+                approve ? 'Successfully approved all waiting users.' : error,
+                {
+                    type: approve ? 'success' : 'error',
+                },
+            );
 
             approve && router.replace('/dashboard/approve');
         },
@@ -32,21 +35,34 @@ export default function ApproveAll() {
     return (
         <AlertDialog>
             <AlertDialogTrigger
-                className="w-28 h-10 border border-black rounded-md text-sm max-sm:w-full max-sm:mt-1"
+                className="h-10 w-28 rounded-md border border-black text-sm max-sm:mt-1 max-sm:w-full"
                 disabled={isPending}
                 aria-label="Approve all waiting users"
             >
-                {isPending ? <ImSpinner6 className="size-full animate-spin py-2" /> : 'Approve All'}
+                {isPending ? (
+                    <ImSpinner6 className="size-full animate-spin py-2" />
+                ) : (
+                    'Approve All'
+                )}
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure to approve all users?</AlertDialogTitle>
+                    <AlertDialogTitle>
+                        Are you sure to approve all users?
+                    </AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isPending} aria-label="Cancel approve">
+                    <AlertDialogCancel
+                        disabled={isPending}
+                        aria-label="Cancel approve"
+                    >
                         Cancel
                     </AlertDialogCancel>
-                    <AlertDialogAction onClick={() => approveAll()} disabled={isPending} aria-label="Confirm approve">
+                    <AlertDialogAction
+                        onClick={() => approveAll()}
+                        disabled={isPending}
+                        aria-label="Confirm approve"
+                    >
                         Approve
                     </AlertDialogAction>
                 </AlertDialogFooter>

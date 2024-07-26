@@ -1,15 +1,22 @@
 'use client';
 
-import type { EventContentArg } from '@fullcalendar/core/index.js';
-import { useSession } from 'next-auth/react';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Label } from '../ui/label';
-import BookAppoinment from './book-appointment';
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import Link from 'next/link';
-import WaitForApprove from '../wait-for-approve';
+import { useSession } from 'next-auth/react';
+import BookAppoinment from './book-appointment';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 import { useLocale } from '@/hooks/use-locale';
-import { DialogDescription } from '@radix-ui/react-dialog';
+import { Label } from '../ui/label';
+import WaitForApprove from '../wait-for-approve';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import type { EventContentArg } from '@fullcalendar/core/index.js';
 
 type BookAppoinmentPopupProps = {
     arg: EventContentArg;
@@ -19,36 +26,31 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
     const { data: session } = useSession();
     const locale = useLocale();
     const { event } = arg;
+    const dateText =
+        event.start && event.end
+            ? `${event.start.toLocaleTimeString(locale, {
+                  hour: '2-digit',
+                  minute: '2-digit',
+              })} : ${event.end.toLocaleTimeString(locale, {
+                  hour: '2-digit',
+                  minute: '2-digit',
+              })}`
+            : event.title;
 
-    if (event.extendedProps.patientId)
-        return (
-            <div>
-                {event.start && event.end
-                    ? `${event.start.toLocaleTimeString(locale, {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                      })} : ${event.end.toLocaleTimeString(locale, {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                      })}`
-                    : event.title}
-            </div>
-        );
+    if (event.extendedProps.patientId) return <div>{dateText}</div>;
 
     return (
         <Dialog>
-            <DialogTrigger className="w-full" aria-label="Open book appointment pop-up">
-                {event.start && event.end
-                    ? `${event.start.toLocaleTimeString(locale, {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                      })} : ${event.end.toLocaleTimeString(locale, {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                      })}`
-                    : event.title}
+            <DialogTrigger
+                className="w-full"
+                aria-label="Open book appointment pop-up"
+            >
+                {dateText}
             </DialogTrigger>
-            <DialogContent className="max-w-[425px]" onOpenAutoFocus={(e) => e.preventDefault()}>
+            <DialogContent
+                className="max-w-[425px]"
+                onOpenAutoFocus={(e) => e.preventDefault()}
+            >
                 {session?.user ? (
                     session.user.status !== 'APPROVED' ? (
                         <>
@@ -59,42 +61,55 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
                         </>
                     ) : (
                         <>
-                            <DialogHeader className="text-left mt-3">
+                            <DialogHeader className="mt-3 text-left">
                                 <VisuallyHidden.Root>
-                                    <DialogTitle>Waiting for approve</DialogTitle>
+                                    <DialogTitle>
+                                        Waiting for approve
+                                    </DialogTitle>
                                 </VisuallyHidden.Root>
                                 <DialogDescription asChild>
                                     <div className="flex flex-col gap-y-2">
                                         <div className="flex flex-col gap-y-1">
                                             <Label>Date:</Label>
-                                            <div className="border-2 rounded-md p-2 text-sm">
-                                                {event.start?.toLocaleDateString(locale, {
-                                                    year: 'numeric',
-                                                    month: 'long',
-                                                    day: 'numeric',
-                                                })}
+                                            <div className="rounded-md border-2 p-2 text-sm">
+                                                {event.start?.toLocaleDateString(
+                                                    locale,
+                                                    {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                    },
+                                                )}
                                             </div>
                                         </div>
                                         <div className="flex flex-col gap-y-1">
                                             <Label>Title:</Label>
-                                            <div className="border-2 rounded-md p-2 text-sm">{event.title}</div>
+                                            <div className="rounded-md border-2 p-2 text-sm">
+                                                {event.title}
+                                            </div>
                                         </div>
                                         <div>
                                             <Label>Start Hour:</Label>
-                                            <div className="border-2 rounded-md p-2 text-sm">
-                                                {event.start?.toLocaleTimeString(locale, {
-                                                    hour: '2-digit',
-                                                    minute: '2-digit',
-                                                })}
+                                            <div className="rounded-md border-2 p-2 text-sm">
+                                                {event.start?.toLocaleTimeString(
+                                                    locale,
+                                                    {
+                                                        hour: '2-digit',
+                                                        minute: '2-digit',
+                                                    },
+                                                )}
                                             </div>
                                         </div>
                                         <div>
                                             <Label>End Hour:</Label>
-                                            <div className="border-2 rounded-md p-2 text-sm">
-                                                {event.end?.toLocaleTimeString(locale, {
-                                                    hour: '2-digit',
-                                                    minute: '2-digit',
-                                                })}
+                                            <div className="rounded-md border-2 p-2 text-sm">
+                                                {event.end?.toLocaleTimeString(
+                                                    locale,
+                                                    {
+                                                        hour: '2-digit',
+                                                        minute: '2-digit',
+                                                    },
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -111,7 +126,7 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
                             <DialogTitle>Login</DialogTitle>
                         </VisuallyHidden.Root>
                         <Link href="/login">
-                            <div className="border-2 rounded-md text-center bg-gray-400 text-white mt-3 py-3">
+                            <div className="mt-3 rounded-md border-2 bg-gray-400 py-3 text-center text-white">
                                 Login
                             </div>
                         </Link>

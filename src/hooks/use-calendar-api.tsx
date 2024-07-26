@@ -1,8 +1,11 @@
-import { useState, useEffect, type MutableRefObject } from 'react';
+import { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
+import type { MutableRefObject } from 'react';
 import type { CalendarApi } from '@fullcalendar/core/index.js';
 
-export const useCalendarApi = (calendarRef: MutableRefObject<FullCalendar | null>) => {
+export const useCalendarApi = (
+    calendarRef: MutableRefObject<FullCalendar | null>,
+) => {
     const [calendarApi, setCalendarApi] = useState<CalendarApi | undefined>();
 
     useEffect(() => {

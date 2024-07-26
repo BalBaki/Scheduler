@@ -1,8 +1,8 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import ProfilePicture from './profile-picture';
 import Details from './details';
+import ProfilePicture from './profile-picture';
 
 export default function Account() {
     const { data: session } = useSession();
@@ -13,7 +13,9 @@ export default function Account() {
         return (
             <div key={key} className="grid grid-cols-[1fr,2fr] text-wrap px-1">
                 <div className="capitalize">{key}</div>
-                <div className="border-l-2 border-l-black pl-1 truncate">{value}</div>
+                <div className="truncate border-l-2 border-l-black pl-1">
+                    {value}
+                </div>
             </div>
         );
     });
@@ -21,7 +23,9 @@ export default function Account() {
     return (
         <div>
             <div className="flex items-center gap-x-2 max-md:flex-col">
-                <div className="max-w-96 border-2 border-black divide-y-2 divide-black">{renderedUser}</div>
+                <div className="max-w-96 divide-y-2 divide-black border-2 border-black">
+                    {renderedUser}
+                </div>
                 <ProfilePicture />
             </div>
             {session.user.role === 'DOCTOR' && (

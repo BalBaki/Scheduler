@@ -1,9 +1,10 @@
 'use client';
 
 import 'react-image-crop/dist/ReactCrop.css';
-import { type Dispatch, type SetStateAction, useEffect, useRef, useState } from 'react';
-import ReactCrop, { type Crop, type PixelCrop, centerCrop, makeAspectCrop } from 'react-image-crop';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -12,8 +13,9 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import type { Dispatch, SetStateAction } from 'react';
+import type { Crop, PixelCrop } from 'react-image-crop';
 
 type ImageCropProps = {
     imageUrl: string;
@@ -21,7 +23,11 @@ type ImageCropProps = {
     disabled?: boolean;
 };
 
-export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: ImageCropProps) {
+export default function ImageCrop({
+    imageUrl,
+    setCroppedImage,
+    disabled,
+}: ImageCropProps) {
     const [crop, setCrop] = useState<Crop>();
     const [isShowDialog, setIsShowDialog] = useState(!!imageUrl);
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
@@ -31,7 +37,11 @@ export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: Image
         imageUrl && setIsShowDialog(true);
     }, [imageUrl]);
 
-    const centerAspectCrop = (mediaWidth: number, mediaHeight: number, aspect: number) =>
+    const centerAspectCrop = (
+        mediaWidth: number,
+        mediaHeight: number,
+        aspect: number,
+    ) =>
         centerCrop(
             makeAspectCrop(
                 {
@@ -40,10 +50,10 @@ export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: Image
                 },
                 aspect,
                 mediaWidth,
-                mediaHeight
+                mediaHeight,
             ),
             mediaWidth,
-            mediaHeight
+            mediaHeight,
         );
 
     const handleCropClick = async () => {
@@ -52,13 +62,26 @@ export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: Image
         const { naturalWidth, naturalHeight, width, height } = imageRef.current;
         const scaleX = naturalWidth / width;
         const scaleY = naturalHeight / height;
-        const offscreen = new OffscreenCanvas(completedCrop.width * scaleX, completedCrop.height * scaleY);
+        const offscreen = new OffscreenCanvas(
+            completedCrop.width * scaleX,
+            completedCrop.height * scaleY,
+        );
         const ctx = offscreen.getContext('2d');
 
         if (!ctx) return;
 
         ctx.translate(-completedCrop.x * scaleX, -completedCrop.y * scaleY);
-        ctx.drawImage(imageRef.current, 0, 0, naturalWidth, naturalHeight, 0, 0, naturalWidth, naturalHeight);
+        ctx.drawImage(
+            imageRef.current,
+            0,
+            0,
+            naturalWidth,
+            naturalHeight,
+            0,
+            0,
+            naturalWidth,
+            naturalHeight,
+        );
 
         const blob = await offscreen.convertToBlob({
             type: 'image/png',
@@ -70,7 +93,9 @@ export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: Image
         file && setCroppedImage(file);
         setIsShowDialog(false);
     };
-    const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const handleImageLoad = (
+        event: React.SyntheticEvent<HTMLImageElement, Event>,
+    ) => {
         const { width, height } = event.currentTarget;
 
         setCrop(centerAspectCrop(width, height, 1));
@@ -79,7 +104,11 @@ export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: Image
     return (
         <Dialog open={isShowDialog} onOpenChange={setIsShowDialog}>
             <DialogTrigger asChild>
-                <Button className="text-center" disabled={disabled} aria-label="Open crop pop-up">
+                <Button
+                    className="text-center"
+                    disabled={disabled}
+                    aria-label="Open crop pop-up"
+                >
                     Crop
                 </Button>
             </DialogTrigger>
@@ -88,7 +117,9 @@ export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: Image
                     <DialogTitle>Crop Image</DialogTitle>
                     <DialogDescription asChild className="text-center">
                         <div>
-                            <VisuallyHidden.Root>Crop Image</VisuallyHidden.Root>
+                            <VisuallyHidden.Root>
+                                Crop Image
+                            </VisuallyHidden.Root>
                             <ReactCrop
                                 crop={crop}
                                 onChange={(c) => setCrop(c)}
@@ -101,7 +132,7 @@ export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: Image
                                         ref={imageRef}
                                         src={imageUrl}
                                         alt="Crop Picture"
-                                        className="object-contain w-60 h-auto"
+                                        className="h-auto w-60 object-contain"
                                         width="0"
                                         height="0"
                                         priority={true}
@@ -110,7 +141,10 @@ export default function ImageCrop({ imageUrl, setCroppedImage, disabled }: Image
                                 </div>
                             </ReactCrop>
                             <div>
-                                <Button aria-label="Complete the cropping" onClick={handleCropClick}>
+                                <Button
+                                    aria-label="Complete the cropping"
+                                    onClick={handleCropClick}
+                                >
                                     Crop
                                 </Button>
                             </div>

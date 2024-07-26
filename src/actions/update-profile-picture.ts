@@ -1,48 +1,59 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
 import { extractImagePublicId } from '@/lib/extract-image-public-id';
 import { profilePictureSchema } from '@/schemas';
 import cloudinary from '@/services/picture-upload-service';
-import { ResultWithError } from '@/types';
 import type { UploadApiResponse } from 'cloudinary';
-import { revalidatePath } from 'next/cache';
+import type { ResultWithError } from '@/types';
 
-export const updateProfilePicture = async (formData: FormData): Promise<ResultWithError<'update'>> => {
+export const updateProfilePicture = async (
+    formData: FormData,
+): Promise<ResultWithError<'update'>> => {
     try {
         const session = await auth();
 
         if (!session || session.user.status !== 'APPROVED')
             return { update: false, error: 'You have no authorization..!' };
 
-        const validatedPicture = profilePictureSchema.safeParse(formData.get('profilePicture'));
+        const validatedPicture = profilePictureSchema.safeParse(
+            formData.get('profilePicture'),
+        );
 
         if (!validatedPicture.success)
-            return { update: false, error: validatedPicture.error.flatten().formErrors.join(' ') };
+            return {
+                update: false,
+                error: validatedPicture.error.flatten().formErrors.join(' '),
+            };
 
         const imageArrayBuffer = await validatedPicture.data.arrayBuffer();
-        const uploadImageResult: UploadApiResponse | undefined = await new Promise((resolve) => {
-            cloudinary.uploader
-                .upload_stream(
-                    {
-                        folder: 'profile',
-                        resource_type: 'image',
-                        filename_override: session.user.id,
-                        use_filename: true,
-                        ...(session.user.imageUrl && {
-                            overwrite: true,
-                            public_id: extractImagePublicId(session.user.imageUrl),
-                        }),
-                    },
-                    (error, uploadResult) => {
-                        if (error) return { update: false, error: error.message };
+        const uploadImageResult: UploadApiResponse | undefined =
+            await new Promise((resolve) => {
+                cloudinary.uploader
+                    .upload_stream(
+                        {
+                            folder: 'profile',
+                            resource_type: 'image',
+                            filename_override: session.user.id,
+                            use_filename: true,
+                            ...(session.user.imageUrl && {
+                                overwrite: true,
+                                public_id: extractImagePublicId(
+                                    session.user.imageUrl,
+                                ),
+                            }),
+                        },
+                        (error, uploadResult) => {
+                            if (error)
+                                return { update: false, error: error.message };
 
-                        return resolve(uploadResult);
-                    }
-                )
-                .end(Buffer.from(imageArrayBuffer));
-        });
+                            return resolve(uploadResult);
+                        },
+                    )
+                    .end(Buffer.from(imageArrayBuffer));
+            });
 
         if (uploadImageResult) {
             await db.user.update({

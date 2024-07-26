@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { FaArrowRight } from 'react-icons/fa6';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
     return (

@@ -1,11 +1,11 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
 import { prismaExclude } from '@/lib/prisma-exclude';
 import { ResultWithError } from '@/types';
 import type { UserStatus } from '@prisma/client';
-import { revalidatePath } from 'next/cache';
 
 export const updateUserStatus = async ({
     id,
@@ -17,7 +17,8 @@ export const updateUserStatus = async ({
     try {
         const session = await auth();
 
-        if (!session || session.user.role !== 'ADMIN') return { update: false, error: 'You have no authorization..!' };
+        if (!session || session.user.role !== 'ADMIN')
+            return { update: false, error: 'You have no authorization..!' };
 
         const user = await db.user.findFirst({
             where: {

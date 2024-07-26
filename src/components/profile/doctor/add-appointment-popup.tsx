@@ -1,10 +1,13 @@
 'use client';
 
-import { type Dispatch, type SetStateAction } from 'react';
-import { type SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'react-toastify';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { ImSpinner6 } from 'react-icons/im';
+import { toast } from 'react-toastify';
+import { addAppointment } from '@/actions/add-appointment';
+import FormValidationError from '@/components/form-validation-error';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -14,17 +17,22 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { Button } from '@/components/ui/button';
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import FormValidationError from '@/components/form-validation-error';
-import { ImSpinner6 } from 'react-icons/im';
-import { addAppointment } from '@/actions/add-appointment';
-import { addAppointmentSchema } from '@/schemas';
-import type { AddAppointmentForm } from '@/types';
 import { useLocale } from '@/hooks/use-locale';
+import { addAppointmentSchema } from '@/schemas';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import type { Dispatch, SetStateAction } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+import type { AddAppointmentForm } from '@/types';
 
 type AddAppointmentPopupProps = {
     date?: Date;
@@ -32,7 +40,11 @@ type AddAppointmentPopupProps = {
     setShow: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function AddAppointmentPopup({ date, show, setShow }: AddAppointmentPopupProps) {
+export default function AddAppointmentPopup({
+    date,
+    show,
+    setShow,
+}: AddAppointmentPopupProps) {
     const locale = useLocale();
     const form = useForm<AddAppointmentForm>({
         mode: 'all',
@@ -41,7 +53,11 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
             title: '',
             start: '',
             end: '',
-            date: date?.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }),
+            date: date?.toLocaleDateString('en-CA', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            }),
         },
     });
 
@@ -69,9 +85,14 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
     return (
         <Dialog open={show} onOpenChange={setShow}>
             <DialogTrigger className="absolute inset-0"></DialogTrigger>
-            <DialogContent className="max-w-[425px]" onOpenAutoFocus={(e) => e.preventDefault()}>
+            <DialogContent
+                className="max-w-[425px]"
+                onOpenAutoFocus={(e) => e.preventDefault()}
+            >
                 <DialogHeader>
-                    <DialogTitle className="uppercase">Add Appointment</DialogTitle>
+                    <DialogTitle className="uppercase">
+                        Add Appointment
+                    </DialogTitle>
                     <VisuallyHidden.Root>
                         <DialogDescription>Add Appointment</DialogDescription>
                     </VisuallyHidden.Root>
@@ -79,7 +100,7 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
                         <form onSubmit={form.handleSubmit(onSubmit)}>
                             <div className="flex flex-col gap-y-1">
                                 <Label htmlFor="startstr">Date</Label>
-                                <div className="border-2 rounded-md p-2 text-sm">
+                                <div className="rounded-md border-2 p-2 text-sm">
                                     {date?.toLocaleDateString(locale, {
                                         year: 'numeric',
                                         month: 'long',
@@ -94,10 +115,17 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
                                     <FormItem>
                                         <FormLabel>Title</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="title" {...field} />
+                                            <Input
+                                                placeholder="title"
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
-                                        {result?.errors?.title && <FormValidationError errors={result.errors.title} />}
+                                        {result?.errors?.title && (
+                                            <FormValidationError
+                                                errors={result.errors.title}
+                                            />
+                                        )}
                                     </FormItem>
                                 )}
                             />
@@ -111,7 +139,11 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
                                             <Input type="time" {...field} />
                                         </FormControl>
                                         <FormMessage />
-                                        {result?.errors?.start && <FormValidationError errors={result.errors.start} />}
+                                        {result?.errors?.start && (
+                                            <FormValidationError
+                                                errors={result.errors.start}
+                                            />
+                                        )}
                                     </FormItem>
                                 )}
                             />
@@ -125,7 +157,11 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
                                             <Input type="time" {...field} />
                                         </FormControl>
                                         <FormMessage />
-                                        {result?.errors?.end && <FormValidationError errors={result.errors.end} />}
+                                        {result?.errors?.end && (
+                                            <FormValidationError
+                                                errors={result.errors.end}
+                                            />
+                                        )}
                                     </FormItem>
                                 )}
                             />
@@ -142,15 +178,25 @@ export default function AddAppointmentPopup({ date, show, setShow }: AddAppointm
                                     </FormItem>
                                 )}
                             />
-                            <DialogFooter className="flex flex-row justify-end mt-3 space-x-2">
+                            <DialogFooter className="mt-3 flex flex-row justify-end space-x-2">
                                 <Button
-                                    className="border-2 w-20 h-10 rounded-md"
-                                    disabled={isPending || !form.formState.isValid}
+                                    className="h-10 w-20 rounded-md border-2"
+                                    disabled={
+                                        isPending || !form.formState.isValid
+                                    }
                                 >
-                                    {isPending ? <ImSpinner6 className="size-6 animate-spin" /> : 'Save'}
+                                    {isPending ? (
+                                        <ImSpinner6 className="size-6 animate-spin" />
+                                    ) : (
+                                        'Save'
+                                    )}
                                 </Button>
                             </DialogFooter>
-                            {result?.errors?._form && <FormValidationError errors={result.errors._form} />}
+                            {result?.errors?._form && (
+                                <FormValidationError
+                                    errors={result.errors._form}
+                                />
+                            )}
                         </form>
                     </Form>
                 </DialogHeader>

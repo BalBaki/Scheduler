@@ -99,7 +99,7 @@ export default function AddAppointmentPopup({
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)}>
                             <div className="flex flex-col gap-y-1">
-                                <Label htmlFor="startstr">Date</Label>
+                                <div>Date</div>
                                 <div className="rounded-md border-2 p-2 text-sm">
                                     {date?.toLocaleDateString(locale, {
                                         year: 'numeric',
@@ -170,7 +170,6 @@ export default function AddAppointmentPopup({
                                 name="date"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel></FormLabel>
                                         <FormControl>
                                             <Input type="hidden" {...field} />
                                         </FormControl>

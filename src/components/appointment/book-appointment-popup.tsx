@@ -53,19 +53,19 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
             >
                 {session?.user ? (
                     session.user.status !== 'APPROVED' ? (
-                        <>
+                        <DialogHeader className="mt-3 text-left">
                             <VisuallyHidden.Root>
                                 <DialogTitle>Waiting for approve</DialogTitle>
                             </VisuallyHidden.Root>
-                            <WaitForApprove />
-                        </>
+                            <DialogDescription>
+                                <WaitForApprove />
+                            </DialogDescription>
+                        </DialogHeader>
                     ) : (
                         <>
                             <DialogHeader className="mt-3 text-left">
                                 <VisuallyHidden.Root>
-                                    <DialogTitle>
-                                        Waiting for approve
-                                    </DialogTitle>
+                                    <DialogTitle>Book Appointment</DialogTitle>
                                 </VisuallyHidden.Root>
                                 <DialogDescription asChild>
                                     <div className="flex flex-col gap-y-2">
@@ -125,11 +125,13 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
                         <VisuallyHidden.Root>
                             <DialogTitle>Login</DialogTitle>
                         </VisuallyHidden.Root>
-                        <Link href="/login">
-                            <div className="mt-3 rounded-md border-2 bg-gray-400 py-3 text-center text-white">
-                                Login
-                            </div>
-                        </Link>
+                        <DialogDescription asChild>
+                            <Link href="/login">
+                                <div className="mt-3 rounded-md border-2 bg-gray-400 py-3 text-center text-white">
+                                    Login
+                                </div>
+                            </Link>
+                        </DialogDescription>
                     </>
                 )}
             </DialogContent>

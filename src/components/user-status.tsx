@@ -1,20 +1,29 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+import LoadingSpinner from './loading-spinner';
+import WaitForApprove from './wait-for-approve';
 
 type UserStatusProps = {
     children: React.ReactNode;
 };
 
 export default function UserStatus({ children }: UserStatusProps) {
-    const { data } = useSession();
+    const { data: session, status } = useSession();
 
-    if (data?.user.status === 'DECLINED')
+    if (!session && status === 'loading') return <LoadingSpinner />;
+
+    if (session && session.user.status === 'DECLINED')
         return (
-            <div className="flex h-screen items-center justify-center text-5xl text-red-500">
+            <div className="flex items-center justify-center text-5xl text-red-500">
                 This Account is Declined..!
             </div>
         );
 
-    return children;
+    return (
+        <>
+            {session && session.user.status === 'WAITING' && <WaitForApprove />}
+            {children}
+        </>
+    );
 }

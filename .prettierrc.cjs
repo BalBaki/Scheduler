@@ -1,8 +1,8 @@
 /** @type {import("prettier").Config} */
 module.exports = {
     plugins: [
-        'prettier-plugin-tailwindcss',
         '@ianvs/prettier-plugin-sort-imports',
+        'prettier-plugin-tailwindcss',
     ],
     tabWidth: 4,
     singleQuote: true,

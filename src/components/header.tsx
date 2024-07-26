@@ -42,7 +42,7 @@ const routes = [
 ];
 
 export default function Header() {
-    const session = useSession();
+    const { data: session, status } = useSession();
 
     return (
         <header className="mt-3 flex h-10 items-center" role="banner">
@@ -69,9 +69,9 @@ export default function Header() {
                             </Link>
                         );
                     })}
-                    {session.status === 'loading'
+                    {status === 'loading'
                         ? null
-                        : !session.data && (
+                        : !session && (
                               <>
                                   <Link
                                       href="/register"
@@ -91,13 +91,13 @@ export default function Header() {
                 <Sheet>
                     <SheetTrigger aria-label="Open hamburger menu">
                         <div className="hidden lg:block">
-                            {session.status === 'loading'
+                            {status === 'loading' && !session
                                 ? null
-                                : session.data &&
-                                  (session.data.user.imageUrl ? (
+                                : session &&
+                                  (session.user.imageUrl ? (
                                       <Avatar>
                                           <AvatarImage
-                                              src={session.data.user.imageUrl}
+                                              src={session.user.imageUrl}
                                               alt="Profile picture"
                                           />
                                           <AvatarFallback>PP</AvatarFallback>
@@ -111,8 +111,8 @@ export default function Header() {
                     <SheetContent className="overflow-y-auto">
                         <SheetHeader>
                             <SheetTitle className="truncate capitalize">
-                                {session.data
-                                    ? `${session.data?.user.name} ${session.data?.user.surname}`
+                                {session
+                                    ? `${session?.user.name} ${session?.user.surname}`
                                     : ''}
                             </SheetTitle>
                             <SheetDescription asChild>
@@ -130,7 +130,7 @@ export default function Header() {
                                                 </SheetClose>
                                             );
                                         })}
-                                        {!session.data && (
+                                        {!session && (
                                             <div className="ml-auto space-x-2">
                                                 <Link
                                                     href="/register"
@@ -147,7 +147,7 @@ export default function Header() {
                                             </div>
                                         )}
                                     </div>
-                                    {session.data && (
+                                    {session && (
                                         <>
                                             <Accordion
                                                 type="single"
@@ -171,8 +171,7 @@ export default function Header() {
                                                     </AccordionContent>
                                                 </AccordionItem>
                                             </Accordion>
-                                            {session.data.user.role ===
-                                                'ADMIN' && (
+                                            {session.user.role === 'ADMIN' && (
                                                 <Accordion
                                                     type="single"
                                                     collapsible

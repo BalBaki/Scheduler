@@ -1,8 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
+import { getSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { ImSpinner6 } from 'react-icons/im';
 import { credentialsSignIn } from '@/actions/credentials-sign-in';
@@ -22,6 +24,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import type { SignInForm } from '@/types';
 
 export default function CredentialsSignIn() {
+    const router = useRouter();
     const form = useForm<SignInForm>({
         mode: 'all',
         resolver: zodResolver(signInSchema),
@@ -36,8 +39,12 @@ export default function CredentialsSignIn() {
         data: loginResult,
     } = useMutation({
         mutationFn: credentialsSignIn,
-        onSuccess({ login }) {
-            if (login) location.replace('/');
+        async onSuccess({ login }) {
+            if (login) {
+                await getSession();
+
+                router.replace('/');
+            }
         },
     });
 

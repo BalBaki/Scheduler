@@ -3,9 +3,7 @@
 import { signOut } from '@/auth';
 import type { SignOutState } from '@/types';
 
-export const signout = async (
-    formState: SignOutState,
-): Promise<SignOutState> => {
+export const signout = async (): Promise<SignOutState> => {
     try {
         await signOut();
     } finally {

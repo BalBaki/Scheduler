@@ -1,8 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
+import { getSession } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ImSpinner6 } from 'react-icons/im';
 import { signUp } from '@/actions/sign-up';
@@ -28,6 +30,7 @@ import { Input } from '../ui/input';
 import type { SignUpForm } from '@/types';
 
 export default function SignUp() {
+    const router = useRouter();
     const form = useForm<SignUpForm>({
         mode: 'all',
         resolver: zodResolver(signUpSchema),
@@ -47,8 +50,12 @@ export default function SignUp() {
         data: result,
     } = useMutation({
         mutationFn: signUp,
-        onSuccess({ register }) {
-            register && location.replace('/');
+        async onSuccess({ register }) {
+            if (register) {
+                await getSession();
+
+                router.push('/');
+            }
         },
     });
 

@@ -13,7 +13,7 @@ export const bookAppointment = async (
         const session = await auth();
 
         if (!session || session.user.status !== 'APPROVED')
-            throw new Error('You have no authorization..!');
+            return { book: false, error: 'You have no authorization..!' };
 
         const appointment = await db.appointment.findFirst({
             where: {

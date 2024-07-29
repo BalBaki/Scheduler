@@ -191,10 +191,12 @@ export default function Header() {
                                                 </Accordion>
                                             )}
                                             <div className="ml-auto">
-                                                <SignOut
-                                                    type="submit"
-                                                    variant="outline"
-                                                />
+                                                <SheetClose asChild>
+                                                    <SignOut
+                                                        type="submit"
+                                                        variant="outline"
+                                                    />
+                                                </SheetClose>
                                             </div>
                                         </>
                                     )}

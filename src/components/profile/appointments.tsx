@@ -10,13 +10,12 @@ import { Skeleton } from '../ui/skeleton';
 export default function Appointments() {
     const { data: session } = useSession();
 
-    if (!session) return null;
-
     const { data, isPending, error } = useQuery({
         queryFn: () => getAppointments(),
         queryKey: ['appointments'],
         refetchOnWindowFocus: false,
         staleTime: Infinity,
+        enabled: !!session && session.user.status === 'APPROVED',
     });
 
     if (isPending)
@@ -32,11 +31,12 @@ export default function Appointments() {
 
     return (
         <>
-            {session.user.role === 'DOCTOR' ? (
-                <DoctorCalendar appointments={data.appointments} />
-            ) : (
-                <AppointmentList appointments={data.appointments} />
-            )}
+            {session &&
+                (session.user.role === 'DOCTOR' ? (
+                    <DoctorCalendar appointments={data.appointments} />
+                ) : (
+                    <AppointmentList appointments={data.appointments} />
+                ))}
         </>
     );
 }

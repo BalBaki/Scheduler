@@ -1,3 +1,4 @@
+import plugin from 'tailwindcss/plugin';
 import type { Config } from 'tailwindcss';
 
 const config = {
@@ -52,6 +53,9 @@ const config = {
                     DEFAULT: 'hsl(var(--card))',
                     foreground: 'hsl(var(--card-foreground))',
                 },
+                validationError: '#db1717',
+                calendarValidDate: '#007a3f',
+                calendarInvalidDate: '#db1717',
             },
             borderRadius: {
                 lg: 'var(--radius)',
@@ -78,7 +82,25 @@ const config = {
             },
         },
     },
-    plugins: [require('tailwindcss-animate')],
+    plugins: [
+        require('tailwindcss-animate'),
+        plugin(function ({ addUtilities }) {
+            addUtilities({
+                '.visually-hidden': {
+                    position: 'absolute',
+                    border: '0px',
+                    width: '1px',
+                    height: '1px',
+                    padding: '0px',
+                    margin: '-1px',
+                    overflow: 'hidden',
+                    clipPath: 'inset(0 0 100% 100%)',
+                    'white-space': 'nowrap',
+                    'overflow-wrap': 'normal',
+                },
+            });
+        }),
+    ],
 } satisfies Config;
 
 export default config;

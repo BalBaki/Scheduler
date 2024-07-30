@@ -43,7 +43,7 @@ export default function DoctorCalendar({ appointments }: DoctorCalendarProps) {
                 buttonText={{ today: '' }}
                 dayHeaderFormat={{ weekday: 'long' }}
                 dayHeaderClassNames="break-all"
-                eventClassNames="bg-green-600 flex justify-center text-white text-center text-wrap cursor-pointer hover:bg-green-600"
+                eventClassNames="bg-calendarValidDate flex justify-center text-white text-center text-wrap cursor-pointer hover:bg-calendarValidDate"
                 height={'auto'}
                 weekNumberClassNames={'text-center'}
                 eventContent={(arg) => <EditAppointmentPopup arg={arg} />}

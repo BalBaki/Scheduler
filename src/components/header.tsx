@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { CgProfile } from 'react-icons/cg';
@@ -43,9 +44,36 @@ const routes = [
 
 export default function Header() {
     const { data: session, status } = useSession();
+    const headerRef = useRef<HTMLElement | null>(null);
+
+    useEffect(() => {
+        if (!headerRef.current) return;
+
+        const stickyObserver = new IntersectionObserver(
+            ([e]) => {
+                e.target.setAttribute(
+                    'data-sticky',
+                    (e.intersectionRatio < 1).toString(),
+                );
+            },
+            {
+                threshold: [1],
+            },
+        );
+
+        stickyObserver.observe(headerRef.current);
+
+        return () => {
+            headerRef.current && stickyObserver.unobserve(headerRef.current);
+        };
+    }, []);
 
     return (
-        <header className="mt-3 flex h-10 items-center" role="banner">
+        <header
+            className="sticky -top-px z-10 flex px-2 py-2 data-[sticky=true]:bg-red-500"
+            role="banner"
+            ref={headerRef}
+        >
             <div className="mr-auto flex items-center text-xl font-semibold">
                 <span className="rounded-md bg-[#a5c422] px-1 text-2xl font-bold text-white">
                     S

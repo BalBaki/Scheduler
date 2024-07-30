@@ -92,7 +92,7 @@ const FormLabel = React.forwardRef<
     return (
         <Label
             ref={ref}
-            className={cn(error && 'text-destructive', className)}
+            className={cn(error && 'text-validationError', className)}
             htmlFor={formItemId}
             {...props}
         />
@@ -112,7 +112,7 @@ const FormControl = React.forwardRef<
             ref={ref}
             id={formItemId}
             className={cn(
-                error && 'border-red-500 focus:border-none',
+                error && 'border-validationError focus:border-none',
                 className,
             )}
             aria-describedby={
@@ -159,7 +159,10 @@ const FormMessage = React.forwardRef<
         <p
             ref={ref}
             id={formMessageId}
-            className={cn('text-sm font-medium text-destructive', className)}
+            className={cn(
+                'text-validationError text-sm font-medium',
+                className,
+            )}
             {...props}
         >
             {body}

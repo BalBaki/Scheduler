@@ -12,7 +12,10 @@ export default function FormValidationError({
     if (typeof errors === 'string') errors = [errors];
 
     return (
-        <div className={cn('text-md text-red-500', className)} {...rest}>
+        <div
+            className={cn('text-md text-validationError', className)}
+            {...rest}
+        >
             {errors.map((err) => (
                 <div key={err}>{err}</div>
             ))}

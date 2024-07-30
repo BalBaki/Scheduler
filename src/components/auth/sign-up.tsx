@@ -11,6 +11,7 @@ import { signUp } from '@/actions/sign-up';
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -112,6 +113,7 @@ export default function SignUp() {
                                     <FormControl>
                                         <Input type="email" {...field} />
                                     </FormControl>
+                                    <FormDescription />
                                     <FormMessage />
                                     {result?.errors?.email && (
                                         <FormValidationError
@@ -139,6 +141,7 @@ export default function SignUp() {
                                             }
                                         />
                                     </FormControl>
+                                    <FormDescription />
                                     <FormMessage />
                                     {result?.errors?.password && (
                                         <FormValidationError
@@ -157,6 +160,7 @@ export default function SignUp() {
                                     <FormControl>
                                         <Input type="password" {...field} />
                                     </FormControl>
+                                    <FormDescription />
                                     <FormMessage />
                                     {result?.errors?.confirmPassword && (
                                         <FormValidationError
@@ -177,6 +181,7 @@ export default function SignUp() {
                                     <FormControl>
                                         <Input type="text" {...field} />
                                     </FormControl>
+                                    <FormDescription />
                                     <FormMessage />
                                     {result?.errors?.name && (
                                         <FormValidationError
@@ -195,6 +200,7 @@ export default function SignUp() {
                                     <FormControl>
                                         <Input type="text" {...field} />
                                     </FormControl>
+                                    <FormDescription />
                                     <FormMessage />
                                     {result?.errors?.surname && (
                                         <FormValidationError
@@ -213,6 +219,7 @@ export default function SignUp() {
                                     <FormControl>
                                         <Input type="text" {...field} />
                                     </FormControl>
+                                    <FormDescription />
                                     <FormMessage />
                                     {result?.errors?.phoneNumber && (
                                         <FormValidationError
@@ -228,9 +235,15 @@ export default function SignUp() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Role</FormLabel>
-                                    <Select onValueChange={field.onChange}>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        value={field.value}
+                                    >
                                         <FormControl>
-                                            <SelectTrigger className="w-36">
+                                            <SelectTrigger
+                                                className="w-36"
+                                                {...field}
+                                            >
                                                 <SelectValue placeholder="Role" />
                                             </SelectTrigger>
                                         </FormControl>
@@ -250,6 +263,8 @@ export default function SignUp() {
                                             </SelectItem>
                                         </SelectContent>
                                     </Select>
+
+                                    <FormDescription />
                                     <FormMessage />
                                     {result?.errors?.role && (
                                         <FormValidationError
@@ -261,7 +276,7 @@ export default function SignUp() {
                         />
                         <Button
                             type="submit"
-                            className="mt-4 h-12 w-full rounded-md border-black bg-[#6675df] text-xs uppercase tracking-widest"
+                            className="mt-4 h-12 w-full rounded-md border-black bg-[#622fcf] text-xs uppercase tracking-widest"
                             disabled={isPending || !form.formState.isValid}
                             aria-label={isPending ? 'Registering' : 'Register'}
                         >
@@ -281,7 +296,7 @@ export default function SignUp() {
                 )}
                 <div className="mt-3 text-center">
                     Do you have an account?
-                    <Link href="/login" className="ml-1 text-[#6675df]">
+                    <Link href="/login" className="ml-1 text-[#2D3DD2]">
                         Sign In
                     </Link>
                 </div>

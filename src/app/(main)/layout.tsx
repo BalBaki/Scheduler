@@ -24,23 +24,23 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className}>
                 <Providers>
-                    <div className="mx-2">
-                        <Header />
-                        <UserStatus>
-                            <main role="main">{children}</main>
-                        </UserStatus>
-                        <HomeIcon />
-                        <ToastContainer
-                            position="bottom-right"
-                            autoClose={5000}
-                            hideProgressBar={false}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            theme="colored"
-                        />
-                    </div>
+                    <Header />
+                    <UserStatus>
+                        <main role="main" className="mx-2">
+                            {children}
+                        </main>
+                    </UserStatus>
+                    <HomeIcon />
+                    <ToastContainer
+                        position="bottom-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        theme="colored"
+                    />
                 </Providers>
             </body>
         </html>

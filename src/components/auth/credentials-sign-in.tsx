@@ -11,6 +11,7 @@ import { credentialsSignIn } from '@/actions/credentials-sign-in';
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -76,6 +77,7 @@ export default function CredentialsSignIn() {
                                             {...field}
                                         />
                                     </FormControl>
+                                    <FormDescription />
                                     <FormMessage />
                                     {loginResult?.errors?.email && (
                                         <FormValidationError
@@ -94,6 +96,7 @@ export default function CredentialsSignIn() {
                                     <FormControl>
                                         <Input type="password" {...field} />
                                     </FormControl>
+                                    <FormDescription />
                                     <FormMessage />
                                     {loginResult?.errors?.password && (
                                         <FormValidationError
@@ -105,7 +108,7 @@ export default function CredentialsSignIn() {
                         />
                         <Button
                             type="submit"
-                            className="mt-4 h-12 w-full rounded-md border-black bg-[#6675df] text-xs uppercase tracking-widest"
+                            className="mt-4 h-12 w-full rounded-md border-black bg-[#622fcf] text-xs uppercase tracking-widest"
                             disabled={isPending || !form.formState.isValid}
                             aria-label={isPending ? 'Logging in' : 'Login'}
                         >
@@ -127,7 +130,7 @@ export default function CredentialsSignIn() {
                     Don't have an account?
                     <Link
                         href="/register"
-                        className="ml-1 text-[#6675df]"
+                        className="ml-1 text-[#2D3DD2]"
                         aria-label="Sign up for a new account"
                     >
                         Sign Up

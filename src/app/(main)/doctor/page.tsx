@@ -36,13 +36,13 @@ export default async function Doctor() {
                             <VisuallyHidden>
                                 <h3>Description</h3>
                             </VisuallyHidden>
-                            {doctor.description}
+                            <p>{doctor.description}</p>
                         </div>
                         {doctor.languages.length > 0 && (
                             <div className="flex">
                                 <h3 className="text-[#237a83]">Languages</h3>
                                 <span className="mr-1 text-[#237a83]">:</span>
-                                <div>
+                                <p>
                                     {doctor.languages
                                         .map(
                                             (language) =>
@@ -53,7 +53,7 @@ export default async function Doctor() {
                                         )
                                         .filter((language) => Boolean(language))
                                         .join(', ')}
-                                </div>
+                                </p>
                             </div>
                         )}
                         <Link

@@ -1,18 +1,21 @@
-import Link from 'next/link';
-import { FaArrowRight } from 'react-icons/fa6';
-import { Button } from '@/components/ui/button';
+import AboutUs from '@/components/home/about-us';
+import Benefits from '@/components/home/benefits';
+import Goals from '@/components/home/goals';
+import Hero from '@/components/home/hero';
+import Info from '@/components/home/info';
+import Issues from '@/components/home/issues';
+import Services from '@/components/home/services';
 
 export default function Home() {
     return (
-        <div className="mt-2">
-            <Link href="/doctor">
-                <Button variant="default">
-                    Doctor List
-                    <span className="ml-2 animate-pulse">
-                        <FaArrowRight className="size-4" />
-                    </span>
-                </Button>
-            </Link>
-        </div>
+        <>
+            <Hero />
+            <Issues />
+            <AboutUs />
+            <Services />
+            <Goals />
+            <Info />
+            <Benefits />
+        </>
     );
 }

@@ -59,13 +59,13 @@ export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
                             <VisuallyHidden>
                                 <h2>Description</h2>
                             </VisuallyHidden>
-                            {doctor.description}
+                            <p>{doctor.description}</p>
                         </div>
                         {doctor.languages.length > 0 && (
                             <div className="flex">
                                 <h2 className="text-[#237a83]">Languages</h2>
                                 <span className="mr-1 text-[#237a83]">:</span>
-                                <div>
+                                <p>
                                     {doctor.languages
                                         .map(
                                             (language) =>
@@ -76,7 +76,7 @@ export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
                                         )
                                         .filter((language) => Boolean(language))
                                         .join(', ')}
-                                </div>
+                                </p>
                             </div>
                         )}
                     </div>

@@ -64,13 +64,13 @@ export default function Header() {
         stickyObserver.observe(headerRef.current);
 
         return () => {
-            headerRef.current && stickyObserver.unobserve(headerRef.current);
+            headerRef.current && stickyObserver.disconnect();
         };
     }, []);
 
     return (
         <header
-            className="sticky -top-px z-10 flex px-2 py-2 data-[sticky=true]:bg-red-500"
+            className="sticky -top-px z-10 flex px-2 py-2 data-[sticky=true]:bg-white"
             role="banner"
             ref={headerRef}
         >

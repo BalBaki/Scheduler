@@ -26,9 +26,7 @@ export default function RootLayout({
                 <Providers>
                     <Header />
                     <UserStatus>
-                        <main role="main" className="mx-2">
-                            {children}
-                        </main>
+                        <main role="main">{children}</main>
                     </UserStatus>
                     <HomeIcon />
                     <ToastContainer

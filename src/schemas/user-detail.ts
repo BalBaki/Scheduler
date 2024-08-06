@@ -1,7 +1,7 @@
 import * as z from 'zod';
 import languages from '@/languages.json';
 
-export const userDetail = z.object({
+export const userDetailSchema = z.object({
     description: z
         .string()
         .max(250, 'Max character Count is 250..!')

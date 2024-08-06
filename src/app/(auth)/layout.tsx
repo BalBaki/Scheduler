@@ -2,7 +2,7 @@ import '../globals.css';
 import 'react-toastify/ReactToastify.css';
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
-import HomeIcon from '@/components/home-icon';
+// import AuthRoute from '@/components/auth-route';
 import UserStatus from '@/components/user-status';
 import Providers from '../providers';
 import type { Metadata } from 'next';
@@ -25,10 +25,11 @@ export default function RootLayout({
                 <Providers>
                     <UserStatus>
                         <main role="main" className="h-screen">
+                            {/* <AuthRoute> */}
                             {children}
+                            {/* </AuthRoute> */}
                         </main>
                     </UserStatus>
-                    <HomeIcon />
                     <ToastContainer
                         position="bottom-right"
                         autoClose={5000}

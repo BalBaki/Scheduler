@@ -57,11 +57,12 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model UserDetail {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  experienceTime Int
-  description    String
-  languages      String[]
+model Feedback {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Roles {

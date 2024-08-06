@@ -1,5 +1,6 @@
 import AboutUs from '@/components/home/about-us';
 import Benefits from '@/components/home/benefits';
+import ContactUs from '@/components/home/contact-us';
 import Goals from '@/components/home/goals';
 import Hero from '@/components/home/hero';
 import Info from '@/components/home/info';
@@ -16,6 +17,7 @@ export default function Home() {
             <Goals />
             <Info />
             <Benefits />
+            <ContactUs />
         </>
     );
 }

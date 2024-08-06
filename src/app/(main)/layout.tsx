@@ -3,7 +3,6 @@ import 'react-toastify/ReactToastify.css';
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 import Header from '@/components/header';
-import HomeIcon from '@/components/home-icon';
 import UserStatus from '@/components/user-status';
 import Providers from '../providers';
 import type { Metadata } from 'next';
@@ -28,7 +27,6 @@ export default function RootLayout({
                     <UserStatus>
                         <main role="main">{children}</main>
                     </UserStatus>
-                    <HomeIcon />
                     <ToastContainer
                         position="bottom-right"
                         autoClose={5000}

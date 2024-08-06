@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
-import { userDetail } from '@/schemas';
+import { userDetailSchema } from '@/schemas';
 import type { FormState, UserDetailForm } from '@/types';
 
 export const updateUserDetail = async (
@@ -18,7 +18,7 @@ export const updateUserDetail = async (
                 errors: { _form: 'You have no authorization..!' },
             };
 
-        const validatedForm = userDetail.safeParse(formData);
+        const validatedForm = userDetailSchema.safeParse(formData);
 
         if (!validatedForm.success)
             return {

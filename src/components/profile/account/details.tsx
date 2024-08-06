@@ -17,7 +17,7 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
-import { userDetail } from '@/schemas';
+import { userDetailSchema } from '@/schemas';
 import { UserDetailForm } from '@/types';
 import EditableText from '../../editable-text';
 import { Textarea } from '../../ui/textarea';
@@ -26,7 +26,7 @@ export default function Details() {
     const { data: session, update: updateSession } = useSession();
 
     const form = useForm<UserDetailForm>({
-        resolver: zodResolver(userDetail),
+        resolver: zodResolver(userDetailSchema),
         mode: 'all',
         values: {
             description: session?.user.description || '',

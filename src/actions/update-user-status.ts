@@ -16,10 +16,6 @@ export const updateUserStatus = async ({
 }): Promise<ResultWithError<'update'>> => {
     try {
         const session = await auth();
-
-        if (!session || session.user.role !== 'ADMIN')
-            return { update: false, error: 'You have no authorization..!' };
-
         const user = await db.user.findFirst({
             where: {
                 id,
@@ -28,6 +24,8 @@ export const updateUserStatus = async ({
         });
 
         if (!user) return { update: false, error: 'Not exits User...' };
+        if (!session || session.user.role !== 'ADMIN' || user.role === 'ADMIN')
+            return { update: false, error: 'You have no authorization..!' };
 
         const updatedUser = await db.user.update({
             data: {

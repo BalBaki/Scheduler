@@ -1,48 +1,44 @@
+'use client';
+
+import { usePathname, useSearchParams } from 'next/navigation';
 import {
-    Pagination,
     PaginationContent,
     PaginationItem,
     PaginationNext,
     PaginationPrevious,
+    Pagination as PaginationWrapper,
 } from '@/components/ui/pagination';
-import db from '@/db';
-import { ITEM_COUNT_PER_PAGE } from '@/lib/constants';
 
-type ApprovePaginationProps = {
-    page: number;
-    searchParams: {
-        page: string | string[] | undefined;
-        term: string | string[] | undefined;
-    };
+type PaginationProps = {
+    totalCount: number;
+    itemCountPerPage: number;
 };
 
-export default async function ApprovePagination({
-    page,
-    searchParams,
-}: ApprovePaginationProps) {
-    const userCount = await db.user.count({
-        where: {
-            NOT: {
-                status: 'APPROVED',
-            },
-            ...(searchParams.term && {
-                email: { contains: searchParams.term.toString() },
-            }),
-        },
-    });
-    const lastPage = Math.ceil(userCount / ITEM_COUNT_PER_PAGE);
+export default function Pagination({
+    totalCount,
+    itemCountPerPage,
+}: PaginationProps) {
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const searchParamsAsObject = Object.fromEntries(
+        new URLSearchParams(searchParams),
+    );
+    const page = Number(searchParams.get('page')) || 1;
+    const lastPage = Math.ceil(totalCount / itemCountPerPage);
+
+    if (totalCount <= itemCountPerPage) return null;
 
     return (
-        <Pagination className="my-2">
+        <PaginationWrapper className="my-2">
             <PaginationContent>
                 <PaginationItem>
                     {page > 1 && (
                         <PaginationPrevious
                             className="w-28 border-2 border-gray-400"
                             href={{
-                                pathname: '/dashboard/approve',
+                                pathname,
                                 query: {
-                                    ...searchParams,
+                                    ...searchParamsAsObject,
                                     page: page - 1,
                                 },
                             }}
@@ -53,9 +49,9 @@ export default async function ApprovePagination({
                     {page < lastPage && (
                         <PaginationNext
                             href={{
-                                pathname: '/dashboard/approve',
+                                pathname,
                                 query: {
-                                    ...searchParams,
+                                    ...searchParamsAsObject,
                                     page: page + 1,
                                 },
                             }}
@@ -64,6 +60,6 @@ export default async function ApprovePagination({
                     )}
                 </PaginationItem>
             </PaginationContent>
-        </Pagination>
+        </PaginationWrapper>
     );
 }

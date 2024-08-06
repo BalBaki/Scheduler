@@ -31,13 +31,14 @@ export default function UserList({ users, page }: UserListProps) {
         });
     }, [page]);
 
-    if (users.length < 1) return <div>No users for waiting approve.</div>;
+    if (users.length < 1) return <div>No users...</div>;
 
     return (
         <Table
-            containerClassname="h-fit max-h-[calc(100vh-205px)] sm:max-h-[calc(100vh-157px)] overflow-y-auto relative mt-1"
+            containerClassname="h-fit max-h-[calc(100vh-230px)] sm:max-h-[calc(100vh-190px)] overflow-y-auto relative mt-1"
             ref={tableRef}
-            aria-label="List of users waiting for approval"
+            aria-label="List of users "
+            tabIndex={0}
         >
             <TableCaption></TableCaption>
             <TableHeader className="sticky top-0 bg-gray-600">
@@ -49,7 +50,7 @@ export default function UserList({ users, page }: UserListProps) {
                     <TableHead>Phone Number</TableHead>
                     <TableHead>Role</TableHead>
                     <TableHead>Status</TableHead>
-                    <TableHead></TableHead>
+                    <TableHead>Buttons</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -62,7 +63,7 @@ export default function UserList({ users, page }: UserListProps) {
                         <TableCell>{user.phoneNumber}</TableCell>
                         <TableCell>{user.role}</TableCell>
                         <TableCell>{user.status}</TableCell>
-                        <TableCell className="flex gap-x-1">
+                        <TableCell className="flex gap-x-1 px-4">
                             <StatusButtons user={user} />
                         </TableCell>
                     </TableRow>

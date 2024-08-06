@@ -57,6 +57,7 @@ export default function Info() {
                 >
                     {infoData.map((info, index) => (
                         <AccordionItem
+                            key={index}
                             value={`item-${index + 1}`}
                             className="border-none"
                         >

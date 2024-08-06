@@ -214,6 +214,11 @@ export default function Header() {
                                                                     Approve
                                                                 </Link>
                                                             </SheetClose>
+                                                            <SheetClose asChild>
+                                                                <Link href="/dashboard/feedback">
+                                                                    Feedback
+                                                                </Link>
+                                                            </SheetClose>
                                                         </AccordionContent>
                                                     </AccordionItem>
                                                 </Accordion>

@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function Goals() {
     return (
         <section
-            aria-describedby="our goals"
+            aria-describedby="goals"
             className="mx-6 grid max-w-screen-lg justify-center max-md:gap-y-8 max-sm:mx-6 md:grid-cols-2 md:gap-x-8 lg:mx-auto"
         >
             <div>
@@ -35,7 +35,7 @@ export default function Goals() {
                     <div className="flex gap-x-5">
                         <Image
                             src="/assets/home/our-vision.png"
-                            alt="our mission icon"
+                            alt="our vision icon"
                             width={0}
                             height={0}
                             sizes="100vw"

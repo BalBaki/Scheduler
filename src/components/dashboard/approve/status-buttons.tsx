@@ -47,22 +47,27 @@ export default function StatusButtons({ user }: StatusButtonsProps) {
 
     return (
         <>
-            <button
-                className="size-6"
-                onClick={() =>
-                    startTransition(() => {
-                        updateUserStatus({ id: user.id, status: 'APPROVED' });
-                    })
-                }
-                disabled={isPending}
-                aria-label="Approve user"
-            >
-                {isPending ? (
-                    <ImSpinner6 className="size-full animate-spin" />
-                ) : (
-                    <FcApproval className="size-full" />
-                )}
-            </button>
+            {user.status !== 'APPROVED' && (
+                <button
+                    className="size-6"
+                    onClick={() =>
+                        startTransition(() => {
+                            updateUserStatus({
+                                id: user.id,
+                                status: 'APPROVED',
+                            });
+                        })
+                    }
+                    disabled={isPending}
+                    aria-label="Approve user"
+                >
+                    {isPending ? (
+                        <ImSpinner6 className="size-full animate-spin" />
+                    ) : (
+                        <FcApproval className="size-full" />
+                    )}
+                </button>
+            )}
             {user.status !== 'DECLINED' && (
                 <button
                     className="size-6"

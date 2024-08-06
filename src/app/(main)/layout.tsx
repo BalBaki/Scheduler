@@ -2,6 +2,7 @@ import '../globals.css';
 import 'react-toastify/ReactToastify.css';
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
+import Footer from '@/components/footer';
 import Header from '@/components/header';
 import UserStatus from '@/components/user-status';
 import Providers from '../providers';
@@ -21,11 +22,14 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={inter.className + ' flex min-h-screen flex-col'}>
                 <Providers>
                     <Header />
                     <UserStatus>
-                        <main role="main">{children}</main>
+                        <main role="main" className="flex-1">
+                            {children}
+                        </main>
+                        <Footer />
                     </UserStatus>
                     <ToastContainer
                         position="bottom-right"

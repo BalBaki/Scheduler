@@ -38,7 +38,7 @@ const routes = [
     },
     {
         text: 'Contact',
-        href: '/',
+        href: '/#contactUs',
     },
 ];
 

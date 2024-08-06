@@ -82,6 +82,7 @@ export default function UserFilters({ validatedfilters }: UserFilters) {
                                     <FormControl>
                                         <SelectTrigger
                                             className="w-36"
+                                            aria-label={field.value}
                                             {...field}
                                         >
                                             <SelectValue placeholder="Role" />
@@ -107,7 +108,6 @@ export default function UserFilters({ validatedfilters }: UserFilters) {
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
-
                                 <FormDescription />
                                 <FormMessage />
                             </FormItem>

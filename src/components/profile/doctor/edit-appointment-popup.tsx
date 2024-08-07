@@ -123,7 +123,12 @@ export default function EditAppointmentPopup({
                                 />
                             </div>
                             <DialogFooter className="mt-3 flex flex-row justify-end space-x-2">
-                                <RemoveAppointment appointmentId={event.id} />
+                                {event.start &&
+                                    new Date(event.start) > new Date() && (
+                                        <RemoveAppointment
+                                            appointmentId={event.id}
+                                        />
+                                    )}
                             </DialogFooter>
                         </form>
                     </DialogDescription>

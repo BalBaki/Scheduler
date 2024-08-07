@@ -30,7 +30,7 @@ const routes = [
     },
     {
         text: 'About Us',
-        href: '/',
+        href: '/#aboutUs',
     },
     {
         text: 'Doctors',

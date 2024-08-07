@@ -11,7 +11,7 @@ export const userDetailSchema = z
             .string()
             .min(1, 'Surname required')
             .max(30, 'Max character Count is 30..!'),
-        description: z.string().max(250, 'Max character Count is 250..!'),
+        description: z.string(),
         phoneNumber: z
             .string()
             .regex(

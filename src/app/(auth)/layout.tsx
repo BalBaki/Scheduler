@@ -1,5 +1,6 @@
 import '../globals.css';
 import 'react-toastify/ReactToastify.css';
+import 'ckeditor5/ckeditor5.css';
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 // import AuthRoute from '@/components/auth-route';

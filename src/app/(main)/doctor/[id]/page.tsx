@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { IoPersonCircle } from 'react-icons/io5';
 import AppointmentCalendar from '@/components/appointment/calendar';
-import VisuallyHidden from '@/components/visually-hidden';
+import NextAvailability from '@/components/doctor/next-availability';
 import db from '@/db';
 import languages from '@/languages.json';
 import { prismaExclude } from '@/lib/prisma-exclude';
@@ -21,9 +21,15 @@ export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
                 where: {
                     start: { gte: new Date() },
                 },
+                orderBy: {
+                    start: 'asc',
+                },
             },
         },
     });
+    const nextAvailableAppointment = doctor?.doctorAppointments.find(
+        (appointment) => !Boolean(appointment.patientId),
+    );
 
     if (!doctor || doctor.role !== 'DOCTOR')
         return (
@@ -33,10 +39,14 @@ export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
         );
 
     return (
-        <div aria-describedby="doctor">
-            <section>
-                <div className="mt-3 flex gap-x-2 px-2 max-md:flex-col max-md:justify-center">
-                    <div className="min-w-60 max-md:mx-auto">
+        <div>
+            <div className="bg-doctorBanner h-52 bg-[10%_8%] object-cover"></div>
+            <div className="space-y-8 bg-[#f9f9f9] px-3 py-8 pt-3 sm:px-8">
+                <section
+                    aria-describedby="doctor"
+                    className="flex gap-x-2 px-2 max-md:flex-col max-md:justify-center"
+                >
+                    <div className="-mt-20 min-w-52 max-md:mx-auto">
                         {doctor.imageUrl ? (
                             <Image
                                 src={doctor.imageUrl}
@@ -44,26 +54,31 @@ export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
                                 width="0"
                                 height="0"
                                 sizes="100vw"
-                                className="w-60 rounded-md object-contain"
+                                className="size-52 rounded-full bg-[#f9f9f9] object-cover p-5"
+                                priority={true}
                             />
                         ) : (
-                            <IoPersonCircle className="size-full -translate-y-5" />
+                            <IoPersonCircle className="size-48 -translate-y-5 rounded-full bg-[#f9f9f9]" />
                         )}
                     </div>
-                    <div className="flex max-w-4xl flex-col gap-y-3 max-md:mt-2 md:ml-10">
+                    <div className="flex max-w-4xl flex-col gap-y-1 max-md:mt-2 max-md:items-center md:ml-6">
                         <h1
-                            className="break-all font-semibold capitalize"
+                            className="break-all text-xl font-semibold capitalize text-[#237a83]"
                             id="doctor"
                         >{`${doctor.name} ${doctor.surname}`}</h1>
-                        <div>
-                            <VisuallyHidden>
-                                <h2>Description</h2>
-                            </VisuallyHidden>
-                            <p>{doctor.description}</p>
-                        </div>
+                        <p className="text-base font-medium text-[#237a83]">
+                            Psychiatrist
+                        </p>
+                        {nextAvailableAppointment && (
+                            <NextAvailability
+                                appointment={nextAvailableAppointment}
+                            />
+                        )}
                         {doctor.languages.length > 0 && (
                             <div className="flex">
-                                <h2 className="text-[#237a83]">Languages</h2>
+                                <h2 className="text-base font-medium text-[#237a83]">
+                                    Languages
+                                </h2>
                                 <span className="mr-1 text-[#237a83]">:</span>
                                 <p>
                                     {doctor.languages
@@ -80,12 +95,39 @@ export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
                             </div>
                         )}
                     </div>
-                </div>
-                <div className="mx-auto my-5 h-px w-1/2 max-w-96 bg-[#237a83]"></div>
-            </section>
-            <section>
-                <AppointmentCalendar user={doctor} />
-            </section>
+                </section>
+                {doctor.description && (
+                    <section
+                        className="rounded-sm bg-white p-8"
+                        aria-labelledby="aboutMe"
+                    >
+                        <h2
+                            id="aboutMe"
+                            className="text-3xl font-bold text-[#4e788f]"
+                        >
+                            About me
+                        </h2>
+                        <p
+                            className="ck-content mt-2"
+                            dangerouslySetInnerHTML={{
+                                __html: doctor.description,
+                            }}
+                        ></p>
+                    </section>
+                )}
+                <section
+                    className="rounded-sm bg-white p-8"
+                    aria-labelledby="availability"
+                >
+                    <h2
+                        id="availability"
+                        className="text-3xl font-bold text-[#4e788f]"
+                    >
+                        Availability
+                    </h2>
+                    <AppointmentCalendar user={doctor} />
+                </section>
+            </div>
         </div>
     );
 }

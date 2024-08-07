@@ -30,6 +30,11 @@ export const removeAppointment = async (
                 remove: false,
                 error: 'You cannot remove this event. It booked by a patient..!',
             };
+        if (new Date(appointment.start) <= new Date())
+            return {
+                remove: false,
+                error: 'You cannot remove pasted event.',
+            };
 
         await db.appointment.delete({
             where: {

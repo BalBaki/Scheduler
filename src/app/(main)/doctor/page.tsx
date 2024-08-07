@@ -25,6 +25,7 @@ export default async function Doctor() {
                                 height="0"
                                 sizes="100vw"
                                 className="w-60 rounded-md object-contain"
+                                priority={true}
                             />
                         ) : (
                             <IoPersonCircle className="size-full -translate-y-5" />
@@ -32,12 +33,19 @@ export default async function Doctor() {
                     </div>
                     <div className="flex flex-col gap-y-3 max-md:mt-2 md:ml-14">
                         <h2 className="break-all font-semibold capitalize">{`${doctor.name} ${doctor.surname}`}</h2>
-                        <div>
-                            <VisuallyHidden>
-                                <h3>Description</h3>
-                            </VisuallyHidden>
-                            <p>{doctor.description}</p>
-                        </div>
+                        {doctor.description && (
+                            <div>
+                                <VisuallyHidden>
+                                    <h3>Description</h3>
+                                </VisuallyHidden>
+                                <p
+                                    dangerouslySetInnerHTML={{
+                                        __html: doctor.description,
+                                    }}
+                                    className="ck-content line-clamp-3"
+                                ></p>
+                            </div>
+                        )}
                         {doctor.languages.length > 0 && (
                             <div className="flex">
                                 <h3 className="text-[#237a83]">Languages</h3>

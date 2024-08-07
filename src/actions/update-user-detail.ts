@@ -31,8 +31,10 @@ export const updateUserDetail = async (
             data: validatedForm.data,
         });
 
-        if (session.user.role === 'DOCTOR')
+        if (session.user.role === 'DOCTOR') {
+            revalidatePath('/doctor');
             revalidatePath(`/doctor/${session.user.id}`);
+        }
 
         return { update: true };
     } catch (error) {

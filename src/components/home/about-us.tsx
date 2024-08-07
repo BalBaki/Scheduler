@@ -1,7 +1,7 @@
 export default function AboutUs() {
     return (
-        <section aria-describedby="aboutUs" className="bg-gray-200 px-14">
-            <div className="mx-auto max-w-screen-lg py-20">
+        <section aria-describedby="aboutUs" className="bg-gray-200 px-14 py-20">
+            <div className="mx-auto max-w-screen-lg">
                 <h2 id="aboutUs" className="mx-auto mb-4 text-xl font-bold">
                     ABOUT US
                 </h2>

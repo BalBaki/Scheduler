@@ -79,7 +79,7 @@
     &.fc-media-screen {
         width: 100%;
         min-width: 60rem;
-        height: 37.5rem;
+        /* height: 37.5rem; */
     }
 
     .fc-daygrid-day-top {
@@ -105,13 +105,15 @@
         background-color: white !important;
 
         .fc-daygrid-day-top > .fc-daygrid-day-number {
-            border: 2px solid green;
-            border-radius: 100%;
+            border-bottom: 2px solid green;
         }
 
         .fc-daygrid-day-events {
             margin-top: 5px;
         }
+    }
+    .fc-daygrid-day-events {
+        margin-top: 7px;
     }
 
     .fc-header-toolbar {
@@ -131,4 +133,14 @@
 .ReactCrop--circular-crop
     .ReactCrop__crop-selection.ReactCrop__crop-selection:after {
     border: unset;
+}
+
+.ck {
+    .ck-powered-by-balloon {
+        display: none !important;
+    }
+
+    .ck-content.ck-editor__editable {
+        height: 20rem;
+    }
 }

@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import DescriptionEditor from './description-editor';
 import Languages from './languages';
 import { updateUserDetail } from '@/actions/update-user-detail';
 import { Button } from '@/components/ui/button';
@@ -100,12 +102,13 @@ export default function Details() {
                                 name="description"
                                 render={({ field }) => (
                                     <FormItem className="md:col-span-2">
-                                        <FormLabel>Description</FormLabel>
+                                        <p>Description</p>
                                         <FormControl>
-                                            <Textarea
+                                            {/* <Textarea
                                                 className="h-36 resize-none"
                                                 {...field}
-                                            />
+                                            /> */}
+                                            <DescriptionEditor />
                                         </FormControl>
                                         <FormDescription />
                                         <FormMessage />

@@ -46,8 +46,9 @@ export default function Languages() {
                                         'justify-between',
                                         !field.value && 'text-muted-foreground',
                                     )}
+                                    aria-label="Select your languages"
                                 >
-                                    Select language
+                                    Select Language
                                 </Button>
                             </FormControl>
                         </PopoverTrigger>

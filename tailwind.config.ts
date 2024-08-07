@@ -79,6 +79,7 @@ const config = {
             backgroundImage: {
                 login: "url('/assets/login.jpg')",
                 register: "url('/assets/register.png')",
+                doctorBanner: "url('/assets/doctor-banner.jpg')",
             },
         },
     },

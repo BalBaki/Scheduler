@@ -56,6 +56,9 @@ export default function SignUp() {
                 await getSession();
 
                 router.push('/');
+            } else {
+                form.resetField('password');
+                form.resetField('confirmPassword');
             }
         },
     });

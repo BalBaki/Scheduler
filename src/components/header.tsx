@@ -126,7 +126,7 @@ export default function Header() {
                                       <Avatar>
                                           <AvatarImage
                                               src={session.user.imageUrl}
-                                              alt="Profile picture"
+                                              alt="Profile avatar"
                                           />
                                           <AvatarFallback>PP</AvatarFallback>
                                       </Avatar>

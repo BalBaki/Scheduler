@@ -45,6 +45,8 @@ export default function CredentialsSignIn() {
                 await getSession();
 
                 router.replace('/');
+            } else {
+                form.resetField('password');
             }
         },
     });

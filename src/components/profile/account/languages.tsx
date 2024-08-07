@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/command';
 import {
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -33,8 +34,8 @@ export default function Languages() {
             control={form.control}
             name="languages"
             render={({ field }) => (
-                <FormItem>
-                    <FormLabel className="text-base">Languages: </FormLabel>
+                <FormItem className="flex flex-col">
+                    <FormLabel>Languages</FormLabel>
                     <Popover>
                         <PopoverTrigger asChild>
                             <FormControl>
@@ -42,7 +43,7 @@ export default function Languages() {
                                     variant="outline"
                                     role="combobox"
                                     className={cn(
-                                        'w-[200px] justify-between',
+                                        'justify-between',
                                         !field.value && 'text-muted-foreground',
                                     )}
                                 >
@@ -50,7 +51,7 @@ export default function Languages() {
                                 </Button>
                             </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0" side="bottom">
+                        <PopoverContent className="p-0" side="bottom">
                             <Command>
                                 <CommandInput
                                     placeholder="Search language..."
@@ -103,6 +104,7 @@ export default function Languages() {
                             </Command>
                         </PopoverContent>
                     </Popover>
+                    <FormDescription />
                     <FormMessage />
                 </FormItem>
             )}

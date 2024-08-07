@@ -49,10 +49,10 @@ export default function ProfilePicture() {
     }, [image]);
 
     return (
-        <div className="flex max-w-96 flex-col justify-center gap-y-1">
-            <div className="flex flex-col items-center justify-center">
+        <div className="flex gap-x-3 rounded-lg bg-white px-3 py-3 shadow-md max-sm:flex-col max-sm:items-center">
+            <div className="flex max-w-56 flex-col items-center justify-center">
                 <label htmlFor={isPending ? '' : 'profilePicture'}>
-                    <div className="relative size-[200px] overflow-hidden">
+                    <div className="relative size-28 overflow-hidden">
                         {image || session?.user.imageUrl ? (
                             <Image
                                 src={
@@ -82,7 +82,7 @@ export default function ProfilePicture() {
                     className="hidden"
                 />
                 {image && (
-                    <div className="mt-2 flex items-center gap-x-1">
+                    <div className="mt-2 flex flex-wrap items-center justify-center gap-1">
                         <ImageCrop
                             imageUrl={imageUrl}
                             setCroppedImage={setCroppedImage}
@@ -113,6 +113,7 @@ export default function ProfilePicture() {
                         </Button>
                         <Button
                             disabled={isPending}
+                            className="w-16"
                             aria-label="Cancel Editing Profile Photo"
                             onClick={handleCancelClick}
                         >
@@ -120,6 +121,10 @@ export default function ProfilePicture() {
                         </Button>
                     </div>
                 )}
+            </div>
+            <div>
+                <p className="text-md font-semibold capitalize">{`${session?.user.name} ${session?.user.surname}`}</p>
+                <p className="text-md">{`${session?.user.email}`}</p>
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ export default function Footer() {
     return (
         <footer
             role="contentinfo"
-            className="flex h-24 items-center justify-center bg-black px-6 text-white"
+            className="flex min-h-24 items-center justify-center bg-black px-6 text-white"
         >
             <h2 className="text-center">
                 Sample text. Click to select the text box. Click again or double

@@ -28,7 +28,7 @@ export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
         },
     });
     const nextAvailableAppointment = doctor?.doctorAppointments.find(
-        (appointment) => !Boolean(appointment.patientId),
+        (appointment) => !appointment.patientId,
     );
 
     if (!doctor || doctor.role !== 'DOCTOR')
@@ -40,7 +40,7 @@ export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
 
     return (
         <div>
-            <div className="bg-doctorBanner h-52 bg-[10%_8%] object-cover"></div>
+            <div className="h-52 bg-doctorBanner bg-[10%_8%] object-cover"></div>
             <div className="space-y-8 bg-[#f9f9f9] px-3 py-8 pt-3 sm:px-8">
                 <section
                     aria-describedby="doctor"

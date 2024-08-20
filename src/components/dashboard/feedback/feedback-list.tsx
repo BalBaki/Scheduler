@@ -34,7 +34,7 @@ export default function FeedbackList({ feedbacks, page }: UserListProps) {
 
     return (
         <Table
-            containerClassname="h-fit max-h-[calc(100vh-230px)] sm:max-h-[calc(100vh-190px)] overflow-y-auto relative mt-1"
+            containerClassname="h-fit max-h-[calc(100vh-350px)] sm:max-h-[calc(100vh-300px)] overflow-y-auto relative mt-1"
             ref={tableRef}
             aria-label="List of feedbacks"
             tabIndex={0}

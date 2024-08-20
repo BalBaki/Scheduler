@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
@@ -22,7 +21,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { userDetailSchema } from '@/schemas';
 import { UserDetailForm } from '@/types';
-import { Textarea } from '../../ui/textarea';
 
 export default function Details() {
     const { data: session, update: updateSession } = useSession();
@@ -97,24 +95,7 @@ export default function Details() {
                     {session?.user.role === 'DOCTOR' && (
                         <>
                             <Languages />
-                            <FormField
-                                control={form.control}
-                                name="description"
-                                render={({ field }) => (
-                                    <FormItem className="md:col-span-2">
-                                        <p>Description</p>
-                                        <FormControl>
-                                            {/* <Textarea
-                                                className="h-36 resize-none"
-                                                {...field}
-                                            /> */}
-                                            <DescriptionEditor />
-                                        </FormControl>
-                                        <FormDescription />
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                            <DescriptionEditor />
                         </>
                     )}
                 </div>

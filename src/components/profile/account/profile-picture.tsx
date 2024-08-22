@@ -66,7 +66,6 @@ export default function ProfilePicture() {
                                 fill
                                 sizes="10rem, 10rem"
                                 className="aspect-square rounded-full"
-                                priority={true}
                             />
                         ) : (
                             <CgProfile className="h-full w-full" />

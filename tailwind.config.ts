@@ -99,6 +99,11 @@ const config = {
                     'white-space': 'nowrap',
                     'overflow-wrap': 'normal',
                 },
+                '.popover-content-width-same-as-its-trigger': {
+                    width: 'var(--radix-popover-trigger-width)',
+                    'max-height':
+                        'var(--radix-popover-content-available-height)',
+                },
             });
         }),
     ],

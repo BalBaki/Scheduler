@@ -34,7 +34,7 @@ export default function Languages() {
             control={form.control}
             name="languages"
             render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className="flex flex-col md:mt-2.5">
                     <FormLabel>Languages</FormLabel>
                     <Popover>
                         <PopoverTrigger asChild>
@@ -52,7 +52,10 @@ export default function Languages() {
                                 </Button>
                             </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="p-0" side="bottom">
+                        <PopoverContent
+                            className="p-0 popover-content-width-same-as-its-trigger"
+                            side="bottom"
+                        >
                             <Command>
                                 <CommandInput
                                     placeholder="Search language..."
@@ -66,8 +69,7 @@ export default function Languages() {
                                                 key={code}
                                                 value={name}
                                                 onSelect={() => {
-                                                    form.setValue(
-                                                        'languages',
+                                                    field.onChange(
                                                         field.value?.includes(
                                                             code,
                                                         )
@@ -81,7 +83,6 @@ export default function Languages() {
                                                                       []),
                                                                   code,
                                                               ],
-                                                        { shouldDirty: true },
                                                     );
                                                 }}
                                             >

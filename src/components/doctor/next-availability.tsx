@@ -13,9 +13,14 @@ export default function NextAvailability({
     const locale = useLocale();
 
     return (
-        <p className="max-sm:text-center">
-            <span className="mr-1 font-medium">Next availability :</span>
-            <span className="rounded-md bg-[#237a83] px-1.5 pb-1 pt-px text-white max-sm:block">
+        <div
+            className="flex flex-wrap max-sm:justify-center"
+            aria-describedby="nextAvailability"
+        >
+            <h2 id="nextAvailability" className="mr-1 font-medium">
+                Next availability :
+            </h2>
+            <p className="rounded-md bg-[#237a83] px-1.5 pb-1 pt-px text-center text-white max-sm:block">
                 {`${appointment.start.toLocaleDateString(locale, {
                     minute: '2-digit',
                     hour: '2-digit',
@@ -29,7 +34,7 @@ export default function NextAvailability({
                     month: 'long',
                     year: 'numeric',
                 })}`}
-            </span>
-        </p>
+            </p>
+        </div>
     );
 }

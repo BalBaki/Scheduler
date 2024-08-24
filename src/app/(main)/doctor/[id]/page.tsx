@@ -108,7 +108,7 @@ export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
                             About me
                         </h2>
                         <p
-                            className="ck-content mt-2"
+                            className="ck-content mt-2 overflow-x-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
                             dangerouslySetInnerHTML={{
                                 __html: doctor.description,
                             }}

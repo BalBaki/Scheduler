@@ -35,7 +35,7 @@ export default function Languages() {
             name="languages"
             render={({ field }) => (
                 <FormItem className="flex flex-col md:mt-2.5">
-                    <FormLabel>Languages</FormLabel>
+                    <FormLabel className="w-fit">Languages</FormLabel>
                     <Popover>
                         <PopoverTrigger asChild>
                             <FormControl>

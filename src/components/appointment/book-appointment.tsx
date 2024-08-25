@@ -1,7 +1,6 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ImSpinner6 } from 'react-icons/im';
 import { toast } from 'react-toastify';
 import { bookAppointment } from '@/actions/book-appointment';
 import {
@@ -15,6 +14,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import LoadingSpinner from '../loading-spinner';
 
 type BookAppoinmentProps = {
     id: string;
@@ -45,11 +45,7 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
                 disabled={isPending}
                 aria-label="Confirmation of book appointment"
             >
-                {isPending ? (
-                    <ImSpinner6 className="size-6 animate-spin" />
-                ) : (
-                    'Book'
-                )}
+                {isPending ? <LoadingSpinner /> : 'Book'}
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
@@ -69,11 +65,7 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
                         disabled={isPending}
                         aria-label="Confirm book appointment"
                     >
-                        {isPending ? (
-                            <ImSpinner6 className="size-6 animate-spin" />
-                        ) : (
-                            'Confirm'
-                        )}
+                        {isPending ? <LoadingSpinner /> : 'Confirm'}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

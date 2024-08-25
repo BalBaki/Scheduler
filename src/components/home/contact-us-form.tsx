@@ -5,7 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FcCheckmark } from 'react-icons/fc';
-import { ImSpinner6 } from 'react-icons/im';
 import { createFeedBack } from '@/actions/create-feedback';
 import {
     Form,
@@ -18,6 +17,7 @@ import {
 } from '@/components/ui/form';
 import { contactUsFormSchema } from '@/schemas';
 import FormValidationError from '../form-validation-error';
+import LoadingSpinner from '../loading-spinner';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
@@ -127,11 +127,7 @@ export default function ContactUsForm() {
                                 aria-label={isPending ? 'Submitting' : 'Submit'}
                                 className="text-md mt-1 w-24 bg-[#cf471f] text-white"
                             >
-                                {isPending ? (
-                                    <ImSpinner6 className="size-6 animate-spin" />
-                                ) : (
-                                    'Submit'
-                                )}
+                                {isPending ? <LoadingSpinner /> : 'Submit'}
                             </Button>
                         </form>
                     </Form>

@@ -3,10 +3,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { ImSpinner6 } from 'react-icons/im';
 import { toast } from 'react-toastify';
 import { addAppointment } from '@/actions/add-appointment';
 import FormValidationError from '@/components/form-validation-error';
+import LoadingSpinner from '@/components/loading-spinner';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -184,11 +184,7 @@ export default function AddAppointmentPopup({
                                         isPending || !form.formState.isValid
                                     }
                                 >
-                                    {isPending ? (
-                                        <ImSpinner6 className="size-6 animate-spin" />
-                                    ) : (
-                                        'Save'
-                                    )}
+                                    {isPending ? <LoadingSpinner /> : 'Save'}
                                 </Button>
                             </DialogFooter>
                             {result?.errors?._form && (

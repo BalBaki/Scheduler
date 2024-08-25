@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
-import { ImSpinner6 } from 'react-icons/im';
 import { toast } from 'react-toastify';
 import { approveAllUsers } from '@/actions/approve-all-users';
+import LoadingSpinner from '@/components/loading-spinner';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -40,7 +40,7 @@ export default function ApproveAll() {
                 aria-label="Approve all waiting users"
             >
                 {isPending ? (
-                    <ImSpinner6 className="size-full animate-spin py-2" />
+                    <LoadingSpinner className="py-2" />
                 ) : (
                     'Approve All'
                 )}

@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { getSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import { ImSpinner6 } from 'react-icons/im';
 import { credentialsSignIn } from '@/actions/credentials-sign-in';
 import {
     Form,
@@ -19,6 +18,7 @@ import {
 } from '@/components/ui/form';
 import { signInSchema } from '@/schemas';
 import FormValidationError from '../form-validation-error';
+import LoadingSpinner from '../loading-spinner';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import type { SubmitHandler } from 'react-hook-form';
@@ -114,11 +114,7 @@ export default function CredentialsSignIn() {
                             disabled={isPending || !form.formState.isValid}
                             aria-label={isPending ? 'Logging in' : 'Login'}
                         >
-                            {isPending ? (
-                                <ImSpinner6 className="size-6 animate-spin" />
-                            ) : (
-                                'Login'
-                            )}
+                            {isPending ? <LoadingSpinner /> : 'Login'}
                         </Button>
                     </form>
                 </Form>

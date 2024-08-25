@@ -1,9 +1,9 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ImSpinner6 } from 'react-icons/im';
 import { toast } from 'react-toastify';
 import { removeAppointment } from '@/actions/remove-appointment';
+import LoadingSpinner from '@/components/loading-spinner';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -47,11 +47,7 @@ export default function RemoveAppointment({
                 disabled={isPending}
                 aria-label="Confirmation of delete appointment"
             >
-                {isPending ? (
-                    <ImSpinner6 className="size-6 animate-spin" />
-                ) : (
-                    'Delete'
-                )}
+                {isPending ? <LoadingSpinner /> : 'Delete'}
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
@@ -70,11 +66,7 @@ export default function RemoveAppointment({
                         disabled={isPending}
                         aria-label="Confirm remove appointment"
                     >
-                        {isPending ? (
-                            <ImSpinner6 className="size-6 animate-spin" />
-                        ) : (
-                            'Delete'
-                        )}
+                        {isPending ? <LoadingSpinner /> : 'Delete'}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

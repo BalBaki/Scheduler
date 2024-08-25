@@ -2,9 +2,9 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GiCancel } from 'react-icons/gi';
-import { ImSpinner6 } from 'react-icons/im';
 import { toast } from 'react-toastify';
 import { cancelAppointment } from '@/actions/cancel-appointment';
+import LoadingSpinner from '@/components/loading-spinner';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -47,7 +47,7 @@ export default function CancelAppointment({
                 aria-label="Cancel appointment"
             >
                 {isPending ? (
-                    <ImSpinner6 className="size-6 animate-spin" />
+                    <LoadingSpinner />
                 ) : (
                     <GiCancel className="size-6" color="red" />
                 )}
@@ -67,11 +67,7 @@ export default function CancelAppointment({
                         disabled={isPending}
                         onClick={handleContinueClick}
                     >
-                        {isPending ? (
-                            <ImSpinner6 className="size-6 animate-spin" />
-                        ) : (
-                            'Continue'
-                        )}
+                        {isPending ? <LoadingSpinner /> : 'Continue'}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

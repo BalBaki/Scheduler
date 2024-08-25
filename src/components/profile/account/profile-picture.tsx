@@ -5,10 +5,10 @@ import Image from 'next/image';
 import { useMutation } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { CgProfile } from 'react-icons/cg';
-import { ImSpinner6 } from 'react-icons/im';
 import { toast } from 'react-toastify';
 import ImageCrop from './image-crop';
 import { updateProfilePicture } from '@/actions/update-profile-picture';
+import LoadingSpinner from '@/components/loading-spinner';
 import { Button } from '../../ui/button';
 
 export default function ProfilePicture() {
@@ -106,7 +106,7 @@ export default function ProfilePicture() {
                             }}
                         >
                             {isPending ? (
-                                <ImSpinner6 className="h-full w-full animate-spin" />
+                                <LoadingSpinner className="size-full" />
                             ) : (
                                 'Save'
                             )}

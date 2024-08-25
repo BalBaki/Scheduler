@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { getSession } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ImSpinner6 } from 'react-icons/im';
 import { signUp } from '@/actions/sign-up';
 import {
     Form,
@@ -26,6 +25,7 @@ import {
 } from '@/components/ui/select';
 import { signUpSchema } from '@/schemas';
 import FormValidationError from '../form-validation-error';
+import LoadingSpinner from '../loading-spinner';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import type { SignUpForm } from '@/types';
@@ -283,11 +283,7 @@ export default function SignUp() {
                             disabled={isPending || !form.formState.isValid}
                             aria-label={isPending ? 'Registering' : 'Register'}
                         >
-                            {isPending ? (
-                                <ImSpinner6 className="size-6 animate-spin" />
-                            ) : (
-                                'Register'
-                            )}
+                            {isPending ? <LoadingSpinner /> : 'Register'}
                         </Button>
                     </form>
                 </Form>

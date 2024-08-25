@@ -11,7 +11,7 @@ type UserStatusProps = {
 export default function UserStatus({ children }: UserStatusProps) {
     const { data: session, status } = useSession();
 
-    if (!session && status === 'loading') return <LoadingSpinner />;
+    if (!session && status === 'loading') return <LoadingSpinner page />;
 
     if (session && session.user.status === 'DECLINED')
         return (

@@ -1,41 +1,9 @@
-// import { FcApproval, FcCancel } from 'react-icons/fc';
-// import { ImSpinner6 } from 'react-icons/im';
-// import { updateUserStatus } from '@/actions/update-user-status';
-// import type { UserWithoutPassword } from '@/types';
-// import SubmitButton from '@/components/submit-button';
-
-// type ApproveButtonsProps = {
-//     user: UserWithoutPassword;
-// };
-
-// export default function ApproveButtons({ user }: ApproveButtonsProps) {
-//     return (
-//         <>
-//             <form action={updateUserStatus.bind(null, { id: user.id, status: 'APPROVED' })}>
-//                 <SubmitButton className="size-6" pendingText={<ImSpinner6 className="w-full h-full animate-spin" />}>
-//                     <FcApproval className="w-full h-full" />
-//                 </SubmitButton>
-//             </form>
-//             {user.status !== 'DECLINED' && (
-//                 <form action={updateUserStatus.bind(null, { id: user.id, status: 'DECLINED' })}>
-//                     <SubmitButton
-//                         className="size-6"
-//                         pendingText={<ImSpinner6 className="w-full h-full animate-spin" />}
-//                     >
-//                         <FcCancel className="w-full h-full" />
-//                     </SubmitButton>
-//                 </form>
-//             )}
-//         </>
-//     );
-// }
-
 'use client';
 
 import { useTransition } from 'react';
 import { FcApproval, FcCancel } from 'react-icons/fc';
-import { ImSpinner6 } from 'react-icons/im';
 import { updateUserStatus } from '@/actions/update-user-status';
+import LoadingSpinner from '@/components/loading-spinner';
 import type { UserWithoutPassword } from '@/types';
 
 type StatusButtonsProps = {
@@ -62,7 +30,7 @@ export default function StatusButtons({ user }: StatusButtonsProps) {
                     aria-label="Approve user"
                 >
                     {isPending ? (
-                        <ImSpinner6 className="size-full animate-spin" />
+                        <LoadingSpinner className="size-full" />
                     ) : (
                         <FcApproval className="size-full" />
                     )}
@@ -83,7 +51,7 @@ export default function StatusButtons({ user }: StatusButtonsProps) {
                     aria-label="Decline user"
                 >
                     {isPending ? (
-                        <ImSpinner6 className="size-full animate-spin" />
+                        <LoadingSpinner className="size-full" />
                     ) : (
                         <FcCancel className="size-full" />
                     )}

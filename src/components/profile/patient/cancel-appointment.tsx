@@ -10,6 +10,7 @@ import {
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
+    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
@@ -57,6 +58,10 @@ export default function CancelAppointment({
                     <AlertDialogTitle>
                         Are you sure you want to cancel the appointment?
                     </AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        cancel your appointment.
+                    </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel aria-label="Cancel process">

@@ -10,6 +10,7 @@ import {
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
+    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
@@ -35,12 +36,12 @@ export default function ApproveAll() {
     return (
         <AlertDialog>
             <AlertDialogTrigger
-                className="h-10 w-28 rounded-md border border-black text-sm max-sm:mt-1 max-sm:w-full"
+                className="flex h-10 w-28 items-center justify-center rounded-md border border-black text-sm max-sm:mt-1 max-sm:w-full"
                 disabled={isPending}
                 aria-label="Approve all waiting users"
             >
                 {isPending ? (
-                    <LoadingSpinner className="py-2" />
+                    <LoadingSpinner className="mx-auto py-2" />
                 ) : (
                     'Approve All'
                 )}
@@ -50,6 +51,10 @@ export default function ApproveAll() {
                     <AlertDialogTitle>
                         Are you sure to approve all users?
                     </AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This action cannot be undone. Are you sure to approve
+                        all users waiting for approval?
+                    </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel

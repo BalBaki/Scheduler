@@ -1,8 +1,15 @@
 export default function AboutUs() {
     return (
-        <section aria-describedby="aboutUs" className="bg-gray-200 px-14 py-20">
+        <section
+            id="aboutUs"
+            aria-describedby="aboutUsDescription"
+            className="bg-gray-200 px-14 py-20"
+        >
             <div className="mx-auto max-w-screen-lg">
-                <h2 id="aboutUs" className="mx-auto mb-4 text-xl font-bold">
+                <h2
+                    id="aboutUsDescription"
+                    className="mx-auto mb-4 text-xl font-bold"
+                >
                     ABOUT US
                 </h2>
                 <div className="grid justify-center gap-x-12 gap-y-5 md:grid-cols-2">

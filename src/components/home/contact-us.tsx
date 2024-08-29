@@ -2,7 +2,11 @@ import ContactUsForm from './contact-us-form';
 
 export default function ContactUs() {
     return (
-        <section aria-labelledby="contactUs" className="bg-gray-200">
+        <section
+            id="contactUs"
+            aria-describedby="contactUsDescription"
+            className="bg-gray-200"
+        >
             <div className="mx-6 mt-24 grid max-w-screen-lg py-12 max-md:gap-y-5 md:grid-cols-2 md:gap-x-5 lg:mx-auto">
                 <div className="flex flex-col gap-y-5 md:mt-10">
                     <h3 className="text-2xl">Help Us 24/7</h3>
@@ -20,7 +24,7 @@ export default function ContactUs() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-y-5">
-                    <h2 id="contactUs" className="text-2xl">
+                    <h2 id="contactUsDescription" className="text-2xl">
                         Contact Us
                     </h2>
                     <h3 className="text-4xl font-bold">Request A Quote</h3>

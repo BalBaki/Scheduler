@@ -15,6 +15,7 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import LoadingSpinner from '../loading-spinner';
+import { Button } from '../ui/button';
 
 type BookAppoinmentProps = {
     id: string;
@@ -40,12 +41,18 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
 
     return (
         <AlertDialog>
-            <AlertDialogTrigger
-                className="flex h-10 w-20 items-center justify-center rounded-md bg-green-500 text-white"
-                disabled={isPending}
-                aria-label="Confirmation of book appointment"
-            >
-                {isPending ? <LoadingSpinner /> : 'Book'}
+            <AlertDialogTrigger asChild>
+                <Button
+                    className="flex h-10 w-20 items-center justify-center rounded-md bg-green-500 text-white"
+                    disabled={isPending}
+                    aria-label={
+                        isPending
+                            ? 'Booking'
+                            : 'Confirmation of book appointment'
+                    }
+                >
+                    {isPending ? <LoadingSpinner /> : 'Book'}
+                </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
@@ -65,7 +72,7 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
                         disabled={isPending}
                         aria-label="Confirm book appointment"
                     >
-                        {isPending ? <LoadingSpinner /> : 'Confirm'}
+                        Confirm
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

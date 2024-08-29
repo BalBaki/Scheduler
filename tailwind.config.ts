@@ -88,18 +88,6 @@ const config = {
         require('tailwind-scrollbar'),
         plugin(function ({ addUtilities }) {
             addUtilities({
-                '.visually-hidden': {
-                    position: 'absolute',
-                    border: '0px',
-                    width: '1px',
-                    height: '1px',
-                    padding: '0px',
-                    margin: '-1px',
-                    overflow: 'hidden',
-                    clipPath: 'inset(0 0 100% 100%)',
-                    'white-space': 'nowrap',
-                    'overflow-wrap': 'normal',
-                },
                 '.popover-content-width-same-as-its-trigger': {
                     width: 'var(--radix-popover-trigger-width)',
                     'max-height':

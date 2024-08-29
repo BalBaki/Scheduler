@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import FeedbackFilters from '@/components/dashboard/feedback/feedback-filters';
 import FeedbackList from '@/components/dashboard/feedback/feedback-list';
 import Pagination from '@/components/pagination';
-import VisuallyHidden from '@/components/visually-hidden';
 import db from '@/db';
 import { getFeedbackCount } from '@/db/queries/feedback-count';
 import { feedbackFilterSchema } from '@/schemas';
@@ -46,9 +45,9 @@ export default async function FeedbackPage({
 
     return (
         <section className="mt-2" aria-labelledby="feedbacks">
-            <VisuallyHidden>
-                <h1 id="feedbacks">Feedback List</h1>
-            </VisuallyHidden>
+            <h1 id="feedbacks" className="sr-only">
+                Feedback List
+            </h1>
             <div className="flex flex-wrap justify-between max-sm:flex-col">
                 <FeedbackFilters validatedFilters={validatedParams.data} />
             </div>

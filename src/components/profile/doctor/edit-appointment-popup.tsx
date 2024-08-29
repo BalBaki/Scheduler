@@ -14,7 +14,6 @@ import { Label } from '@/components/ui/label';
 import UserDetailPopover from '@/components/user-detail-popover';
 import { useLocale } from '@/hooks/use-locale';
 import { DialogDescription } from '@radix-ui/react-dialog';
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import type { EventContentArg } from '@fullcalendar/core/index.js';
 
 type EditAppointmentPopupProps = {
@@ -44,9 +43,7 @@ export default function EditAppointmentPopup({
                     : event.title}
             </DialogTrigger>
             <DialogHeader>
-                <VisuallyHidden.Root>
-                    <DialogTitle>Edit Appointment</DialogTitle>
-                </VisuallyHidden.Root>
+                <DialogTitle className="sr-only">Edit Appointment</DialogTitle>
                 <DialogContent
                     className="max-w-[425px]"
                     onOpenAutoFocus={(e) => e.preventDefault()}

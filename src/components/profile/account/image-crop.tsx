@@ -13,7 +13,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import type { Dispatch, SetStateAction } from 'react';
 import type { Crop, PixelCrop } from 'react-image-crop';
 
@@ -117,9 +116,6 @@ export default function ImageCrop({
                     <DialogTitle>Crop Image</DialogTitle>
                     <DialogDescription asChild className="text-center">
                         <div>
-                            <VisuallyHidden.Root>
-                                Crop Image
-                            </VisuallyHidden.Root>
                             <ReactCrop
                                 crop={crop}
                                 onChange={(c) => setCrop(c)}

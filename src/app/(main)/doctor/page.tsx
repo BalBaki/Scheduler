@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoPersonCircle } from 'react-icons/io5';
-import VisuallyHidden from '@/components/visually-hidden';
 import db from '@/db';
 import languages from '@/languages.json';
 
@@ -35,9 +34,7 @@ export default async function Doctor() {
                         <h2 className="break-all font-semibold capitalize">{`${doctor.name} ${doctor.surname}`}</h2>
                         {doctor.description && (
                             <div>
-                                <VisuallyHidden>
-                                    <h3>Description</h3>
-                                </VisuallyHidden>
+                                <h3 className="sr-only">Description</h3>
                                 <p
                                     dangerouslySetInnerHTML={{
                                         __html: doctor.description,

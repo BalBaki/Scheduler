@@ -26,10 +26,8 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useLocale } from '@/hooks/use-locale';
 import { addAppointmentSchema } from '@/schemas';
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import type { Dispatch, SetStateAction } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import type { AddAppointmentForm } from '@/types';
@@ -93,9 +91,9 @@ export default function AddAppointmentPopup({
                     <DialogTitle className="uppercase">
                         Add Appointment
                     </DialogTitle>
-                    <VisuallyHidden.Root>
-                        <DialogDescription>Add Appointment</DialogDescription>
-                    </VisuallyHidden.Root>
+                    <DialogDescription className="sr-only">
+                        Add new appointment
+                    </DialogDescription>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)}>
                             <div className="flex flex-col gap-y-1">

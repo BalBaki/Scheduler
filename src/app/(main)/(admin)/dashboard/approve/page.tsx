@@ -3,7 +3,6 @@ import ApproveAll from '@/components/dashboard/approve/approve-all';
 import UserFilters from '@/components/dashboard/approve/user-filters';
 import UserList from '@/components/dashboard/approve/user-list';
 import Pagination from '@/components/pagination';
-import VisuallyHidden from '@/components/visually-hidden';
 import db from '@/db';
 import { getUserCount } from '@/db/queries/user-count';
 import { prismaExclude } from '@/lib/prisma-exclude';
@@ -55,9 +54,9 @@ export default async function ApprovePage({ searchParams }: ApprovePageProps) {
 
     return (
         <section className="mt-2" aria-labelledby="userList">
-            <VisuallyHidden>
-                <h1 id="userList">User List</h1>
-            </VisuallyHidden>
+            <h1 id="userList" className="sr-only">
+                User List
+            </h1>
             <div className="flex flex-wrap justify-between max-sm:flex-col">
                 <UserFilters validatedfilters={validatedParams.data} />
                 <ApproveAll />

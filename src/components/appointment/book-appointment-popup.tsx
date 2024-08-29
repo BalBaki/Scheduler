@@ -15,7 +15,6 @@ import {
 import { useLocale } from '@/hooks/use-locale';
 import { Label } from '../ui/label';
 import WaitForApprove from '../wait-for-approve';
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import type { EventContentArg } from '@fullcalendar/core/index.js';
 
 type BookAppoinmentPopupProps = {
@@ -54,9 +53,9 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
                 {session?.user ? (
                     session.user.status !== 'APPROVED' ? (
                         <DialogHeader className="mt-3 text-left">
-                            <VisuallyHidden.Root>
-                                <DialogTitle>Waiting for approve</DialogTitle>
-                            </VisuallyHidden.Root>
+                            <DialogTitle className="sr-only">
+                                Waiting for approve
+                            </DialogTitle>
                             <DialogDescription>
                                 <WaitForApprove />
                             </DialogDescription>
@@ -64,9 +63,9 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
                     ) : (
                         <>
                             <DialogHeader className="mt-3 text-left">
-                                <VisuallyHidden.Root>
-                                    <DialogTitle>Book Appointment</DialogTitle>
-                                </VisuallyHidden.Root>
+                                <DialogTitle className="sr-only">
+                                    Book Appointment
+                                </DialogTitle>
                                 <DialogDescription asChild>
                                     <div className="flex flex-col gap-y-2">
                                         <div className="flex flex-col gap-y-1">
@@ -122,9 +121,7 @@ export default function BookAppoinmentPopup({ arg }: BookAppoinmentPopupProps) {
                     )
                 ) : (
                     <>
-                        <VisuallyHidden.Root>
-                            <DialogTitle>Login</DialogTitle>
-                        </VisuallyHidden.Root>
+                        <DialogTitle className="sr-only">Login</DialogTitle>
                         <DialogDescription asChild>
                             <Link href="/login">
                                 <div className="mt-3 rounded-md border-2 bg-gray-400 py-3 text-center text-white">

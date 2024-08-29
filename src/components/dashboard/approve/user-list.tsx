@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import StatusButtons from './status-buttons';
 import {
     Table,
@@ -16,10 +17,10 @@ import type { UserWithoutPassword } from '@/types';
 
 type UserListProps = {
     users: UserWithoutPassword[];
-    page: number;
 };
 
-export default function UserList({ users, page }: UserListProps) {
+export default function UserList({ users }: UserListProps) {
+    const searchParams = useSearchParams();
     const tableRef = useRef<HTMLTableElement | null>(null);
 
     useEffect(() => {
@@ -29,7 +30,7 @@ export default function UserList({ users, page }: UserListProps) {
             block: 'start',
             inline: 'start',
         });
-    }, [page]);
+    }, [searchParams]);
 
     if (users.length < 1) return <div>No users...</div>;
 

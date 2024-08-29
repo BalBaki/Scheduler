@@ -62,7 +62,7 @@ export default async function ApprovePage({ searchParams }: ApprovePageProps) {
                 <UserFilters validatedfilters={validatedParams.data} />
                 <ApproveAll />
             </div>
-            <UserList users={users} page={page} />
+            <UserList users={users} />
             <Pagination
                 totalCount={userCount}
                 itemCountPerPage={itemCountPerPage}

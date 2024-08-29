@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
     Table,
     TableBody,
@@ -15,10 +16,10 @@ import type { Feedback } from '@prisma/client';
 
 type UserListProps = {
     feedbacks: Feedback[];
-    page: number;
 };
 
-export default function FeedbackList({ feedbacks, page }: UserListProps) {
+export default function FeedbackList({ feedbacks }: UserListProps) {
+    const searchParams = useSearchParams();
     const tableRef = useRef<HTMLTableElement | null>(null);
 
     useEffect(() => {
@@ -28,7 +29,7 @@ export default function FeedbackList({ feedbacks, page }: UserListProps) {
             block: 'start',
             inline: 'start',
         });
-    }, [page]);
+    }, [useSearchParams]);
 
     if (feedbacks.length < 1) return <div>No feedback.</div>;
 

@@ -52,7 +52,7 @@ export default async function FeedbackPage({
             <div className="flex flex-wrap justify-between max-sm:flex-col">
                 <FeedbackFilters validatedFilters={validatedParams.data} />
             </div>
-            <FeedbackList feedbacks={feedbacks} page={page} />
+            <FeedbackList feedbacks={feedbacks} />
             <Pagination
                 totalCount={feedbackCount}
                 itemCountPerPage={itemCountPerPage}

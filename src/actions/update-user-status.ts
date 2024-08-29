@@ -24,7 +24,12 @@ export const updateUserStatus = async ({
         });
 
         if (!user) return { update: false, error: 'Not exits User...' };
-        if (!session || session.user.role !== 'ADMIN' || user.role === 'ADMIN')
+        if (
+            !session ||
+            session.user.role !== 'ADMIN' ||
+            session.user.status !== 'APPROVED' ||
+            user.role === 'ADMIN'
+        )
             return { update: false, error: 'You have no authorization..!' };
 
         const updatedUser = await db.user.update({

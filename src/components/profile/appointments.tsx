@@ -20,10 +20,10 @@ export default function Appointments() {
 
     if (isPending)
         return (
-            <div className="mt-3 max-w-[55rem] space-y-4">
-                <Skeleton className="h-12 w-full rounded-md" />
-                <Skeleton className="h-12 w-full rounded-md" />
-                <Skeleton className="h-12 w-full rounded-md" />
+            <div className="mt-3 w-full space-y-4">
+                <Skeleton className="h-12 w-full rounded-md bg-gray-200" />
+                <Skeleton className="h-12 w-full rounded-md bg-gray-200" />
+                <Skeleton className="h-12 w-full rounded-md bg-gray-200" />
             </div>
         );
     if (!data?.search) return <div>Error: {data?.error}</div>;

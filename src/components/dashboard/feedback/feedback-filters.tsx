@@ -39,10 +39,10 @@ export default function FeedbackFilters({
     };
 
     return (
-        <div className="w-full sm:max-w-md">
+        <div className="max-sm:w-full">
             <Form {...form}>
                 <form
-                    className="flex items-end gap-x-1 max-sm:block"
+                    className="flex gap-2 max-sm:flex-col sm:items-end"
                     onSubmit={form.handleSubmit(onSubmit)}
                 >
                     <FormField
@@ -58,20 +58,20 @@ export default function FeedbackFilters({
                                         placeholder="Search By Email..."
                                     />
                                 </FormControl>
-                                <FormDescription />
+                                <FormDescription className="sr-only">
+                                    Email to search
+                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <div className="mb-2 flex items-center max-sm:mt-1">
-                        <Button
-                            type="submit"
-                            disabled={!form.formState.isValid}
-                            className="w-20"
-                        >
-                            Search
-                        </Button>
-                    </div>
+                    <Button
+                        type="submit"
+                        disabled={!form.formState.isValid}
+                        className="w-full sm:w-20"
+                    >
+                        Search
+                    </Button>
                 </form>
             </Form>
         </div>

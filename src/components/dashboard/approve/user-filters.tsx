@@ -45,10 +45,10 @@ export default function UserFilters({ validatedfilters }: UserFilters) {
     };
 
     return (
-        <div className="w-full sm:max-w-md">
+        <div className="max-sm:w-full">
             <Form {...form}>
                 <form
-                    className="flex items-end gap-x-1 max-sm:block"
+                    className="flex gap-2 max-sm:flex-col md:items-end"
                     onSubmit={form.handleSubmit(onSubmit)}
                 >
                     <FormField
@@ -60,11 +60,13 @@ export default function UserFilters({ validatedfilters }: UserFilters) {
                                 <FormControl>
                                     <Input
                                         {...field}
-                                        className="w-full sm:w-80"
+                                        className="w-full sm:w-64"
                                         placeholder="Search By Email..."
                                     />
                                 </FormControl>
-                                <FormDescription />
+                                <FormDescription className="sr-only">
+                                    Email to search
+                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -81,7 +83,7 @@ export default function UserFilters({ validatedfilters }: UserFilters) {
                                 >
                                     <FormControl>
                                         <SelectTrigger
-                                            className="w-36"
+                                            className="w-full sm:w-36"
                                             aria-label={field.value}
                                             {...field}
                                         >
@@ -108,20 +110,20 @@ export default function UserFilters({ validatedfilters }: UserFilters) {
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
-                                <FormDescription />
+                                <FormDescription className="sr-only">
+                                    User status to search
+                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <div className="mb-2 flex items-center max-sm:mt-1">
-                        <Button
-                            type="submit"
-                            disabled={!form.formState.isValid}
-                            className="w-20"
-                        >
-                            Search
-                        </Button>
-                    </div>
+                    <Button
+                        type="submit"
+                        disabled={!form.formState.isValid}
+                        className="mt-auto w-full sm:w-20"
+                    >
+                        Search
+                    </Button>
                 </form>
             </Form>
         </div>

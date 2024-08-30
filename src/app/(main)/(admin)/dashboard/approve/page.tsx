@@ -57,7 +57,7 @@ export default async function ApprovePage({ searchParams }: ApprovePageProps) {
             <h1 id="userList" className="sr-only">
                 User List
             </h1>
-            <div className="flex flex-wrap justify-between max-sm:flex-col">
+            <div className="flex flex-wrap items-end justify-between gap-2 max-sm:flex-col">
                 <UserFilters validatedfilters={validatedParams.data} />
                 <ApproveAll />
             </div>

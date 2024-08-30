@@ -36,7 +36,7 @@ export default function ApproveAll() {
     return (
         <AlertDialog>
             <AlertDialogTrigger
-                className="flex h-10 w-28 items-center justify-center rounded-md border border-black text-sm max-sm:mt-1 max-sm:w-full"
+                className="flex h-10 w-28 items-center justify-center rounded-md border border-black text-sm max-sm:w-full"
                 disabled={isPending}
                 aria-label="Approve all waiting users"
             >

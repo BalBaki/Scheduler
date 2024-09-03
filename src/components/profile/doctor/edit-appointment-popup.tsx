@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import UserDetailPopover from '@/components/user-detail-popover';
+import UserDetail from '@/components/user-detail';
 import { useLocale } from '@/hooks/use-locale';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import type { EventContentArg } from '@fullcalendar/core/index.js';
@@ -106,7 +106,7 @@ export default function EditAppointmentPopup({
                                     />
                                 </div>
                                 {event.extendedProps.patient && (
-                                    <UserDetailPopover
+                                    <UserDetail
                                         triggerText="Patient Detail"
                                         user={event.extendedProps.patient}
                                     />

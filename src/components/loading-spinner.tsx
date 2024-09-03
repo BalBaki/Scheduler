@@ -2,17 +2,19 @@ import { ImSpinner9 } from 'react-icons/im';
 import { cn } from '@/lib/utils';
 import type { IconBaseProps, IconType } from 'react-icons/lib';
 
-type LoadingSpinnerProps =
-    | ({
+type LoadingSpinnerProps = (
+    | {
           icon?: IconType;
           page?: false;
           containerProps?: never;
-      } & IconBaseProps)
-    | ({
+      }
+    | {
           icon?: IconType;
           page: true;
           containerProps?: React.ComponentPropsWithoutRef<'div'>;
-      } & IconBaseProps);
+      }
+) &
+    IconBaseProps;
 
 export default function LoadingSpinner({
     icon: Icon = ImSpinner9,
@@ -21,10 +23,14 @@ export default function LoadingSpinner({
     containerProps,
     ...props
 }: LoadingSpinnerProps) {
-    const iconClasses = cn('animate-spin size-6', {
-        'size-44': page,
-    });
-    const icon = <Icon className={iconClasses} {...props} />;
+    const icon = (
+        <Icon
+            className={cn('size-6 animate-spin', {
+                'size-44': page,
+            })}
+            {...props}
+        />
+    );
 
     if (page) {
         let containerPropsWithoutClassName: Omit<

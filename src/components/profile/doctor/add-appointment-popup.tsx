@@ -51,7 +51,7 @@ export default function AddAppointmentPopup({
             title: '',
             start: '',
             end: '',
-            date: date?.toLocaleDateString('en-CA', {
+            date: date?.toLocaleDateString(locale, {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',

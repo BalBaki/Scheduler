@@ -11,7 +11,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import UserDetailPopover from '@/components/user-detail-popover';
+import UserDetail from '@/components/user-detail';
 import { useLocale } from '@/hooks/use-locale';
 import type { UserWithoutPassword } from '@/types';
 import type { Appointment } from '@prisma/client';
@@ -48,7 +48,7 @@ export default function AppointmentList({
                         <TableCell>{appointment.id}</TableCell>
                         <TableCell>{appointment.title}</TableCell>
                         <TableCell className="cursor-pointer">
-                            <UserDetailPopover
+                            <UserDetail
                                 triggerText={`${appointment.doctor?.name} ${appointment.doctor?.surname}`}
                                 user={appointment?.doctor}
                             />

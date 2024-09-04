@@ -1,42 +1,40 @@
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 import { IoPersonCircle } from 'react-icons/io5';
 import AppointmentCalendar from '@/components/appointment/calendar';
 import NextAvailability from '@/components/doctor/next-availability';
 import db from '@/db';
+import { getDoctorWithValidAppointmentsById } from '@/db/queries/user';
 import languages from '@/languages.json';
+import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import { prismaExclude } from '@/lib/prisma-exclude';
+import { capitalizeFirstLetter } from '@/lib/utils';
+import type { Metadata } from 'next';
 
 type DoctorPageProps = {
     params: { id: string };
 };
 
+export async function generateMetadata({
+    params,
+}: DoctorPageProps): Promise<Metadata> {
+    const doctor = await getDoctorWithValidAppointmentsById(params.id);
+    const doctorFullName = `${capitalizeFirstLetter(doctor?.name || '')} ${capitalizeFirstLetter(doctor?.surname || '')}`;
+
+    return {
+        title: `${doctorFullName} - ${METADATA_TITLE_SITE_NAME}`,
+        description: `View detailed information about ${doctorFullName}, including qualifications, availability, and patient reviews. Book an appointment today.`,
+    };
+}
+
 export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
-    const doctor = await db.user.findFirst({
-        where: {
-            id,
-        },
-        select: {
-            ...prismaExclude('User', ['password']),
-            doctorAppointments: {
-                where: {
-                    start: { gte: new Date() },
-                },
-                orderBy: {
-                    start: 'asc',
-                },
-            },
-        },
-    });
+    const doctor = await getDoctorWithValidAppointmentsById(id);
+
     const nextAvailableAppointment = doctor?.doctorAppointments.find(
         (appointment) => !appointment.patientId,
     );
 
-    if (!doctor || doctor.role !== 'DOCTOR')
-        return (
-            <div className="flex h-screen items-center justify-center text-4xl text-red-500">
-                This User is not Doctor..!
-            </div>
-        );
+    if (!doctor || doctor.role !== 'DOCTOR') return notFound();
 
     return (
         <div>

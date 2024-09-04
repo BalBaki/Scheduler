@@ -3,6 +3,14 @@ import Link from 'next/link';
 import { IoPersonCircle } from 'react-icons/io5';
 import db from '@/db';
 import languages from '@/languages.json';
+import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: `Doctors - ${METADATA_TITLE_SITE_NAME}`,
+    description:
+        'Browse our list of registered doctors. Find the right specialist and book your appointment online.',
+};
 
 export default async function Doctor() {
     const doctors = await db.user.findMany({

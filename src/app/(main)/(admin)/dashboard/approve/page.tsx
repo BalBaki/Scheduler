@@ -5,8 +5,16 @@ import UserList from '@/components/dashboard/approve/user-list';
 import Pagination from '@/components/pagination';
 import db from '@/db';
 import { getUserCount } from '@/db/queries/user-count';
+import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import { prismaExclude } from '@/lib/prisma-exclude';
 import { userFilterSchema } from '@/schemas';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: `Approve Registered Users - ${METADATA_TITLE_SITE_NAME}`,
+    description:
+        'Review and approve new user registrations. Manage access for doctors and patients on your platform.',
+};
 
 type ApprovePageProps = {
     searchParams: {

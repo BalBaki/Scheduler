@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
-import { __NEXTAUTH, getSession } from 'next-auth/react';
 import { signout } from '@/actions/sign-out';
+import { triggerClientSessionUpdate } from '@/lib/trigger-client-session-update';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import type { ButtonProps } from '../ui/button';
@@ -21,9 +21,7 @@ export default function SignOut({
             if (logout) {
                 router.push('/');
 
-                await getSession();
-
-                await __NEXTAUTH._getSession({ event: 'storage' });
+                await triggerClientSessionUpdate();
             }
         },
     });

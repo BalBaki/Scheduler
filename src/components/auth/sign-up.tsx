@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { getSession } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { signUp } from '@/actions/sign-up';
 import {
@@ -23,6 +22,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { triggerClientSessionUpdate } from '@/lib/trigger-client-session-update';
 import { signUpSchema } from '@/schemas';
 import FormValidationError from '../form-validation-error';
 import LoadingSpinner from '../loading-spinner';
@@ -53,7 +53,7 @@ export default function SignUp() {
         mutationFn: signUp,
         async onSuccess({ register }) {
             if (register) {
-                await getSession();
+                await triggerClientSessionUpdate();
 
                 router.push('/');
             } else {

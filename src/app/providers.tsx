@@ -12,9 +12,7 @@ const queryClient = new QueryClient();
 export default function Providers({ children }: ProvidersProps) {
     return (
         <QueryClientProvider client={queryClient}>
-            <SessionProvider refetchOnWindowFocus={false}>
-                {children}
-            </SessionProvider>
+            <SessionProvider>{children}</SessionProvider>
         </QueryClientProvider>
     );
 }

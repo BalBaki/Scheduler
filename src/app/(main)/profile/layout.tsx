@@ -1,3 +1,4 @@
+import ApprovedUserCheck from '@/components/approved-user-check';
 import Tabs from '@/components/profile/tabs';
 
 type ProfileLayoutProps = {
@@ -7,8 +8,10 @@ type ProfileLayoutProps = {
 export default function ProfileLayout({ children }: ProfileLayoutProps) {
     return (
         <div className="mx-2 mt-1 flex gap-2 max-md:flex-col max-sm:gap-y-2">
-            <Tabs />
-            {children}
+            <ApprovedUserCheck>
+                <Tabs />
+                {children}
+            </ApprovedUserCheck>
         </div>
     );
 }

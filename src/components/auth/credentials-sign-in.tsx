@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { getSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { credentialsSignIn } from '@/actions/credentials-sign-in';
 import {
@@ -16,6 +15,7 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { triggerClientSessionUpdate } from '@/lib/trigger-client-session-update';
 import { signInSchema } from '@/schemas';
 import FormValidationError from '../form-validation-error';
 import LoadingSpinner from '../loading-spinner';
@@ -42,7 +42,7 @@ export default function CredentialsSignIn() {
         mutationFn: credentialsSignIn,
         async onSuccess({ login }) {
             if (login) {
-                await getSession();
+                await triggerClientSessionUpdate();
 
                 router.replace('/');
             } else {

@@ -18,7 +18,7 @@ export default function UserDetail({ triggerText, user }: UserDetailProps) {
     return (
         <Accordion type="single" collapsible>
             <AccordionItem value="user-detail" className="border-b-0">
-                <AccordionTrigger className="border-b py-1">
+                <AccordionTrigger className="cursor-pointer border-b py-1">
                     {triggerText}
                 </AccordionTrigger>
                 <AccordionContent className="mt-3 space-y-2">

@@ -10,7 +10,7 @@ export default function RootLayout({
     return (
         <>
             <Header />
-            <main role="main" className="flex-1">
+            <main role="main" className="relative flex-1">
                 <UserStatus>{children}</UserStatus>
             </main>
             <Footer />

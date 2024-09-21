@@ -26,7 +26,7 @@ export default function LoadingSpinner({
     const icon = (
         <Icon
             className={cn('size-6 animate-spin', {
-                'size-44': page,
+                'size-40': page,
             })}
             {...props}
         />

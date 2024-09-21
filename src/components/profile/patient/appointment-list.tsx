@@ -31,7 +31,7 @@ export default function AppointmentList({
     if (appointments.length < 1) return <div>No Appointments...</div>;
 
     return (
-        <Table className="max-w-[55rem]" aria-label="Booked appointment list">
+        <Table aria-label="Booked appointment list">
             <TableCaption></TableCaption>
             <TableHeader>
                 <TableRow>
@@ -44,16 +44,19 @@ export default function AppointmentList({
             </TableHeader>
             <TableBody>
                 {appointments.map((appointment) => (
-                    <TableRow key={appointment.id}>
+                    <TableRow
+                        key={appointment.id}
+                        className="[&>td]:align-baseline"
+                    >
                         <TableCell>{appointment.id}</TableCell>
                         <TableCell>{appointment.title}</TableCell>
-                        <TableCell className="cursor-pointer">
+                        <TableCell className="min-w-80">
                             <UserDetail
                                 triggerText={`${appointment.doctor?.name} ${appointment.doctor?.surname}`}
                                 user={appointment?.doctor}
                             />
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="text-nowrap">
                             {new Date(appointment.start).toLocaleDateString(
                                 locale,
                                 {
@@ -63,7 +66,7 @@ export default function AppointmentList({
                                 },
                             )}
                         </TableCell>
-                        <TableCell>{`${new Date(
+                        <TableCell className="text-nowrap">{`${new Date(
                             appointment.start,
                         ).toLocaleTimeString(locale, {
                             hour: '2-digit',

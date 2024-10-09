@@ -13,5 +13,5 @@ export const profilePictureSchema = z
     .refine((file) => file.size <= MAX_FILE_SIZE, 'Max image size is 5 MB')
     .refine(
         (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
-        'Only supported jpeg, jpg, png, webp',
+        `Only supported ${ACCEPTED_IMAGE_TYPES.map((type) => type.split('/')[1] || '').join(', ')}`,
     );

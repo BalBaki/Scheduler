@@ -125,7 +125,7 @@ export default function CredentialsSignIn() {
                     />
                 )}
                 <div className="mt-3 text-center">
-                    Don't have an account?
+                    Dont have an account?
                     <Link
                         href="/register"
                         className="ml-1 text-[#2D3DD2]"

@@ -9,7 +9,10 @@ export default function ApprovedUserCheck({
 }>) {
     const { data: session, status } = useSession();
 
-    if (status === 'loading' || session?.user.status !== 'APPROVED')
+    if (
+        (!session && status === 'loading') ||
+        (session && session.user.status !== 'APPROVED')
+    )
         return null;
 
     return children;

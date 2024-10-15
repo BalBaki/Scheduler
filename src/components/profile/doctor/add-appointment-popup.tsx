@@ -51,11 +51,7 @@ export default function AddAppointmentPopup({
             title: '',
             start: '',
             end: '',
-            date: date?.toLocaleDateString(locale, {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            }),
+            date: date?.toISOString().split('T')[0],
         },
     });
 

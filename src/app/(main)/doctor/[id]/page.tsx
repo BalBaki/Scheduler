@@ -12,12 +12,13 @@ import { capitalizeFirstLetter } from '@/lib/utils';
 import type { Metadata } from 'next';
 
 type DoctorPageProps = {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 };
 
-export async function generateMetadata({
-    params,
-}: DoctorPageProps): Promise<Metadata> {
+export async function generateMetadata(
+    props: DoctorPageProps,
+): Promise<Metadata> {
+    const params = await props.params;
     const doctor = await getDoctorWithValidAppointmentsById(params.id);
     const doctorFullName = `${capitalizeFirstLetter(doctor?.name || '')} ${capitalizeFirstLetter(doctor?.surname || '')}`;
 
@@ -27,7 +28,11 @@ export async function generateMetadata({
     };
 }
 
-export default async function DoctorPage({ params: { id } }: DoctorPageProps) {
+export default async function DoctorPage(props: DoctorPageProps) {
+    const params = await props.params;
+
+    const { id } = params;
+
     const doctor = await getDoctorWithValidAppointmentsById(id);
 
     const nextAvailableAppointment = doctor?.doctorAppointments.find(

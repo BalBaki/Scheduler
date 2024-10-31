@@ -1,3 +1,5 @@
+'use client';
+
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import {
     Autoformat,
@@ -82,6 +84,7 @@ export default function DescriptionEditor() {
                             onChange={(_, editor) =>
                                 field.onChange(editor.getData())
                             }
+                            // @ts-expect-errors
                             data={field.value}
                         />
                     </FormControl>

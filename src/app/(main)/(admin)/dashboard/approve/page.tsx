@@ -17,15 +17,16 @@ export const metadata: Metadata = {
 };
 
 type ApprovePageProps = {
-    searchParams: {
+    searchParams: Promise<{
         page: string | string[] | undefined;
         query: string | string[] | undefined;
         limit: string | string[] | undefined;
         status: string | string[] | undefined;
-    };
+    }>;
 };
 
-export default async function ApprovePage({ searchParams }: ApprovePageProps) {
+export default async function ApprovePage(props: ApprovePageProps) {
+    const searchParams = await props.searchParams;
     const page = parseInt(searchParams.page?.toString() || '') || 1;
     const validatedParams = userFilterSchema.safeParse({
         query: searchParams.query?.toString() || '',

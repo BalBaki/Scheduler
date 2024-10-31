@@ -12,8 +12,8 @@ import type { FormState, SignUpForm } from '@/types';
 export const signUp = async (
     formData: SignUpForm,
 ): Promise<FormState<'register', SignUpForm>> => {
-    const cookieStore = cookies();
-    const url = headers().get('Referer');
+    const cookieStore = await cookies();
+    const url = (await headers()).get('Referer');
     const validatedForm = signUpSchema.safeParse(formData);
 
     if (!validatedForm.success)

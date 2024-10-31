@@ -15,16 +15,15 @@ export const metadata: Metadata = {
 };
 
 type FeedbackPageProps = {
-    searchParams: {
+    searchParams: Promise<{
         page: string | string[] | undefined;
         query: string | string[] | undefined;
         limit: string | string[] | undefined;
-    };
+    }>;
 };
 
-export default async function FeedbackPage({
-    searchParams,
-}: FeedbackPageProps) {
+export default async function FeedbackPage(props: FeedbackPageProps) {
+    const searchParams = await props.searchParams;
     const page = parseInt(searchParams.page?.toString() || '') || 1;
     const validatedParams = feedbackFilterSchema.safeParse({
         query: searchParams.query?.toString() || '',

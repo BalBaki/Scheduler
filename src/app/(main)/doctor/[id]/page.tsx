@@ -101,7 +101,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
                 </section>
                 {doctor.description && (
                     <section
-                        className="rounded-sm bg-white p-8"
+                        className="ql-snow rounded-sm bg-white p-8"
                         aria-labelledby="aboutMe"
                     >
                         <h2
@@ -110,12 +110,12 @@ export default async function DoctorPage(props: DoctorPageProps) {
                         >
                             About me
                         </h2>
-                        <p
-                            className="ck-content mt-2 overflow-x-auto scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
+                        <div
+                            className="ql-editor mt-2 overflow-x-auto !p-0 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
                             dangerouslySetInnerHTML={{
                                 __html: doctor.description,
                             }}
-                        ></p>
+                        ></div>
                     </section>
                 )}
                 <section

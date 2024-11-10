@@ -5,8 +5,7 @@ import { auth } from '@/auth';
 import db from '@/db';
 import { extractImagePublicId } from '@/lib/extract-image-public-id';
 import { profilePictureSchema } from '@/schemas';
-import cloudinary from '@/services/picture-upload-service';
-import type { UploadApiResponse } from 'cloudinary';
+import { cloudinaryService } from '@/services/cloudinary.service';
 import type { ResultWithError } from '@/types';
 
 export const updateProfilePicture = async (
@@ -28,43 +27,34 @@ export const updateProfilePicture = async (
                 error: validatedPicture.error.flatten().formErrors.join(' '),
             };
 
-        const imageArrayBuffer = await validatedPicture.data.arrayBuffer();
-        const uploadImageResult: UploadApiResponse | undefined =
-            await new Promise((resolve) => {
-                cloudinary.uploader
-                    .upload_stream(
-                        {
-                            folder: 'profile',
-                            resource_type: 'image',
-                            filename_override: session.user.id,
-                            use_filename: true,
-                            ...(session.user.imageUrl && {
-                                overwrite: true,
-                                public_id: extractImagePublicId(
-                                    session.user.imageUrl,
-                                ),
-                            }),
-                        },
-                        (error, uploadResult) => {
-                            if (error)
-                                return { update: false, error: error.message };
+        const uploadImageResponse = await cloudinaryService.uploadFile(
+            validatedPicture.data,
+            {
+                folder: 'profileee',
+                resource_type: 'image',
+                filename_override: session.user.id,
+                use_filename: true,
+                ...(session.user.imageUrl && {
+                    overwrite: true,
+                    public_id: extractImagePublicId(session.user.imageUrl),
+                }),
+            },
+        );
 
-                            return resolve(uploadResult);
-                        },
-                    )
-                    .end(Buffer.from(imageArrayBuffer));
-            });
+        if (!uploadImageResponse.upload)
+            return {
+                update: false,
+                error: uploadImageResponse.error,
+            };
 
-        if (uploadImageResult) {
-            await db.user.update({
-                where: {
-                    id: session.user.id,
-                },
-                data: {
-                    imageUrl: uploadImageResult.secure_url,
-                },
-            });
-        }
+        await db.user.update({
+            where: {
+                id: session.user.id,
+            },
+            data: {
+                imageUrl: uploadImageResponse.data.secure_url,
+            },
+        });
 
         //TODO will delete after doctor page new design
         if (session.user.role === 'DOCTOR') revalidatePath('/doctor');

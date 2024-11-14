@@ -1,10 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { cookies, headers } from 'next/headers';
+import { isRedirectError } from 'next/dist/client/components/redirect';
 import { hash } from 'bcryptjs';
-import { v4 as randomUUID } from 'uuid';
-import { MAX_TOKEN_AGE } from '@/auth';
+import { signIn } from '@/auth';
 import db from '@/db';
 import { signUpSchema } from '@/schemas';
 import type { FormState, SignUpForm } from '@/types';
@@ -12,8 +11,6 @@ import type { FormState, SignUpForm } from '@/types';
 export const signUp = async (
     formData: SignUpForm,
 ): Promise<FormState<'register', SignUpForm>> => {
-    const cookieStore = await cookies();
-    const url = (await headers()).get('Referer');
     const validatedForm = signUpSchema.safeParse(formData);
 
     if (!validatedForm.success)
@@ -36,44 +33,20 @@ export const signUp = async (
         const hashedPassword = await hash(validatedForm.data.password, 15);
         const { confirmPassword, ...formWithoutConfirm } = validatedForm.data;
 
-        const newUser = await db.user.create({
+        const { password, ...rest } = await db.user.create({
             data: { ...formWithoutConfirm, password: hashedPassword },
         });
 
-        const token = randomUUID();
-        const expireDate = new Date(Date.now() + MAX_TOKEN_AGE * 1000);
-
-        await db.session.create({
-            data: {
-                sessionToken: token,
-                userId: newUser.id,
-                expires: expireDate,
-            },
-        });
-
-        cookieStore.set({
-            name: 'authjs.session-token',
-            value: token,
-            httpOnly: true,
-            expires: expireDate,
-            path: '/',
-            sameSite: 'lax',
-        });
-
-        if (url) {
-            cookieStore.set({
-                name: 'authjs.callback-url',
-                value: url,
-                httpOnly: true,
-                path: '/',
-                sameSite: 'lax',
-            });
-        }
+        await signIn('credentials', rest);
 
         revalidatePath('/dashboard/approve');
 
         return { register: true };
     } catch (error) {
+        if (isRedirectError(error)) {
+            return { register: true };
+        }
+
         return {
             register: false,
             errors: {

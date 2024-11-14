@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
+import { hasPermission } from '@/lib/permissions';
 import { prismaExclude } from '@/lib/prisma-exclude';
 import { ResultWithError } from '@/types';
 import type { UserStatus } from '@prisma/client';
@@ -26,8 +27,7 @@ export const updateUserStatus = async ({
         if (!user) return { update: false, error: 'Not exits User...' };
         if (
             !session ||
-            session.user.role !== 'ADMIN' ||
-            session.user.status !== 'APPROVED' ||
+            !hasPermission(session.user, 'user', 'changeStatus') ||
             user.role === 'ADMIN'
         )
             return { update: false, error: 'You have no authorization..!' };

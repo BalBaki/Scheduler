@@ -19,6 +19,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { hasPermission } from '@/lib/permissions';
 import { userDetailSchema } from '@/schemas';
 import { UserDetailForm } from '@/types';
 
@@ -92,12 +93,13 @@ export default function Details() {
                             </FormItem>
                         )}
                     />
-                    {session?.user.role === 'DOCTOR' && (
-                        <>
-                            <Languages />
-                            <DescriptionEditor />
-                        </>
-                    )}
+                    {session &&
+                        hasPermission(session.user, 'user', 'moreDetail') && (
+                            <>
+                                <Languages />
+                                <DescriptionEditor />
+                            </>
+                        )}
                 </div>
                 <div className="mt-2 flex flex-row-reverse items-center gap-x-2">
                     <Button

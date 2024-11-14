@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
 import { extractImagePublicId } from '@/lib/extract-image-public-id';
+import { hasPermission } from '@/lib/permissions';
 import { profilePictureSchema } from '@/schemas';
 import { cloudinaryService } from '@/services/cloudinary.service';
 import type { ResultWithError } from '@/types';
@@ -14,7 +15,7 @@ export const updateProfilePicture = async (
     try {
         const session = await auth();
 
-        if (!session || session.user.status !== 'APPROVED')
+        if (!session || !hasPermission(session.user, 'user', 'update'))
             return { update: false, error: 'You have no authorization..!' };
 
         const validatedPicture = profilePictureSchema.safeParse(

@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
 import { checkAppointmentOverlap } from '@/lib/check-appointment-overlap';
+import { hasPermission } from '@/lib/permissions';
 import { addAppointmentSchema } from '@/schemas';
 import type { AddAppointmentForm, FormState } from '@/types';
 
@@ -13,11 +14,7 @@ export const addAppointment = async (
     try {
         const session = await auth();
 
-        if (
-            !session ||
-            session.user.status !== 'APPROVED' ||
-            session.user.role !== 'DOCTOR'
-        )
+        if (!session || !hasPermission(session.user, 'appointment', 'create'))
             return {
                 add: false,
                 errors: { _form: 'You have no authorization..!' },

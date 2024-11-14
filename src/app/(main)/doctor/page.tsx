@@ -41,14 +41,14 @@ export default async function Doctor() {
                     <div className="flex flex-col gap-y-3 max-md:mt-2 md:ml-14">
                         <h2 className="break-all font-semibold capitalize">{`${doctor.name} ${doctor.surname}`}</h2>
                         {doctor.description && (
-                            <div>
+                            <div className="ql-snow">
                                 <h3 className="sr-only">Description</h3>
-                                <p
+                                <div
                                     dangerouslySetInnerHTML={{
                                         __html: doctor.description,
                                     }}
-                                    className="ck-content line-clamp-3"
-                                ></p>
+                                    className="ql-editor line-clamp-3 !overflow-y-hidden !p-0"
+                                ></div>
                             </div>
                         )}
                         {doctor.languages.length > 0 && (

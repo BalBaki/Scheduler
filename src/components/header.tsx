@@ -22,6 +22,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet';
+import { hasPermission } from '@/lib/permissions';
 
 const routes = [
     {
@@ -175,7 +176,7 @@ export default function Header() {
                                             </div>
                                         )}
                                     </div>
-                                    {session && (
+                                    {session?.user && (
                                         <>
                                             <Accordion
                                                 type="single"
@@ -199,7 +200,11 @@ export default function Header() {
                                                     </AccordionContent>
                                                 </AccordionItem>
                                             </Accordion>
-                                            {session.user.role === 'ADMIN' && (
+                                            {hasPermission(
+                                                session.user,
+                                                'dashboard',
+                                                'view',
+                                            ) && (
                                                 <Accordion
                                                     type="single"
                                                     collapsible

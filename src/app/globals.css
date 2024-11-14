@@ -135,12 +135,10 @@
     border: unset;
 }
 
-.ck {
-    .ck-powered-by-balloon {
-        display: none !important;
-    }
-
-    .ck-content.ck-editor__editable {
+.quill {
+    .ql-container {
         height: 20rem;
+        overflow: auto;
+        background-color: white;
     }
 }

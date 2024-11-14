@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { format as formatDate } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { addAppointment } from '@/actions/add-appointment';
@@ -51,7 +52,7 @@ export default function AddAppointmentPopup({
             title: '',
             start: '',
             end: '',
-            date: date?.toISOString().split('T')[0],
+            date: formatDate(date || '', 'yyyy-MM-dd'),
         },
     });
 

@@ -28,7 +28,7 @@ export default function ProfilePicture() {
                 });
             }
 
-            toast(update ? 'Successfully Changed' : error, {
+            toast(update ? 'Profile picture was changed' : error, {
                 type: update ? 'success' : 'error',
             });
         },

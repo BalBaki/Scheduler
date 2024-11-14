@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
+import { hasPermission } from '@/lib/permissions';
 import { userDetailSchema } from '@/schemas';
 import type { FormState, UserDetailForm } from '@/types';
 
@@ -12,7 +13,7 @@ export const updateUserDetail = async (
     try {
         const session = await auth();
 
-        if (!session || session.user.status !== 'APPROVED')
+        if (!session || !hasPermission(session.user, 'user', 'update'))
             return {
                 update: false,
                 errors: { _form: 'You have no authorization..!' },

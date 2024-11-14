@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
+import { hasPermission } from '@/lib/permissions';
 import type { ResultWithError } from '@/types';
 
 export const approveAllUsers = async (): Promise<
@@ -11,11 +12,7 @@ export const approveAllUsers = async (): Promise<
     try {
         const session = await auth();
 
-        if (
-            !session ||
-            session.user.role !== 'ADMIN' ||
-            session.user.status !== 'APPROVED'
-        )
+        if (!session || !hasPermission(session.user, 'user', 'changeStatus'))
             return { approve: false, error: 'You have no authorization..!' };
 
         await db.user.updateMany({

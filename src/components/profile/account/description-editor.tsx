@@ -1,25 +1,7 @@
 'use client';
 
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import {
-    Autoformat,
-    BlockQuote,
-    Bold,
-    ClassicEditor,
-    Essentials,
-    FontSize,
-    Indent,
-    IndentBlock,
-    Italic,
-    List,
-    Mention,
-    Paragraph,
-    PasteFromOffice,
-    PictureEditing,
-    TextTransformation,
-    Underline,
-} from 'ckeditor5';
 import { useFormContext } from 'react-hook-form';
+import ReactQuill from 'react-quill-new';
 import {
     FormControl,
     FormDescription,
@@ -41,51 +23,31 @@ export default function DescriptionEditor() {
                 <FormItem className="md:col-span-2">
                     <Label>Description</Label>
                     <FormControl>
-                        <CKEditor
-                            editor={ClassicEditor}
-                            config={{
-                                toolbar: {
-                                    items: [
-                                        'undo',
-                                        'redo',
-                                        '|',
-                                        'fontSize',
+                        <ReactQuill
+                            modules={{
+                                toolbar: [
+                                    [
+                                        { header: [1, 2, 3, 4, 5, 6, false] },
+                                        { font: [] },
+                                    ],
+                                    [{ size: [] }],
+                                    [
                                         'bold',
                                         'italic',
                                         'underline',
-                                        '|',
-                                        'blockQuote',
-                                        '|',
-                                        'bulletedList',
-                                        'numberedList',
-                                        '|',
-                                        'outdent',
-                                        'indent',
+                                        'strike',
+                                        'blockquote',
                                     ],
-                                },
-                                plugins: [
-                                    Autoformat,
-                                    BlockQuote,
-                                    Bold,
-                                    FontSize,
-                                    Essentials,
-                                    Indent,
-                                    IndentBlock,
-                                    Italic,
-                                    List,
-                                    Mention,
-                                    Paragraph,
-                                    PasteFromOffice,
-                                    PictureEditing,
-                                    TextTransformation,
-                                    Underline,
+                                    [
+                                        { list: 'ordered' },
+                                        { list: 'bullet' },
+                                        { indent: '-1' },
+                                        { indent: '+1' },
+                                    ],
                                 ],
                             }}
-                            onChange={(_, editor) =>
-                                field.onChange(editor.getData())
-                            }
-                            // @ts-expect-errors
-                            data={field.value}
+                            defaultValue={field.value}
+                            onChange={field.onChange}
                         />
                     </FormControl>
                     <FormDescription className="sr-only">

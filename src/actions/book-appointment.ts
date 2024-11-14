@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
 import { checkAppointmentOverlap } from '@/lib/check-appointment-overlap';
+import { hasPermission } from '@/lib/permissions';
 import type { ResultWithError } from '@/types';
 
 export const bookAppointment = async (
@@ -12,7 +13,7 @@ export const bookAppointment = async (
     try {
         const session = await auth();
 
-        if (!session || session.user.status !== 'APPROVED')
+        if (!session || !hasPermission(session.user, 'appointment', 'book'))
             return { book: false, error: 'You have no authorization..!' };
 
         const appointment = await db.appointment.findFirst({
@@ -30,7 +31,7 @@ export const bookAppointment = async (
             };
         if (appointment.start < new Date())
             return { book: false, error: 'Outdated appointment..!' };
-        if (session.user.role === 'DOCTOR')
+        if (!hasPermission(session.user, 'appointment', 'book'))
             return { book: false, error: "You can't book this event..!" };
 
         const isAppointmentOverlap = await checkAppointmentOverlap({

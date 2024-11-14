@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
+import { hasPermission } from '@/lib/permissions';
 import type { ResultWithError } from '@/types';
 
 export const cancelAppointment = async (
@@ -21,7 +22,7 @@ export const cancelAppointment = async (
             return { cancel: false, error: 'Not exists appointment..!' };
         if (
             !session ||
-            session.user.status !== 'APPROVED' ||
+            !hasPermission(session.user, 'appointment', 'cancel') ||
             appointment.patientId !== session.user.id
         )
             return { cancel: false, error: 'You have no authorization..!' };

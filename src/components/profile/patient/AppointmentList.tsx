@@ -1,6 +1,6 @@
 'use client';
 
-import CancelAppointment from './cancel-appointment';
+import CancelAppointment from './CancelAppointment';
 import {
     Table,
     TableBody,
@@ -11,7 +11,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import UserDetail from '@/components/user-detail';
+import UserDetail from '@/components/UserDetail';
 import { useLocale } from '@/hooks/use-locale';
 import type { UserWithoutPassword } from '@/types';
 import type { Appointment } from '@prisma/client';

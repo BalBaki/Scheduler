@@ -5,8 +5,8 @@ import { useMutation } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import DescriptionEditor from './description-editor';
-import Languages from './languages';
+import DescriptionEditor from './DescriptionEditor';
+import Languages from './Languages';
 import { updateUserDetail } from '@/actions/update-user-detail';
 import { Button } from '@/components/ui/button';
 import {

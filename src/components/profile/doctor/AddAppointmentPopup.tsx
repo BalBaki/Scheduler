@@ -6,8 +6,8 @@ import { format as formatDate } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { addAppointment } from '@/actions/add-appointment';
-import FormValidationError from '@/components/form-validation-error';
-import LoadingSpinner from '@/components/loading-spinner';
+import FormValidationError from '@/components/FormValidationError';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,

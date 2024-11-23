@@ -1,11 +1,11 @@
-import AboutUs from '@/components/home/about-us';
-import Benefits from '@/components/home/benefits';
-import ContactUs from '@/components/home/contact-us';
-import Goals from '@/components/home/goals';
-import Hero from '@/components/home/hero';
-import Info from '@/components/home/info';
-import Issues from '@/components/home/issues';
-import Services from '@/components/home/services';
+import AboutUs from '@/components/home/AboutUs';
+import Benefits from '@/components/home/Benefits';
+import ContactUs from '@/components/home/ContactUs';
+import Goals from '@/components/home/Goals';
+import Hero from '@/components/home/Hero';
+import Info from '@/components/home/Info';
+import Issues from '@/components/home/Issues';
+import Services from '@/components/home/Services';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import type { Metadata } from 'next/types';
 

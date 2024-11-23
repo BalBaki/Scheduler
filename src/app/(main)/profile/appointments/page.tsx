@@ -1,4 +1,4 @@
-import Appointments from '@/components/profile/appointments';
+import Appointments from '@/components/profile/Appointments';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import type { Metadata } from 'next';
 

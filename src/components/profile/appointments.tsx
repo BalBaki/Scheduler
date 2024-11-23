@@ -2,8 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
-import DoctorCalendar from '@/components/profile/doctor/calendar';
-import AppointmentList from '@/components/profile/patient/appointment-list';
+import DoctorCalendar from '@/components/profile/doctor/DoctorCalendar';
+import AppointmentList from '@/components/profile/patient/AppointmentList';
 import { getAppointments } from '@/queries/get-appointment';
 import { Skeleton } from '../ui/skeleton';
 

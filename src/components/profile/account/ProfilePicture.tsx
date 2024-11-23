@@ -6,9 +6,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { CgProfile } from 'react-icons/cg';
 import { toast } from 'react-toastify';
-import ImageCrop from './image-crop';
+import ImageCrop from './ImageCrop';
 import { updateProfilePicture } from '@/actions/update-profile-picture';
-import LoadingSpinner from '@/components/loading-spinner';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { Button } from '../../ui/button';
 
 export default function ProfilePicture() {

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { CgProfile } from 'react-icons/cg';
 import { FiMenu } from 'react-icons/fi';
-import SignOut from './auth/sign-out';
+import SignOut from './auth/SignOut';
 import {
     Accordion,
     AccordionContent,

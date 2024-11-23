@@ -16,8 +16,8 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { contactUsFormSchema } from '@/schemas';
-import FormValidationError from '../form-validation-error';
-import LoadingSpinner from '../loading-spinner';
+import FormValidationError from '../FormValidationError';
+import LoadingSpinner from '../LoadingSpinner';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';

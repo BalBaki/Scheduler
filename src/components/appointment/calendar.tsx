@@ -3,7 +3,7 @@
 import dayGridPlugin from '@fullcalendar/daygrid';
 import intercetionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
-import BookAppoinmentPopup from './book-appointment-popup';
+import BookAppoinmentPopup from './BookAppointmentPopUp';
 import { useLocale } from '@/hooks/use-locale';
 import type { UserWithoutPassword } from '@/types';
 import type { Appointment } from '@prisma/client';

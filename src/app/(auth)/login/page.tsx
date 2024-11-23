@@ -1,4 +1,4 @@
-import CredentialsSignIn from '@/components/auth/credentials-sign-in';
+import CredentialsSignIn from '@/components/auth/CredentialsSignIn';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import type { Metadata } from 'next';
 

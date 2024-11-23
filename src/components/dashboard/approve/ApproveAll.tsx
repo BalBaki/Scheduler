@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { approveAllUsers } from '@/actions/approve-all-users';
-import LoadingSpinner from '@/components/loading-spinner';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import {
     AlertDialog,
     AlertDialogAction,

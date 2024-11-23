@@ -1,8 +1,8 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import LoadingSpinner from './loading-spinner';
-import WaitForApprove from './wait-for-approve';
+import LoadingSpinner from './LoadingSpinner';
+import WaitForApprove from './WaitForApprove';
 
 type UserStatusProps = {
     children: React.ReactNode;

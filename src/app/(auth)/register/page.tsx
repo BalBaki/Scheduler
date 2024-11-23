@@ -1,4 +1,4 @@
-import SignUp from '@/components/auth/sign-up';
+import SignUp from '@/components/auth/SignUp';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import type { Metadata } from 'next';
 

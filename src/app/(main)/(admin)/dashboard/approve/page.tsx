@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
-import ApproveAll from '@/components/dashboard/approve/approve-all';
-import UserFilters from '@/components/dashboard/approve/user-filters';
-import UserList from '@/components/dashboard/approve/user-list';
-import Pagination from '@/components/pagination';
+import ApproveAll from '@/components/dashboard/approve/ApproveAll';
+import UserFilters from '@/components/dashboard/approve/UserFilters';
+import UserList from '@/components/dashboard/approve/UserList';
+import Pagination from '@/components/Pagination';
 import db from '@/db';
 import { getUserCount } from '@/db/queries/user-count';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';

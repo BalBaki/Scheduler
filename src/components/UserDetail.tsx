@@ -1,4 +1,4 @@
-import TextWithCopyClipboard from './text-with-copy-clipboard';
+import TextWithCopyClipboard from './TextWithCopyClipboard';
 import {
     Accordion,
     AccordionContent,

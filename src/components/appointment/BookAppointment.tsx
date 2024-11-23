@@ -14,7 +14,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import LoadingSpinner from '../loading-spinner';
+import LoadingSpinner from '../LoadingSpinner';
 import { Button } from '../ui/button';
 
 type BookAppoinmentProps = {

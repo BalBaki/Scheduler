@@ -1,6 +1,6 @@
-import Footer from '@/components/footer';
-import Header from '@/components/header';
-import UserStatus from '@/components/user-status';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import UserStatus from '@/components/UserStatus';
 
 export default function RootLayout({
     children,

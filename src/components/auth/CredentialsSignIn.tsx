@@ -17,8 +17,8 @@ import {
 } from '@/components/ui/form';
 import { triggerClientSessionUpdate } from '@/lib/trigger-client-session-update';
 import { signInSchema } from '@/schemas';
-import FormValidationError from '../form-validation-error';
-import LoadingSpinner from '../loading-spinner';
+import FormValidationError from '../FormValidationError';
+import LoadingSpinner from '../LoadingSpinner';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import type { SubmitHandler } from 'react-hook-form';

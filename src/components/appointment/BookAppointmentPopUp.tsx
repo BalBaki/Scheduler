@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import BookAppoinment from './book-appointment';
+import BookAppoinment from './BookAppointment';
 import {
     Dialog,
     DialogContent,
@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dialog';
 import { useLocale } from '@/hooks/use-locale';
 import { Label } from '../ui/label';
-import WaitForApprove from '../wait-for-approve';
+import WaitForApprove from '../WaitForApprove';
 import type { EventContentArg } from '@fullcalendar/core/index.js';
 
 type BookAppoinmentPopupProps = {

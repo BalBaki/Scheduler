@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GiCancel } from 'react-icons/gi';
 import { toast } from 'react-toastify';
 import { cancelAppointment } from '@/actions/cancel-appointment';
-import LoadingSpinner from '@/components/loading-spinner';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import {
     AlertDialog,
     AlertDialogAction,

@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { IoPersonCircle } from 'react-icons/io5';
-import AppointmentCalendar from '@/components/appointment/calendar';
-import NextAvailability from '@/components/doctor/next-availability';
+import AppointmentCalendar from '@/components/appointment/Calendar';
+import NextAvailability from '@/components/doctor/NextAvailability';
 import db from '@/db';
 import { getDoctorWithValidAppointmentsById } from '@/db/queries/user';
 import languages from '@/languages.json';

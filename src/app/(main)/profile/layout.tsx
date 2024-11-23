@@ -1,5 +1,5 @@
-import ApprovedUserCheck from '@/components/approved-user-check';
-import Tabs from '@/components/profile/tabs';
+import ApprovedUserCheck from '@/components/ApprovedUserCheck';
+import Tabs from '@/components/profile/Tabs';
 
 type ProfileLayoutProps = {
     children: React.ReactNode;

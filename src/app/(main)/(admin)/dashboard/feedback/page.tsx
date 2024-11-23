@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import FeedbackFilters from '@/components/dashboard/feedback/feedback-filters';
-import FeedbackList from '@/components/dashboard/feedback/feedback-list';
-import Pagination from '@/components/pagination';
+import FeedbackFilters from '@/components/dashboard/feedback/FeedbackFilters';
+import FeedbackList from '@/components/dashboard/feedback/FeedbackList';
+import Pagination from '@/components/Pagination';
 import db from '@/db';
 import { getFeedbackCount } from '@/db/queries/feedback-count';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import StatusButtons from './status-buttons';
+import StatusButtons from './StatusButtons';
 import {
     Table,
     TableBody,

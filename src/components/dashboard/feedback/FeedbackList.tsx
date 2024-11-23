@@ -29,7 +29,7 @@ export default function FeedbackList({ feedbacks }: UserListProps) {
             block: 'start',
             inline: 'start',
         });
-    }, [useSearchParams]);
+    }, [searchParams]);
 
     if (feedbacks.length < 1) return <div>No feedback.</div>;
 

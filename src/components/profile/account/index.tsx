@@ -1,5 +1,5 @@
-import Details from './details';
-import ProfilePicture from './profile-picture';
+import Details from './Details';
+import ProfilePicture from './ProfilePicture';
 
 export default function Account() {
     return (

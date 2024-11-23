@@ -1,6 +1,6 @@
 'use client';
 
-import RemoveAppointment from './remove-appointment';
+import RemoveAppointment from './RemoveAppointment';
 import {
     Dialog,
     DialogContent,
@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import UserDetail from '@/components/user-detail';
+import UserDetail from '@/components/UserDetail';
 import { useLocale } from '@/hooks/use-locale';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import type { EventContentArg } from '@fullcalendar/core/index.js';

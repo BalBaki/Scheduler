@@ -4,7 +4,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import NextAuth from 'next-auth';
 import { v4 as randomUUID } from 'uuid';
 import db from './db';
-import { checkPageType } from './lib/check-page-type';
+import { findPageType } from './lib/find-page-type';
 import { hasPermission } from './lib/permissions';
 import { prismaExclude } from './lib/prisma-exclude';
 import type { Adapter, AdapterSession, AdapterUser } from '@auth/core/adapters';
@@ -104,11 +104,11 @@ export const {
             return token;
         },
         async authorized({ request: { nextUrl, url }, auth }) {
-            const { pathname } = nextUrl;
             const isLoggedIn = !!auth?.user;
-            const isAdminPage = checkPageType('admin', pathname);
-            const isAuthRequiredPage = checkPageType('authRequired', pathname);
-            const isAuthPage = checkPageType('auth', pathname);
+            const pageTypes = findPageType(nextUrl);
+            const isAdminPage = pageTypes.includes('admin');
+            const isAuthPage = pageTypes.includes('auth');
+            const isAuthRequiredPage = pageTypes.includes('authRequired');
 
             if (isLoggedIn) {
                 if (isAdminPage) {
@@ -116,7 +116,9 @@ export const {
                         hasPermission(auth.user, 'dashboard', 'view') ||
                         Response.redirect(new URL('/', url))
                     );
-                } else if (isAuthPage) {
+                }
+
+                if (isAuthPage) {
                     return Response.redirect(new URL('/', url));
                 }
             } else {

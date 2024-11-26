@@ -25,5 +25,5 @@ export default function NProgressBarProvider({
         };
     }, [pathname, searchParams]);
 
-    return [children];
+    return null;
 }

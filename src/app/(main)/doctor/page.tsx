@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoPersonCircle } from 'react-icons/io5';
+import { Skeleton } from '@/components/ui/skeleton';
 import db from '@/db';
 import languages from '@/languages.json';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';

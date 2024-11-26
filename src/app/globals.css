@@ -142,3 +142,13 @@
         background-color: white;
     }
 }
+
+#nprogress {
+    .peg {
+        display: none !important;
+    }
+    .bar {
+        height: 0.3rem !important;
+        background-color: #5b8c27 !important;
+    }
+}

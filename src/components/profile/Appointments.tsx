@@ -15,7 +15,6 @@ export default function Appointments() {
         queryKey: ['appointments'],
         refetchOnWindowFocus: false,
         staleTime: Infinity,
-        enabled: !!session && session.user.status === 'APPROVED',
     });
 
     if (isPending)

@@ -134,18 +134,3 @@ export default async function DoctorPage(props: DoctorPageProps) {
         </div>
     );
 }
-
-export async function generateStaticParams() {
-    const doctors = await db.user.findMany({
-        where: {
-            role: 'DOCTOR',
-        },
-        select: prismaExclude('User', ['password']),
-    });
-
-    return doctors.map((doctor) => {
-        return {
-            id: doctor.id,
-        };
-    });
-}

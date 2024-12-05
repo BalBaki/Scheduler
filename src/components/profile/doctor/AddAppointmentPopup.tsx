@@ -28,10 +28,10 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useLocale } from '@/hooks/use-locale';
-import { addAppointmentSchema } from '@/schemas';
+import { addAppointmentClientSchema } from '@/schemas';
 import type { Dispatch, SetStateAction } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
-import type { AddAppointmentForm } from '@/types';
+import type { AddAppointmentClientForm } from '@/types';
 
 type AddAppointmentPopupProps = {
     date?: Date;
@@ -45,18 +45,18 @@ export default function AddAppointmentPopup({
     setShow,
 }: AddAppointmentPopupProps) {
     const locale = useLocale();
-    const form = useForm<AddAppointmentForm>({
+    const form = useForm<AddAppointmentClientForm>({
         mode: 'all',
-        resolver: zodResolver(addAppointmentSchema),
+        resolver: zodResolver(addAppointmentClientSchema),
         defaultValues: {
             title: '',
             start: '',
             end: '',
-            date: formatDate(date || '', 'yyyy-MM-dd'),
         },
     });
 
     const queryClient = useQueryClient();
+
     const {
         mutate,
         isPending,
@@ -75,7 +75,13 @@ export default function AddAppointmentPopup({
             });
         },
     });
-    const onSubmit: SubmitHandler<AddAppointmentForm> = (data) => mutate(data);
+    const onSubmit: SubmitHandler<AddAppointmentClientForm> = (data) => {
+        const formattedDate = formatDate(date || '', 'yyyy-MM-dd');
+        const start = new Date(`${formattedDate} ${data.start}`).toISOString();
+        const end = new Date(`${formattedDate} ${data.end}`).toISOString();
+
+        mutate(Object.assign(data, { start, end }));
+    };
 
     return (
         <Dialog open={show} onOpenChange={setShow}>
@@ -157,18 +163,6 @@ export default function AddAppointmentPopup({
                                                 errors={result.errors.end}
                                             />
                                         )}
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="date"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <Input type="hidden" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />

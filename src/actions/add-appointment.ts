@@ -5,12 +5,12 @@ import { auth } from '@/auth';
 import db from '@/db';
 import { checkAppointmentOverlap } from '@/lib/check-appointment-overlap';
 import { hasPermission } from '@/lib/permissions';
-import { addAppointmentSchema } from '@/schemas';
-import type { AddAppointmentForm, FormState } from '@/types';
+import { addAppointmentServerSchema } from '@/schemas';
+import type { AddAppointmentServerForm, FormState } from '@/types';
 
 export const addAppointment = async (
-    form: AddAppointmentForm,
-): Promise<FormState<'add', AddAppointmentForm>> => {
+    form: AddAppointmentServerForm,
+): Promise<FormState<'add', AddAppointmentServerForm>> => {
     try {
         const session = await auth();
 
@@ -20,7 +20,7 @@ export const addAppointment = async (
                 errors: { _form: 'You have no authorization..!' },
             };
 
-        const validatedForm = addAppointmentSchema.safeParse(form);
+        const validatedForm = addAppointmentServerSchema.safeParse(form);
 
         if (!validatedForm.success)
             return {
@@ -28,12 +28,8 @@ export const addAppointment = async (
                 errors: validatedForm.error.flatten().fieldErrors,
             };
 
-        const start = new Date(
-            `${validatedForm.data.date} ${validatedForm.data.start}`,
-        );
-        const end = new Date(
-            `${validatedForm.data.date} ${validatedForm.data.end}`,
-        );
+        const start = new Date(validatedForm.data.start);
+        const end = new Date(validatedForm.data.end);
 
         if (start >= end)
             return {

@@ -1,7 +1,7 @@
 import { encode as encodeParam } from '@auth/core/jwt';
-import Credentials from '@auth/core/providers/credentials';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import NextAuth from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
 import { v4 as randomUUID } from 'uuid';
 import db from './db';
 import { findPageType } from './lib/find-page-type';

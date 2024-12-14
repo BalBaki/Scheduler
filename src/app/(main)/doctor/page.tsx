@@ -22,8 +22,8 @@ export default async function Doctor() {
 
     const renderedDoctors = doctors.map((doctor) => {
         return (
-            <div key={doctor.id} role="listitem">
-                <div className="mx-[4.5%] my-20 flex gap-x-2 px-2 max-md:flex-col max-md:justify-center">
+            <div key={doctor.id} role="listitem" className="space-y-16">
+                <div className="mx-[4.5%] flex gap-x-2 px-2 max-md:flex-col max-md:justify-center">
                     <div className="min-w-60 max-md:mx-auto">
                         {doctor.imageUrl ? (
                             <Image
@@ -85,10 +85,10 @@ export default async function Doctor() {
 
     return (
         <section aria-describedby="doctorList">
-            <h1 id="doctorList" className="text-4xl">
+            <h1 id="doctorList" className="sr-only text-4xl">
                 Doctor List
             </h1>
-            <div className="mt-2 flex flex-col gap-y-2 text-2xl" role="list">
+            <div className="mt-20 flex flex-col gap-y-24 text-2xl" role="list">
                 {renderedDoctors}
             </div>
         </section>

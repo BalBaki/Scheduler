@@ -1,4 +1,7 @@
-export type FormState<K extends string, T> = (K extends ''
+export type FormState<
+    K extends string,
+    T extends Record<string, any>,
+> = (K extends ''
     ? {}
     : {
           [key in K]: boolean;

@@ -36,7 +36,7 @@ export default function UserFilters({ validatedfilters }: UserFilters) {
         resolver: zodResolver(userFilterSchema),
         defaultValues: {
             query: validatedfilters.query,
-            status: validatedfilters.status,
+            status: validatedfilters.status || 'WAITING', 
         },
     });
 

@@ -1,6 +1,8 @@
 import { cache } from 'react';
 import db from '..';
-import { prismaExclude } from '@/lib/prisma-exclude';
+import { Prisma } from '@prisma/client';
+
+type DoctorWithValidAppointmes = Prisma.UserGetPayload<{include: {doctorAppointments: true}, omit: {password:true}}> | null
 
 export const getUserByEmail = async (email: string) => {
     const user = await db.user.findFirst({
@@ -13,21 +15,26 @@ export const getUserByEmail = async (email: string) => {
 };
 
 export const getDoctorWithValidAppointmentsById = cache(
-    async (id: string) =>
-        await db.user.findFirst({
+    async (id: string) => {
+     return await db.user.findUnique({
+            omit: {
+                password: true,
+            },
             where: {
                 id,
             },
-            select: {
-                ...prismaExclude('User', ['password']),
+            include: {
                 doctorAppointments: {
+                    
                     where: {
                         start: { gte: new Date() },
                     },
                     orderBy: {
                         start: 'asc',
                     },
-                },
-            },
-        }),
+                } 
+            }
+            
+        })
+    }
 );

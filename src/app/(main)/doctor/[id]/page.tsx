@@ -3,11 +3,9 @@ import { notFound } from 'next/navigation';
 import { IoPersonCircle } from 'react-icons/io5';
 import AppointmentCalendar from '@/components/appointment/Calendar';
 import NextAvailability from '@/components/doctor/NextAvailability';
-import db from '@/db';
 import { getDoctorWithValidAppointmentsById } from '@/db/queries/user';
 import languages from '@/languages.json';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
-import { prismaExclude } from '@/lib/prisma-exclude';
 import { capitalizeFirstLetter } from '@/lib/utils';
 import type { Metadata } from 'next';
 

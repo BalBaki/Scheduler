@@ -4,7 +4,6 @@ import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import db from '@/db';
 import { hasPermission } from '@/lib/permissions';
-import { prismaExclude } from '@/lib/prisma-exclude';
 import { ResultWithError } from '@/types';
 import type { UserStatus } from '@prisma/client';
 
@@ -18,10 +17,12 @@ export const updateUserStatus = async ({
     try {
         const session = await auth();
         const user = await db.user.findFirst({
+            omit: {
+                password: true
+            },
             where: {
                 id,
             },
-            select: prismaExclude('User', ['password']),
         });
 
         if (!user) return { update: false, error: 'Not exits User...' };
@@ -33,13 +34,15 @@ export const updateUserStatus = async ({
             return { update: false, error: 'You have no authorization..!' };
 
         const updatedUser = await db.user.update({
+             omit: {
+                password: true
+            },
             data: {
                 status,
             },
             where: {
                 id: user.id,
             },
-            select: prismaExclude('User', ['password']),
         });
 
         revalidatePath('/dashboard/approve');

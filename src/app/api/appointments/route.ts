@@ -1,6 +1,5 @@
 import { auth } from '@/auth';
 import db from '@/db';
-import { prismaExclude } from '@/lib/prisma-exclude';
 import type { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -20,7 +19,9 @@ export async function GET(request: NextRequest) {
             },
             include: {
                 [session.user.role === 'DOCTOR' ? 'patient' : 'doctor']: {
-                    select: prismaExclude('User', ['password']),
+                    omit: {
+                        password: true
+                    }
                 },
             },
         });

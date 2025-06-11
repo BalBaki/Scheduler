@@ -12,7 +12,7 @@ export default function Appointments() {
 
     const { data, isPending, error } = useQuery({
         queryFn: () => getAppointments(),
-        queryKey: ['appointments'],
+        queryKey: ['appointments', session?.user.id],
         refetchOnWindowFocus: false,
         staleTime: Infinity,
     });

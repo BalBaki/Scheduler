@@ -6,7 +6,6 @@ import { v4 as randomUUID } from 'uuid';
 import db from './db';
 import { findPageType } from './lib/find-page-type';
 import { hasPermission } from './lib/permissions';
-import { prismaExclude } from './lib/prisma-exclude';
 import type { Adapter, AdapterSession, AdapterUser } from '@auth/core/adapters';
 import type { PrismaClient } from '@prisma/client';
 
@@ -27,11 +26,11 @@ const CustomPrismaAdapter = (
                 where: { sessionToken },
                 include: {
                     user: {
-                        select: prismaExclude('User', [
-                            'password',
-                            'createdAt',
-                            'updatedAt',
-                        ]),
+                        omit: {
+                            'password': true,
+                            'createdAt': true,
+                            'updatedAt':true
+                        }
                     },
                 },
             });

@@ -6,7 +6,6 @@ import Pagination from '@/components/Pagination';
 import db from '@/db';
 import { getUserCount } from '@/db/queries/user-count';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
-import { prismaExclude } from '@/lib/prisma-exclude';
 import { userFilterSchema } from '@/schemas';
 import type { Metadata } from 'next';
 
@@ -45,6 +44,9 @@ export default async function ApprovePage(props: ApprovePageProps) {
     const itemCountPerPage =
         parseInt(searchParams.limit?.toString() || '') || 20;
     const users = await db.user.findMany({
+        omit: {
+            password: true
+        },
         where: {
             ...(status !== 'ALL' && {
                 status,
@@ -53,7 +55,6 @@ export default async function ApprovePage(props: ApprovePageProps) {
                 email: { contains: query },
             }),
         },
-        select: prismaExclude('User', ['password']),
         orderBy: {
             createdAt: 'desc',
         },

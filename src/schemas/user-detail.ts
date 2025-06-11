@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from "zod/v4";
 import languages from '@/languages.json';
 
 export const userDetailSchema = z

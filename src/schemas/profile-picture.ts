@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from "zod/v4";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = [

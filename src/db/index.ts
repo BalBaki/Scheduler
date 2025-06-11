@@ -3,19 +3,16 @@ import { withAccelerate } from '@prisma/extension-accelerate';
 import { addDummyFeedback } from './dummy-feedback';
 import { addDummyUsers } from './dummy-user';
 
-const prismaClientSingleton = () => {
-    return new PrismaClient().$extends(withAccelerate());
-};
 
-declare global {
-    var prisma: undefined | ReturnType<typeof prismaClientSingleton>;
+const globalForPrisma = global as unknown as { 
+    db: PrismaClient
 }
 
-const db = globalThis.prisma ?? prismaClientSingleton();
+const db = globalForPrisma.db || new PrismaClient().$extends(withAccelerate())
 
-export default db;
+if (process.env.NODE_ENV !== 'production') globalForPrisma.db = db
 
-if (process.env.NODE_ENV !== 'production') globalThis.prisma = db;
+export default db
 
 // db.user
 //     .upsert({

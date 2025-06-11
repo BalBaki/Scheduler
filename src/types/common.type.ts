@@ -1,5 +1,11 @@
 import { Status } from '@/enums';
 
+export type FormState<T extends Record<string, any>> = {
+    [key in keyof T]?: string[];
+} & {
+    _form?: string;
+};
+
 export type ResultWithError<K extends string> = (K extends ''
     ? {}
     : {
@@ -9,6 +15,7 @@ export type ResultWithError<K extends string> = (K extends ''
 };
 
 export type BaseError = string;
+
 export type Result<Ok, Err> =
     | {
           status: Status.Ok;

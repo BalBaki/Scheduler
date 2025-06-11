@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { removeAppointment } from '@/actions/remove-appointment';
+import { removeAppointment } from '@/actions/appointment.action';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import {
     AlertDialog,
@@ -15,6 +15,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Status } from '@/enums';
 
 type RemoveAppointmentProps = {
     appointmentId: string;
@@ -26,12 +27,15 @@ export default function RemoveAppointment({
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: removeAppointment,
-        onSuccess: ({ remove, error }) => {
-            remove &&
-                queryClient.invalidateQueries({ queryKey: ['appointments'] });
+        onSuccess: (result) => {
+            const isSuccess = result.status === Status.Ok;
 
-            toast(remove ? 'Successfully Removed' : error, {
-                type: remove ? 'success' : 'error',
+            if (isSuccess) {
+                queryClient.invalidateQueries({ queryKey: ['appointments'] });
+            }
+
+            toast(isSuccess ? 'Successfully Removed' : result.err, {
+                type: isSuccess ? 'success' : 'error',
             });
         },
     });

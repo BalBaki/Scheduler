@@ -3,10 +3,10 @@ import ApproveAll from '@/components/dashboard/approve/ApproveAll';
 import UserFilters from '@/components/dashboard/approve/UserFilters';
 import UserList from '@/components/dashboard/approve/UserList';
 import Pagination from '@/components/Pagination';
-import db from '@/db';
-import { getUserCount } from '@/db/queries/user-count';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import { userFilterSchema } from '@/schemas';
+import db from '@/services/db.service';
+import { UserManagementService } from '@/services/user-management.service';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -37,7 +37,7 @@ export default async function ApprovePage(props: ApprovePageProps) {
     const {
         data: { status, query },
     } = validatedParams;
-    const userCount = await getUserCount({
+    const userCount = await UserManagementService.getUserCount({
         status,
         query,
     });
@@ -45,7 +45,7 @@ export default async function ApprovePage(props: ApprovePageProps) {
         parseInt(searchParams.limit?.toString() || '') || 20;
     const users = await db.user.findMany({
         omit: {
-            password: true
+            password: true,
         },
         where: {
             ...(status !== 'ALL' && {

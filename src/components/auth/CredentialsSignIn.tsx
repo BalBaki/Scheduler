@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { credentialsSignIn } from '@/actions/credentials-sign-in';
+import { credentialsSignIn } from '@/actions/auth.action';
 import {
     Form,
     FormControl,
@@ -15,6 +15,7 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { Status } from '@/enums';
 import { triggerClientSessionUpdate } from '@/lib/trigger-client-session-update';
 import { signInSchema } from '@/schemas';
 import FormValidationError from '../FormValidationError';
@@ -37,11 +38,11 @@ export default function CredentialsSignIn() {
     const {
         mutate,
         isPending,
-        data: loginResult,
+        data: result,
     } = useMutation({
         mutationFn: credentialsSignIn,
-        async onSuccess({ login }) {
-            if (login) {
+        async onSuccess({ status }) {
+            if (status === Status.Ok) {
                 await triggerClientSessionUpdate();
 
                 router.replace('/');
@@ -50,12 +51,13 @@ export default function CredentialsSignIn() {
             }
         },
     });
+    const isFailure = result && result.status === Status.Err;
 
     const onSubmit: SubmitHandler<SignInForm> = (data) => mutate(data);
 
     return (
         <div className="flex h-full justify-center">
-            <div className="flex-1 bg-login bg-cover max-md:hidden"></div>
+            <div className="bg-login flex-1 bg-cover max-md:hidden"></div>
             <div className="my-auto flex w-1/2 max-w-140 flex-col items-center px-14 py-2 max-md:w-full max-md:max-w-full max-md:px-[10%]">
                 <h1 id="loginForm" className="mb-6 text-3xl">
                     Sign In to continue
@@ -81,9 +83,9 @@ export default function CredentialsSignIn() {
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
-                                    {loginResult?.errors?.email && (
+                                    {isFailure && result.err.email && (
                                         <FormValidationError
-                                            errors={loginResult.errors.email}
+                                            errors={result.err.email}
                                         />
                                     )}
                                 </FormItem>
@@ -100,9 +102,9 @@ export default function CredentialsSignIn() {
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
-                                    {loginResult?.errors?.password && (
+                                    {isFailure && result.err.password && (
                                         <FormValidationError
-                                            errors={loginResult.errors.password}
+                                            errors={result.err.password}
                                         />
                                     )}
                                 </FormItem>
@@ -110,7 +112,7 @@ export default function CredentialsSignIn() {
                         />
                         <Button
                             type="submit"
-                            className="mt-4 h-12 w-full rounded-md border-black bg-[#622fcf] text-xs uppercase tracking-widest"
+                            className="mt-4 h-12 w-full rounded-md border-black bg-[#622fcf] text-xs tracking-widest uppercase"
                             disabled={isPending || !form.formState.isValid}
                             aria-label={isPending ? 'Logging in' : 'Login'}
                         >
@@ -118,10 +120,10 @@ export default function CredentialsSignIn() {
                         </Button>
                     </form>
                 </Form>
-                {loginResult?.errors?._form && (
+                {isFailure && result.err._form && (
                     <FormValidationError
                         className="mt-3"
-                        errors={loginResult.errors._form}
+                        errors={result.err._form}
                     />
                 )}
                 <div className="mt-3 text-center">

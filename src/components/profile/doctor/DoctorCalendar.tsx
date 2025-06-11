@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import intercetionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
-import AddAppointmentPopup from './AddAppointmentPopup';
+import CreateAppointmentPopup from './CreateAppointmentPopup';
 import EditAppointmentPopup from './EditAppointmentPopup';
 import { useLocale } from '@/hooks/use-locale';
 import type { UserWithoutPassword } from '@/types';
@@ -52,7 +52,7 @@ export default function DoctorCalendar({ appointments }: DoctorCalendarProps) {
             />
             <div className="relative">
                 {isShowDialog && (
-                    <AddAppointmentPopup
+                    <CreateAppointmentPopup
                         date={selectedDate}
                         show={isShowDialog}
                         setShow={setIsShowDialog}

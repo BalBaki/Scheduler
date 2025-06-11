@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GiCancel } from 'react-icons/gi';
 import { toast } from 'react-toastify';
-import { cancelAppointment } from '@/actions/cancel-appointment';
+import { cancelAppointment } from '@/actions/appointment.action';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import {
     AlertDialog,
@@ -16,6 +16,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Status } from '@/enums';
 
 type CancelAppointmentProps = {
     appointmentId: string;
@@ -27,12 +28,15 @@ export default function CancelAppointment({
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: cancelAppointment,
-        onSuccess: ({ cancel, error }) => {
-            cancel &&
-                queryClient.invalidateQueries({ queryKey: ['appointments'] });
+        onSuccess: (result) => {
+            const isSuccess = result.status === Status.Ok;
 
-            toast(cancel ? 'Successfully Cancelled' : error, {
-                type: cancel ? 'success' : 'error',
+            if (isSuccess) {
+                queryClient.invalidateQueries({ queryKey: ['appointments'] });
+            }
+
+            toast(isSuccess ? 'Successfully Cancelled' : result.err, {
+                type: isSuccess ? 'success' : 'error',
             });
         },
     });

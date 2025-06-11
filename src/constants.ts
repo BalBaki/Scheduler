@@ -5,3 +5,4 @@ export const ACCEPTED_IMAGE_TYPES = [
     'image/png',
     'image/webp',
 ];
+export const DEFAULT_LOCAL_URL = 'http://localhost:3000/';

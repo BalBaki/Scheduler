@@ -2,9 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { IoPersonCircle } from 'react-icons/io5';
 import { Skeleton } from '@/components/ui/skeleton';
-import db from '@/db';
 import languages from '@/languages.json';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
+import db from '@/services/db.service';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export default async function Doctor() {
                         )}
                     </div>
                     <div className="flex flex-col gap-y-3 max-md:mt-2 md:ml-14">
-                        <h2 className="break-all font-semibold capitalize">{`${doctor.name} ${doctor.surname}`}</h2>
+                        <h2 className="font-semibold break-all capitalize">{`${doctor.name} ${doctor.surname}`}</h2>
                         {doctor.description && (
                             <div className="ql-snow">
                                 <h3 className="sr-only">Description</h3>

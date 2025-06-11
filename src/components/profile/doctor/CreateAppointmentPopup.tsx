@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format as formatDate } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { addAppointment } from '@/actions/add-appointment';
+import { createAppointment } from '@/actions/appointment.action';
 import FormValidationError from '@/components/FormValidationError';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { Button } from '@/components/ui/button';
@@ -27,34 +27,34 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Status } from '@/enums';
 import { useLocale } from '@/hooks/use-locale';
-import { addAppointmentClientSchema } from '@/schemas';
+import { createAppointmentClientSchema } from '@/schemas';
 import type { Dispatch, SetStateAction } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
-import type { AddAppointmentClientForm } from '@/types';
+import type { CreateAppointmentClientForm } from '@/types';
 
-type AddAppointmentPopupProps = {
+type CreateAppointmentPopupProps = {
     date?: Date;
     show: boolean;
     setShow: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function AddAppointmentPopup({
+export default function CreateAppointmentPopup({
     date,
     show,
     setShow,
-}: AddAppointmentPopupProps) {
+}: CreateAppointmentPopupProps) {
     const locale = useLocale();
-    const form = useForm<AddAppointmentClientForm>({
+    const form = useForm<CreateAppointmentClientForm>({
         mode: 'all',
-        resolver: zodResolver(addAppointmentClientSchema),
+        resolver: zodResolver(createAppointmentClientSchema),
         defaultValues: {
             title: '',
             start: '',
             end: '',
         },
     });
-
     const queryClient = useQueryClient();
 
     const {
@@ -62,20 +62,24 @@ export default function AddAppointmentPopup({
         isPending,
         data: result,
     } = useMutation({
-        mutationFn: addAppointment,
-        onSuccess: ({ add }) => {
-            if (add) {
+        mutationFn: createAppointment,
+        onSuccess: ({ status }) => {
+            const isSuccess = status === Status.Ok;
+
+            if (isSuccess) {
                 queryClient.invalidateQueries({ queryKey: ['appointments'] });
 
                 setShow(false);
             }
 
-            toast(add ? 'Successfully Added' : 'Added Failed', {
-                type: add ? 'success' : 'error',
+            toast(isSuccess ? 'Successfully Created' : 'Creation Failed', {
+                type: isSuccess ? 'success' : 'error',
             });
         },
     });
-    const onSubmit: SubmitHandler<AddAppointmentClientForm> = (data) => {
+    const isFailure = result && result.status === Status.Err;
+
+    const onSubmit: SubmitHandler<CreateAppointmentClientForm> = (data) => {
         const formattedDate = formatDate(date || '', 'yyyy-MM-dd');
         const start = new Date(`${formattedDate} ${data.start}`).toISOString();
         const end = new Date(`${formattedDate} ${data.end}`).toISOString();
@@ -92,10 +96,10 @@ export default function AddAppointmentPopup({
             >
                 <DialogHeader>
                     <DialogTitle className="uppercase">
-                        Add Appointment
+                        Create Appointment
                     </DialogTitle>
                     <DialogDescription className="sr-only">
-                        Add new appointment
+                        Create new appointment
                     </DialogDescription>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -122,9 +126,9 @@ export default function AddAppointmentPopup({
                                             />
                                         </FormControl>
                                         <FormMessage />
-                                        {result?.errors?.title && (
+                                        {isFailure && result.err.title && (
                                             <FormValidationError
-                                                errors={result.errors.title}
+                                                errors={result.err.title}
                                             />
                                         )}
                                     </FormItem>
@@ -140,9 +144,9 @@ export default function AddAppointmentPopup({
                                             <Input type="time" {...field} />
                                         </FormControl>
                                         <FormMessage />
-                                        {result?.errors?.start && (
+                                        {isFailure && result.err.start && (
                                             <FormValidationError
-                                                errors={result.errors.start}
+                                                errors={result.err.start}
                                             />
                                         )}
                                     </FormItem>
@@ -158,9 +162,9 @@ export default function AddAppointmentPopup({
                                             <Input type="time" {...field} />
                                         </FormControl>
                                         <FormMessage />
-                                        {result?.errors?.end && (
+                                        {isFailure && result?.err.end && (
                                             <FormValidationError
-                                                errors={result.errors.end}
+                                                errors={result.err.end}
                                             />
                                         )}
                                     </FormItem>
@@ -176,9 +180,9 @@ export default function AddAppointmentPopup({
                                     {isPending ? <LoadingSpinner /> : 'Save'}
                                 </Button>
                             </DialogFooter>
-                            {result?.errors?._form && (
+                            {isFailure && result.err._form && (
                                 <FormValidationError
-                                    errors={result.errors._form}
+                                    errors={result.err._form}
                                 />
                             )}
                         </form>

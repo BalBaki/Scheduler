@@ -1,8 +1,8 @@
 import { z } from 'zod/v4';
 import {
-    addAppointmentClientSchema,
-    addAppointmentServerSchema,
     contactUsFormSchema,
+    createAppointmentClientSchema,
+    createAppointmentServerSchema,
     feedbackFilterSchema,
     signInSchema,
     signUpSchema,
@@ -10,11 +10,11 @@ import {
     userFilterSchema,
 } from '@/schemas';
 
-export type AddAppointmentServerForm = z.infer<
-    typeof addAppointmentServerSchema
+export type CreateAppointmentServerForm = z.infer<
+    typeof createAppointmentServerSchema
 >;
-export type AddAppointmentClientForm = z.infer<
-    typeof addAppointmentClientSchema
+export type CreateAppointmentClientForm = z.infer<
+    typeof createAppointmentClientSchema
 >;
 export type SignInForm = z.infer<typeof signInSchema>;
 export type SignUpForm = z.infer<typeof signUpSchema>;

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { signUp } from '@/actions/sign-up';
+import { signUp } from '@/actions/auth.action';
 import {
     Form,
     FormControl,
@@ -22,6 +22,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { Status } from '@/enums';
 import { triggerClientSessionUpdate } from '@/lib/trigger-client-session-update';
 import { signUpSchema } from '@/schemas';
 import FormValidationError from '../FormValidationError';
@@ -51,8 +52,8 @@ export default function SignUp() {
         data: result,
     } = useMutation({
         mutationFn: signUp,
-        async onSuccess({ register }) {
-            if (register) {
+        async onSuccess({ status }) {
+            if (status === Status.Ok) {
                 await triggerClientSessionUpdate();
 
                 router.push('/');
@@ -62,6 +63,7 @@ export default function SignUp() {
             }
         },
     });
+    const isFailure = result && result.status === Status.Err;
 
     const onSubmit: SubmitHandler<SignUpForm> = (data) => mutate(data);
     const handlePasswordChange = (
@@ -96,7 +98,7 @@ export default function SignUp() {
 
     return (
         <div className="flex h-full justify-center">
-            <div className="flex-1 bg-register bg-cover max-md:hidden"></div>
+            <div className="bg-register flex-1 bg-cover max-md:hidden"></div>
             <div className="my-auto flex w-1/2 max-w-140 flex-col items-center px-14 py-2 max-md:w-full max-md:max-w-full max-md:px-[10%]">
                 <h1 id="signUpForm" className="mb-6 text-3xl">
                     Sign Up to continue
@@ -118,9 +120,9 @@ export default function SignUp() {
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
-                                    {result?.errors?.email && (
+                                    {isFailure && result.err.email && (
                                         <FormValidationError
-                                            errors={result.errors.email}
+                                            errors={result.err.email}
                                         />
                                     )}
                                 </FormItem>
@@ -146,9 +148,9 @@ export default function SignUp() {
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
-                                    {result?.errors?.password && (
+                                    {isFailure && result.err.password && (
                                         <FormValidationError
-                                            errors={result.errors.password}
+                                            errors={result.err.password}
                                         />
                                     )}
                                 </FormItem>
@@ -165,13 +167,14 @@ export default function SignUp() {
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
-                                    {result?.errors?.confirmPassword && (
-                                        <FormValidationError
-                                            errors={
-                                                result.errors.confirmPassword
-                                            }
-                                        />
-                                    )}
+                                    {isFailure &&
+                                        result.err.confirmPassword && (
+                                            <FormValidationError
+                                                errors={
+                                                    result.err.confirmPassword
+                                                }
+                                            />
+                                        )}
                                 </FormItem>
                             )}
                         />
@@ -186,9 +189,9 @@ export default function SignUp() {
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
-                                    {result?.errors?.name && (
+                                    {isFailure && result.err.name && (
                                         <FormValidationError
-                                            errors={result.errors.name}
+                                            errors={result.err.name}
                                         />
                                     )}
                                 </FormItem>
@@ -205,9 +208,9 @@ export default function SignUp() {
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
-                                    {result?.errors?.surname && (
+                                    {isFailure && result.err.surname && (
                                         <FormValidationError
-                                            errors={result.errors.surname}
+                                            errors={result.err.surname}
                                         />
                                     )}
                                 </FormItem>
@@ -224,9 +227,9 @@ export default function SignUp() {
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
-                                    {result?.errors?.phoneNumber && (
+                                    {isFailure && result.err.phoneNumber && (
                                         <FormValidationError
-                                            errors={result.errors.phoneNumber}
+                                            errors={result.err.phoneNumber}
                                         />
                                     )}
                                 </FormItem>
@@ -269,9 +272,9 @@ export default function SignUp() {
 
                                     <FormDescription />
                                     <FormMessage />
-                                    {result?.errors?.role && (
+                                    {isFailure && result.err.role && (
                                         <FormValidationError
-                                            errors={result.errors.role}
+                                            errors={result.err.role}
                                         />
                                     )}
                                 </FormItem>
@@ -279,7 +282,7 @@ export default function SignUp() {
                         />
                         <Button
                             type="submit"
-                            className="mt-4 h-12 w-full rounded-md border-black bg-[#622fcf] text-xs uppercase tracking-widest"
+                            className="mt-4 h-12 w-full rounded-md border-black bg-[#622fcf] text-xs tracking-widest uppercase"
                             disabled={isPending || !form.formState.isValid}
                             aria-label={isPending ? 'Registering' : 'Register'}
                         >
@@ -287,10 +290,10 @@ export default function SignUp() {
                         </Button>
                     </form>
                 </Form>
-                {result?.errors?._form && (
+                {isFailure && result.err._form && (
                     <FormValidationError
                         className="mt-3"
-                        errors={result.errors._form}
+                        errors={result.err._form}
                     />
                 )}
                 <div className="mt-3 text-center">

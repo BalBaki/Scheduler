@@ -3,16 +3,13 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { v4 as randomUUID } from 'uuid';
-import db from './db';
 import { findPageType } from './lib/find-page-type';
 import { hasPermission } from './lib/permissions';
+import db from './services/db.service';
 import type { Adapter, AdapterSession, AdapterUser } from '@auth/core/adapters';
 import type { PrismaClient } from '@prisma/client';
 
-const PASSWORD_SECRET = process.env.PASSWORD_SECRET;
 export const MAX_TOKEN_AGE = 3 * 24 * 60 * 60;
-
-if (!PASSWORD_SECRET) throw new Error('Missing Password Outh Credentials!');
 
 const CustomPrismaAdapter = (
     prisma: PrismaClient | ReturnType<PrismaClient['$extends']>,
@@ -27,10 +24,10 @@ const CustomPrismaAdapter = (
                 include: {
                     user: {
                         omit: {
-                            'password': true,
-                            'createdAt': true,
-                            'updatedAt':true
-                        }
+                            password: true,
+                            createdAt: true,
+                            updatedAt: true,
+                        },
                     },
                 },
             });

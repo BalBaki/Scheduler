@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react';
 import { FcApproval, FcCancel } from 'react-icons/fc';
-import { updateUserStatus } from '@/actions/update-user-status';
+import { updateUserStatus } from '@/actions/user-status.action';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import type { UserWithoutPassword } from '@/types';
 

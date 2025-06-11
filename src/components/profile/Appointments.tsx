@@ -4,15 +4,20 @@ import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import DoctorCalendar from '@/components/profile/doctor/DoctorCalendar';
 import AppointmentList from '@/components/profile/patient/AppointmentList';
-import { getAppointments } from '@/queries/get-appointment';
+import { Status } from '@/enums';
+import { ApiService } from '@/services/api.service';
 import { Skeleton } from '../ui/skeleton';
 
 export default function Appointments() {
     const { data: session } = useSession();
 
-    const { data, isPending, error } = useQuery({
-        queryFn: () => getAppointments(),
-        queryKey: ['appointments'],
+    const {
+        data: result,
+        isPending,
+        error,
+    } = useQuery({
+        queryFn: () => ApiService.getAppointments(),
+        queryKey: ['appointments', session?.user.id],
         refetchOnWindowFocus: false,
         staleTime: Infinity,
     });
@@ -25,16 +30,16 @@ export default function Appointments() {
                 <Skeleton className="h-12 w-full rounded-md bg-gray-200" />
             </div>
         );
-    if (!data?.search) return <div>Error: {data?.error}</div>;
+    if (result?.status === Status.Err) return <div>Error: {result.err}</div>;
     if (error) return <div>Something went wrong..!</div>;
 
     return (
         <>
             {session &&
                 (session.user.role === 'DOCTOR' ? (
-                    <DoctorCalendar appointments={data.appointments} />
+                    <DoctorCalendar appointments={result.data.appointments} />
                 ) : (
-                    <AppointmentList appointments={data.appointments} />
+                    <AppointmentList appointments={result.data.appointments} />
                 ))}
         </>
     );

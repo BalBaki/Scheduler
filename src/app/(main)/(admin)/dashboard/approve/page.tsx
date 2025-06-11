@@ -3,11 +3,10 @@ import ApproveAll from '@/components/dashboard/approve/ApproveAll';
 import UserFilters from '@/components/dashboard/approve/UserFilters';
 import UserList from '@/components/dashboard/approve/UserList';
 import Pagination from '@/components/Pagination';
-import db from '@/db';
-import { getUserCount } from '@/db/queries/user-count';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
-import { prismaExclude } from '@/lib/prisma-exclude';
 import { userFilterSchema } from '@/schemas';
+import db from '@/services/db.service';
+import { UserManagementService } from '@/services/user-management.service';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -38,13 +37,16 @@ export default async function ApprovePage(props: ApprovePageProps) {
     const {
         data: { status, query },
     } = validatedParams;
-    const userCount = await getUserCount({
+    const userCount = await UserManagementService.getUserCount({
         status,
         query,
     });
     const itemCountPerPage =
         parseInt(searchParams.limit?.toString() || '') || 20;
     const users = await db.user.findMany({
+        omit: {
+            password: true,
+        },
         where: {
             ...(status !== 'ALL' && {
                 status,
@@ -53,7 +55,6 @@ export default async function ApprovePage(props: ApprovePageProps) {
                 email: { contains: query },
             }),
         },
-        select: prismaExclude('User', ['password']),
         orderBy: {
             createdAt: 'desc',
         },

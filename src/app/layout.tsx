@@ -5,6 +5,7 @@ import 'nprogress/nprogress.css';
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 import Providers from './providers';
+import { env } from '@/services/env.service';
 
 const inter = Inter({ subsets: ['latin'] });
 

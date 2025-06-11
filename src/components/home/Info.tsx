@@ -39,7 +39,7 @@ export default function Info() {
     return (
         <section
             aria-label="info about therapy"
-            className="mx-6 mt-24 grid max-w-screen-lg md:grid-cols-2 md:gap-x-5 lg:mx-auto"
+            className="mx-6 mt-24 grid max-w-(--breakpoint-lg) md:grid-cols-2 md:gap-x-5 lg:mx-auto"
         >
             <Image
                 src="/assets/home/info.jpg"
@@ -47,7 +47,7 @@ export default function Info() {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className="h-[25rem] w-full object-cover md:h-[35rem]"
+                className="h-100 w-full object-cover md:h-140"
             />
             <div>
                 <Accordion

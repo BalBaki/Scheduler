@@ -15,6 +15,7 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { Status } from '@/enums';
 import { contactUsFormSchema } from '@/schemas';
 import FormValidationError from '../FormValidationError';
 import LoadingSpinner from '../LoadingSpinner';
@@ -42,8 +43,8 @@ export default function ContactUsForm() {
         data: result,
     } = useMutation({
         mutationFn: createFeedBack,
-        onSuccess({ submit }) {
-            if (submit) {
+        onSuccess({ status }) {
+            if (status === Status.Ok) {
                 localStorage.setItem(
                     STORAGE_KEY,
                     Math.floor(new Date().getTime() / 1000).toString(),
@@ -53,6 +54,8 @@ export default function ContactUsForm() {
             }
         },
     });
+    const isFailure = result && result.status === Status.Err;
+
     const onSubmit: SubmitHandler<IContactUsForm> = (data) => mutate(data);
 
     useEffect(() => {
@@ -80,7 +83,7 @@ export default function ContactUsForm() {
                                 control={form.control}
                                 name="email"
                                 render={({ field }) => (
-                                    <FormItem className="h-[6.25rem]">
+                                    <FormItem className="h-25">
                                         <FormLabel>Email</FormLabel>
                                         <FormControl>
                                             <Input
@@ -90,9 +93,9 @@ export default function ContactUsForm() {
                                         </FormControl>
                                         <FormDescription />
                                         <FormMessage />
-                                        {result?.errors?.email && (
+                                        {isFailure && result.err.email && (
                                             <FormValidationError
-                                                errors={result.errors.email}
+                                                errors={result.err.email}
                                             />
                                         )}
                                     </FormItem>
@@ -113,9 +116,9 @@ export default function ContactUsForm() {
                                         </FormControl>
                                         <FormDescription />
                                         <FormMessage />
-                                        {result?.errors?.message && (
+                                        {isFailure && result.err.message && (
                                             <FormValidationError
-                                                errors={result.errors.message}
+                                                errors={result.err.message}
                                             />
                                         )}
                                     </FormItem>
@@ -131,10 +134,10 @@ export default function ContactUsForm() {
                             </Button>
                         </form>
                     </Form>
-                    {result?.errors?._form && (
+                    {isFailure && result.err._form && (
                         <FormValidationError
                             className="mt-3"
-                            errors={result.errors._form}
+                            errors={result.err._form}
                         />
                     )}
                 </>

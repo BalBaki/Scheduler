@@ -1,4 +1,4 @@
-import db from '.';
+import db from '@/services/db.service';
 
 export const addDummyFeedback = async (count: number) => {
     try {

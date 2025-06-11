@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import intercetionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
-import AddAppointmentPopup from './AddAppointmentPopup';
+import CreateAppointmentPopup from './CreateAppointmentPopup';
 import EditAppointmentPopup from './EditAppointmentPopup';
 import { useLocale } from '@/hooks/use-locale';
 import type { UserWithoutPassword } from '@/types';
@@ -43,7 +43,7 @@ export default function DoctorCalendar({ appointments }: DoctorCalendarProps) {
                 buttonText={{ today: '' }}
                 dayHeaderFormat={{ weekday: 'long' }}
                 dayHeaderClassNames="break-all"
-                eventClassNames="bg-calendarValidDate flex justify-center text-white text-center text-wrap cursor-pointer hover:bg-calendarValidDate"
+                eventClassNames="bg-calendar-valid-date flex justify-center text-white text-center text-wrap cursor-pointer hover:bg-calendar-valid-date"
                 height={'auto'}
                 weekNumberClassNames={'text-center'}
                 eventContent={(arg) => <EditAppointmentPopup arg={arg} />}
@@ -52,7 +52,7 @@ export default function DoctorCalendar({ appointments }: DoctorCalendarProps) {
             />
             <div className="relative">
                 {isShowDialog && (
-                    <AddAppointmentPopup
+                    <CreateAppointmentPopup
                         date={selectedDate}
                         show={isShowDialog}
                         setShow={setIsShowDialog}

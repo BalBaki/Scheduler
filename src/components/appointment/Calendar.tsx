@@ -33,8 +33,8 @@ export default function AppointmentCalendar({
                 eventClassNames={({ event }) =>
                     `flex justify-center text-white text-center text-wrap ${
                         event.extendedProps.patientId
-                            ? 'bg-calendarInvalidDate hover:bg-calendarInvalidDate cursor-not-allowed'
-                            : 'bg-calendarValidDate hover:bg-calendarValidDate cursor-pointer'
+                            ? 'bg-calendar-invalid-date hover:bg-calendar-invalid-date cursor-not-allowed'
+                            : 'bg-calendar-valid-date hover:bg-calendar-valid-date cursor-pointer'
                     }`
                 }
                 height={'auto'}

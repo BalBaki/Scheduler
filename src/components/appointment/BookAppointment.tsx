@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { bookAppointment } from '@/actions/book-appointment';
+import { bookAppointment } from '@/actions/appointment.action';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -14,6 +14,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Status } from '@/enums';
 import LoadingSpinner from '../LoadingSpinner';
 import { Button } from '../ui/button';
 
@@ -25,12 +26,15 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: bookAppointment,
-        onSuccess({ book, error }) {
-            book &&
-                queryClient.invalidateQueries({ queryKey: ['appointments'] });
+        onSuccess(result) {
+            const isSuccess = result.status === Status.Ok;
 
-            toast(book ? 'Successfully Booked' : error, {
-                type: book ? 'success' : 'error',
+            if (isSuccess) {
+                queryClient.invalidateQueries({ queryKey: ['appointments'] });
+            }
+
+            toast(isSuccess ? 'Successfully Booked' : result.err, {
+                type: isSuccess ? 'success' : 'error',
             });
         },
     });

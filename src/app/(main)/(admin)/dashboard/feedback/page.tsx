@@ -2,10 +2,10 @@ import { notFound } from 'next/navigation';
 import FeedbackFilters from '@/components/dashboard/feedback/FeedbackFilters';
 import FeedbackList from '@/components/dashboard/feedback/FeedbackList';
 import Pagination from '@/components/Pagination';
-import db from '@/db';
-import { getFeedbackCount } from '@/db/queries/feedback-count';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import { feedbackFilterSchema } from '@/schemas';
+import db from '@/services/db.service';
+import { FeedbackService } from '@/services/feedback.service';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -34,7 +34,7 @@ export default async function FeedbackPage(props: FeedbackPageProps) {
     const {
         data: { query },
     } = validatedParams;
-    const feedbackCount = await getFeedbackCount(query);
+    const feedbackCount = await FeedbackService.getCount(query);
     const itemCountPerPage =
         parseInt(searchParams.limit?.toString() || '') || 20;
     const feedbacks = await db.feedback.findMany({

@@ -5,7 +5,7 @@ export default function AboutUs() {
             aria-describedby="aboutUsDescription"
             className="bg-gray-200 px-14 py-20"
         >
-            <div className="mx-auto max-w-screen-lg">
+            <div className="mx-auto max-w-(--breakpoint-lg)">
                 <h2
                     id="aboutUsDescription"
                     className="mx-auto mb-4 text-xl font-bold"

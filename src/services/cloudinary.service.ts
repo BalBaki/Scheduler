@@ -1,14 +1,7 @@
+import 'server-only';
 import { v2 as cloudinary } from 'cloudinary';
+import { env } from './env.service';
 import type { UploadApiOptions, UploadApiResponse } from 'cloudinary';
-
-if (!process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET)
-    throw new Error('Missing CLOUDINARY Auth Credentials..!');
-
-cloudinary.config({
-    cloud_name: 'schedular',
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 type FileUpload =
     | {
@@ -23,6 +16,14 @@ type FileUpload =
       };
 
 class CloudinaryService {
+    constructor() {
+        cloudinary.config({
+            cloud_name: 'schedular',
+            api_key: env.cloudinaryApiKey,
+            api_secret: env.cloudinaryApiSecret,
+        });
+    }
+
     uploadFile = async (
         file: File,
         options: UploadApiOptions,

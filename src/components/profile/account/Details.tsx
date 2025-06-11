@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import DescriptionEditor from './DescriptionEditor';
 import Languages from './Languages';
-import { updateUserDetail } from '@/actions/update-user-detail';
+import { updateUserDetail } from '@/actions/user-profile.action';
 import { Button } from '@/components/ui/button';
 import {
     Form,
@@ -19,6 +19,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Status } from '@/enums';
 import { hasPermission } from '@/lib/permissions';
 import { userDetailSchema } from '@/schemas';
 import { UserDetailForm } from '@/types';
@@ -39,8 +40,8 @@ export default function Details() {
     });
     const { mutate, isPending } = useMutation({
         mutationFn: updateUserDetail,
-        onSuccess({ update }) {
-            update && updateSession();
+        onSuccess({ status }) {
+            status === Status.Ok && updateSession();
         },
     });
     const onSubmit: SubmitHandler<UserDetailForm> = (data) => mutate(data);

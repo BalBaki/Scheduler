@@ -1,3 +1,5 @@
+'use client';
+
 import Details from './Details';
 import ProfilePicture from './ProfilePicture';
 

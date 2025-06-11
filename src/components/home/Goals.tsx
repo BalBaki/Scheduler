@@ -4,7 +4,7 @@ export default function Goals() {
     return (
         <section
             aria-describedby="goals"
-            className="mx-6 grid max-w-screen-lg justify-center max-md:gap-y-8 max-sm:mx-6 md:grid-cols-2 md:gap-x-8 lg:mx-auto"
+            className="mx-6 grid max-w-(--breakpoint-lg) justify-center max-md:gap-y-8 max-sm:mx-6 md:grid-cols-2 md:gap-x-8 lg:mx-auto"
         >
             <div>
                 <h2 id="goals" className="text-4xl font-bold">
@@ -58,7 +58,7 @@ export default function Goals() {
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="h-[30rem] w-full object-cover"
+                    className="h-120 w-full object-cover"
                 />
             </div>
         </section>

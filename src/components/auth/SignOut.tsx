@@ -2,7 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
-import { signout } from '@/actions/sign-out';
+import { signout } from '@/actions/auth.action';
+import { Status } from '@/enums';
 import { triggerClientSessionUpdate } from '@/lib/trigger-client-session-update';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
@@ -17,8 +18,8 @@ export default function SignOut({
     const router = useRouter();
     const { mutate: logout } = useMutation({
         mutationFn: signout,
-        async onSuccess({ logout }) {
-            if (logout) {
+        async onSuccess({ status }) {
+            if (status === Status.Ok) {
                 router.push('/');
 
                 await triggerClientSessionUpdate();

@@ -7,7 +7,7 @@ export default function ContactUs() {
             aria-describedby="contactUsDescription"
             className="bg-gray-200"
         >
-            <div className="mx-6 mt-24 grid max-w-screen-lg py-12 max-md:gap-y-5 md:grid-cols-2 md:gap-x-5 lg:mx-auto">
+            <div className="mx-6 mt-24 grid max-w-(--breakpoint-lg) py-12 max-md:gap-y-5 md:grid-cols-2 md:gap-x-5 lg:mx-auto">
                 <div className="flex flex-col gap-y-5 md:mt-10">
                     <h3 className="text-2xl">Help Us 24/7</h3>
                     <h3 className="text-5xl font-bold">

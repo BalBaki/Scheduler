@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { approveAllUsers } from '@/actions/approve-all-users';
+import { approveAllUsers } from '@/actions/user-status.action';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import {
     AlertDialog,
@@ -16,20 +16,25 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Status } from '@/enums';
 
 export default function ApproveAll() {
     const router = useRouter();
     const { mutate: approveAll, isPending } = useMutation({
         mutationFn: approveAllUsers,
-        onSuccess({ approve, error }) {
+        onSuccess(result) {
+            const isSuccess = result.status === Status.Ok;
+
             toast(
-                approve ? 'Successfully approved all waiting users.' : error,
+                isSuccess
+                    ? 'Successfully approved all waiting users.'
+                    : result.err,
                 {
-                    type: approve ? 'success' : 'error',
+                    type: isSuccess ? 'success' : 'error',
                 },
             );
 
-            approve && router.replace('/dashboard/approve');
+            isSuccess && router.replace('/dashboard/approve');
         },
     });
 

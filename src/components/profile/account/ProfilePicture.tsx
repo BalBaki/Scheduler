@@ -7,8 +7,9 @@ import { useSession } from 'next-auth/react';
 import { CgProfile } from 'react-icons/cg';
 import { toast } from 'react-toastify';
 import ImageCrop from './ImageCrop';
-import { updateProfilePicture } from '@/actions/update-profile-picture';
+import { updateProfilePicture } from '@/actions/user-profile.action';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { Status } from '@/enums';
 import { Button } from '../../ui/button';
 
 export default function ProfilePicture() {
@@ -21,15 +22,17 @@ export default function ProfilePicture() {
 
     const { mutate: uploadPicture, isPending } = useMutation({
         mutationFn: updateProfilePicture,
-        onSuccess({ update, error }) {
-            if (update) {
+        onSuccess(result) {
+            const isSuccess = result.status === Status.Ok;
+
+            if (isSuccess) {
                 updateSession().then(() => {
                     setImage(null);
                 });
             }
 
-            toast(update ? 'Profile picture was changed' : error, {
-                type: update ? 'success' : 'error',
+            toast(isSuccess ? 'Profile picture was changed' : result.err, {
+                type: isSuccess ? 'success' : 'error',
             });
         },
     });

@@ -3,12 +3,10 @@ import { notFound } from 'next/navigation';
 import { IoPersonCircle } from 'react-icons/io5';
 import AppointmentCalendar from '@/components/appointment/Calendar';
 import NextAvailability from '@/components/doctor/NextAvailability';
-import db from '@/db';
-import { getDoctorWithValidAppointmentsById } from '@/db/queries/user';
 import languages from '@/languages.json';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
-import { prismaExclude } from '@/lib/prisma-exclude';
 import { capitalizeFirstLetter } from '@/lib/utils';
+import { UserService } from '@/services/user.service';
 import type { Metadata } from 'next';
 
 type DoctorPageProps = {
@@ -19,7 +17,9 @@ export async function generateMetadata(
     props: DoctorPageProps,
 ): Promise<Metadata> {
     const params = await props.params;
-    const doctor = await getDoctorWithValidAppointmentsById(params.id);
+    const doctor = await UserService.getDoctorWithValidAppointmentsById(
+        params.id,
+    );
     const doctorFullName = `${capitalizeFirstLetter(doctor?.name || '')} ${capitalizeFirstLetter(doctor?.surname || '')}`;
 
     return {
@@ -33,7 +33,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
 
     const { id } = params;
 
-    const doctor = await getDoctorWithValidAppointmentsById(id);
+    const doctor = await UserService.getDoctorWithValidAppointmentsById(id);
 
     const nextAvailableAppointment = doctor?.doctorAppointments.find(
         (appointment) => !appointment.patientId,
@@ -43,7 +43,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
 
     return (
         <div>
-            <div className="h-52 bg-doctorBanner bg-[10%_8%] object-cover"></div>
+            <div className="bg-doctor-banner h-52 bg-position-[10%_8%] object-cover"></div>
             <div className="space-y-8 bg-[#f9f9f9] px-3 py-8 pt-3 sm:px-8">
                 <section
                     aria-describedby="doctor"
@@ -66,7 +66,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
                     </div>
                     <div className="flex max-w-4xl flex-col gap-y-1 max-md:mt-2 max-md:items-center md:ml-6">
                         <h1
-                            className="break-all text-xl font-semibold capitalize text-[#237a83]"
+                            className="text-xl font-semibold break-all text-[#237a83] capitalize"
                             id="doctor"
                         >{`${doctor.name} ${doctor.surname}`}</h1>
                         <p className="text-base font-medium text-[#237a83]">
@@ -111,7 +111,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
                             About me
                         </h2>
                         <div
-                            className="ql-editor mt-2 overflow-x-auto !p-0 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
+                            className="ql-editor scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 mt-2 overflow-x-auto p-0!"
                             dangerouslySetInnerHTML={{
                                 __html: doctor.description,
                             }}

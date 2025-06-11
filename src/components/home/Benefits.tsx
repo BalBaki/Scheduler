@@ -6,7 +6,7 @@ export default function Benefits() {
     return (
         <section
             aria-describedby="benefits"
-            className="mx-6 my-24 grid max-w-screen-lg md:grid-cols-2 md:gap-x-5 lg:mx-auto"
+            className="mx-6 my-24 grid max-w-(--breakpoint-lg) md:grid-cols-2 md:gap-x-5 lg:mx-auto"
         >
             <div className="space-y-6">
                 <h2 id="benefits" className="text-3xl font-bold md:text-5xl">
@@ -55,7 +55,7 @@ export default function Benefits() {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className="h-[35rem] w-full bg-center object-cover max-md:mt-3 md:object-contain"
+                className="h-140 w-full bg-center object-cover max-md:mt-3 md:object-contain"
             />
         </section>
     );

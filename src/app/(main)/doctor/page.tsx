@@ -48,7 +48,7 @@ export default async function Doctor() {
                                     dangerouslySetInnerHTML={{
                                         __html: doctor.description,
                                     }}
-                                    className="ql-editor line-clamp-3 !overflow-y-hidden !p-0"
+                                    className="ql-editor line-clamp-3 overflow-y-hidden! p-0!"
                                 ></div>
                             </div>
                         )}

@@ -56,7 +56,7 @@ export default function CredentialsSignIn() {
     return (
         <div className="flex h-full justify-center">
             <div className="flex-1 bg-login bg-cover max-md:hidden"></div>
-            <div className="my-auto flex w-1/2 max-w-[35rem] flex-col items-center px-14 py-2 max-md:w-full max-md:max-w-full max-md:px-[10%]">
+            <div className="my-auto flex w-1/2 max-w-140 flex-col items-center px-14 py-2 max-md:w-full max-md:max-w-full max-md:px-[10%]">
                 <h1 id="loginForm" className="mb-6 text-3xl">
                     Sign In to continue
                 </h1>

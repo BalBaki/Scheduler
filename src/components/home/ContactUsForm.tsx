@@ -80,7 +80,7 @@ export default function ContactUsForm() {
                                 control={form.control}
                                 name="email"
                                 render={({ field }) => (
-                                    <FormItem className="h-[6.25rem]">
+                                    <FormItem className="h-25">
                                         <FormLabel>Email</FormLabel>
                                         <FormControl>
                                             <Input

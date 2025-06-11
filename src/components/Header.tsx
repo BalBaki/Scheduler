@@ -86,7 +86,7 @@ export default function Header() {
                 role="navigation"
                 aria-label="Main navigation"
             >
-                <div className="hidden lg:flex [&>a]:before:absolute [&>a]:before:bottom-0 [&>a]:before:left-0 [&>a]:before:h-[1px] [&>a]:before:w-0 [&>a]:before:origin-left [&>a]:before:bg-black [&>a]:before:transition-all">
+                <div className="hidden lg:flex [&>a]:before:absolute [&>a]:before:bottom-0 [&>a]:before:left-0 [&>a]:before:h-px [&>a]:before:w-0 [&>a]:before:origin-left [&>a]:before:bg-black [&>a]:before:transition-all">
                     {routes.map((router) => {
                         return (
                             <Link
@@ -181,9 +181,10 @@ export default function Header() {
                                             <Accordion
                                                 type="single"
                                                 collapsible
+                                                className="hover:"
                                             >
                                                 <AccordionItem value="profile">
-                                                    <AccordionTrigger className="py-2 [&[data-state=open]]:pb-4">
+                                                    <AccordionTrigger className="py-2 hover:no-underline data-[state=open]:pb-4">
                                                         Profile
                                                     </AccordionTrigger>
                                                     <AccordionContent className="flex flex-col gap-y-2">
@@ -210,7 +211,7 @@ export default function Header() {
                                                     collapsible
                                                 >
                                                     <AccordionItem value="dashboard">
-                                                        <AccordionTrigger className="py-2 [&[data-state=open]]:pb-4">
+                                                        <AccordionTrigger className="py-2 hover:no-underline data-[state=open]:pb-4">
                                                             Dashboard
                                                         </AccordionTrigger>
                                                         <AccordionContent className="flex flex-col gap-y-2">

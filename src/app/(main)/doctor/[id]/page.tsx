@@ -41,7 +41,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
 
     return (
         <div>
-            <div className="h-52 bg-doctorBanner bg-[10%_8%] object-cover"></div>
+            <div className="h-52 bg-doctor-banner bg-position-[10%_8%] object-cover"></div>
             <div className="space-y-8 bg-[#f9f9f9] px-3 py-8 pt-3 sm:px-8">
                 <section
                     aria-describedby="doctor"
@@ -109,7 +109,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
                             About me
                         </h2>
                         <div
-                            className="ql-editor mt-2 overflow-x-auto !p-0 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
+                            className="ql-editor mt-2 overflow-x-auto p-0! scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
                             dangerouslySetInnerHTML={{
                                 __html: doctor.description,
                             }}

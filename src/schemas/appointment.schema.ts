@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from 'zod/v4';
 
 export const addAppointmentClientSchema = z.object({
     title: z.string().min(1, 'Title Required'),
@@ -18,6 +18,6 @@ export const addAppointmentClientSchema = z.object({
 
 export const addAppointmentServerSchema = z.object({
     title: z.string().min(1, 'Title Required'),
-    start: z.string().datetime(),
-    end: z.string().datetime(),
+    start: z.iso.datetime(),
+    end: z.iso.datetime(),
 });

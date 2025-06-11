@@ -1,9 +1,9 @@
 'use server';
 
 import { signOut } from '@/auth';
-import type { SignOutState } from '@/types';
+import type { SignOut } from '@/types';
 
-export const signout = async (): Promise<SignOutState> => {
+export const signout = async (): Promise<SignOut> => {
     try {
         await signOut();
     } finally {

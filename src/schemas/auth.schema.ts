@@ -1,4 +1,11 @@
-import { z } from "zod/v4";
+import { z } from 'zod/v4';
+
+export const signInSchema = z.object({
+    email: z.email('Enter valid email'),
+    password: z
+        .string()
+        .min(8, 'Password must contain at least 8 character(s)'),
+});
 
 export const signUpSchema = z
     .object({
@@ -10,7 +17,7 @@ export const signUpSchema = z
             .string()
             .min(1, 'Surname required')
             .max(30, 'Max character Count is 30..!'),
-        email: z.string().email('Enter valid email'),
+        email: z.email('Enter valid email'),
         password: z
             .string()
             .min(8, 'Password must contain at least 8 character(s)'),

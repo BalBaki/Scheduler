@@ -11,12 +11,12 @@ import {
 
 type PaginationProps = {
     totalCount: number;
-    itemCountPerPage: number;
+    itemCountPerPage?: number;
 };
 
 export default function Pagination({
     totalCount,
-    itemCountPerPage,
+    itemCountPerPage = 20,
 }: PaginationProps) {
     const pathname = usePathname();
     const searchParams = useSearchParams();

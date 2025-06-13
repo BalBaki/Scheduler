@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoPersonCircle } from 'react-icons/io5';
-import { Skeleton } from '@/components/ui/skeleton';
 import languages from '@/languages.json';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
-import db from '@/services/db.service';
+import { UserService } from '@/services/user.service';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -14,11 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Doctor() {
-    const doctors = await db.user.findMany({
-        where: {
-            AND: [{ role: 'DOCTOR', status: 'APPROVED' }],
-        },
-    });
+    const doctors = await UserService.getApprovedDoctors();
 
     const renderedDoctors = doctors.map((doctor) => {
         return (

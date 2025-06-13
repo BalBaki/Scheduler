@@ -26,3 +26,8 @@ export type Result<Ok, Err> =
           err: Err;
       };
 export type AsyncResult<Ok, Err> = Promise<Result<Ok, Err>>;
+export interface PaginatedDataParams {
+    page: number;
+    query?: string;
+    limit?: number;
+}

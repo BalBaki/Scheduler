@@ -216,8 +216,8 @@ export default function Header() {
                                                         </AccordionTrigger>
                                                         <AccordionContent className="flex flex-col gap-y-2">
                                                             <SheetClose asChild>
-                                                                <Link href="/dashboard/approve">
-                                                                    Approve
+                                                                <Link href="/dashboard/users">
+                                                                    Users
                                                                 </Link>
                                                             </SheetClose>
                                                             <SheetClose asChild>

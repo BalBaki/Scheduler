@@ -15,27 +15,29 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { feedbackFilterSchema } from '@/schemas';
-import type { FeedbackFilterForm } from '@/types';
+import type { FeedbackFilterForm, FeedbackSearchParams } from '@/types';
 
 type FeedbackFiltersProps = {
-    validatedFilters: FeedbackFilterForm;
+    filters: FeedbackFilterForm;
+    params: FeedbackSearchParams;
 };
 
 export default function FeedbackFilters({
-    validatedFilters,
+    filters: validatedFilters,
+    params,
 }: FeedbackFiltersProps) {
     const pathname = usePathname();
     const { replace } = useRouter();
     const form = useForm<FeedbackFilterForm>({
         mode: 'all',
         resolver: zodResolver(feedbackFilterSchema),
-        defaultValues: {
-            query: validatedFilters.query,
-        },
+        defaultValues: validatedFilters,
     });
 
     const onSubmit: SubmitHandler<FeedbackFilterForm> = (data) => {
-        replace(`${pathname}?${new URLSearchParams(data).toString()}`);
+        replace(
+            `${pathname}?${new URLSearchParams(Object.assign({ ...params, ...data })).toString()}`,
+        );
     };
 
     return (

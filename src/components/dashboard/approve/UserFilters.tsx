@@ -22,13 +22,14 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { userFilterSchema } from '@/schemas';
-import type { UserFilterForm } from '@/types';
+import type { UserFilterForm, UsersSearchParams } from '@/types';
 
 type UserFilters = {
     validatedfilters: UserFilterForm;
+    params: UsersSearchParams;
 };
 
-export default function UserFilters({ validatedfilters }: UserFilters) {
+export default function UserFilters({ validatedfilters, params }: UserFilters) {
     const pathname = usePathname();
     const { replace } = useRouter();
     const form = useForm<UserFilterForm>({
@@ -36,12 +37,14 @@ export default function UserFilters({ validatedfilters }: UserFilters) {
         resolver: zodResolver(userFilterSchema),
         defaultValues: {
             query: validatedfilters.query,
-            status: validatedfilters.status || 'WAITING', 
+            status: validatedfilters.status || 'WAITING',
         },
     });
 
     const onSubmit: SubmitHandler<UserFilterForm> = (data) => {
-        replace(`${pathname}?${new URLSearchParams(data).toString()}`);
+        replace(
+            `${pathname}?${new URLSearchParams(Object.assign({ ...params, ...data })).toString()}`,
+        );
     };
 
     return (

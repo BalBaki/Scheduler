@@ -4,6 +4,7 @@ import {
     createAppointmentClientSchema,
     createAppointmentServerSchema,
     feedbackFilterSchema,
+    feedbackSearchParamsSchema,
     signInSchema,
     signUpSchema,
     userDetailSchema,

@@ -10,6 +10,8 @@ import type {
     ApproveAllWaitingUsersResult,
     ChangeUserStatusPayload,
     ChangeUserStatusResult,
+    GetPaginatedUserParams,
+    GetPaginatedUsersResult,
     UserFilterForm,
 } from '@/types';
 
@@ -94,18 +96,64 @@ export class UserManagementService {
         }
     }
 
-    static getUserCount = cache(
-        async (data: UserFilterForm): Promise<number> => {
-            try {
-                return await db.user.count({
-                    where: {
-                        ...(data.status !== 'ALL' && { status: data.status }),
-                        ...(data.query && { email: { contains: data.query } }),
+    static getCount = cache(async (data: UserFilterForm) => {
+        return db.user.count({
+            where: {
+                ...(data.status !== 'ALL' && {
+                    status: data.status,
+                }),
+                ...(data.query && {
+                    email: { contains: data.query },
+                }),
+            },
+        });
+    });
+
+    static getPaginatedUsers = async ({
+        limit = 20,
+        page,
+        query = '',
+        status = 'WAITING',
+    }: GetPaginatedUserParams): GetPaginatedUsersResult => {
+        try {
+            const userCount = await UserManagementService.getCount({
+                query,
+                status,
+            });
+            const users = await db.user.findMany({
+                omit: {
+                    password: true,
+                },
+                where: {
+                    ...(status !== 'ALL' && {
+                        status,
+                    }),
+                    ...(query && {
+                        email: { contains: query },
+                    }),
+                    NOT: {
+                        role: 'ADMIN',
                     },
-                });
-            } catch (error) {
-                throw new Error('Something went wrong...!');
-            }
-        },
-    );
+                },
+                orderBy: {
+                    createdAt: 'desc',
+                },
+                skip: (page - 1) * limit,
+                take: limit,
+            });
+
+            return {
+                status: Status.Ok,
+                data: {
+                    users,
+                    userCount,
+                },
+            };
+        } catch (error) {
+            return {
+                status: Status.Err,
+                err: 'Something went wrong..!',
+            };
+        }
+    };
 }

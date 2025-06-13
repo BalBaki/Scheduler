@@ -19,16 +19,16 @@ import type {
 
 export class AuthService {
     static async signUp(formData: SignUpForm): SignUpResult {
-        const validatedForm = signUpSchema.safeParse(formData);
-
-        if (!validatedForm.success) {
-            return {
-                status: Status.Err,
-                err: z.flattenError(validatedForm.error).fieldErrors,
-            };
-        }
-
         try {
+            const validatedForm = signUpSchema.safeParse(formData);
+
+            if (!validatedForm.success) {
+                return {
+                    status: Status.Err,
+                    err: z.flattenError(validatedForm.error).fieldErrors,
+                };
+            }
+
             const user = await db.user.findFirst({
                 where: { email: validatedForm.data.email },
             });

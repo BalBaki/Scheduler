@@ -2,9 +2,9 @@ import { notFound } from 'next/navigation';
 import FeedbackFilters from '@/components/dashboard/feedback/FeedbackFilters';
 import FeedbackList from '@/components/dashboard/feedback/FeedbackList';
 import Pagination from '@/components/Pagination';
+import { Status } from '@/enums';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
-import { feedbackFilterSchema } from '@/schemas';
-import db from '@/services/db.service';
+import { feedbackSearchParamsSchema } from '@/schemas';
 import { FeedbackService } from '@/services/feedback.service';
 import type { Metadata } from 'next';
 
@@ -24,31 +24,16 @@ type FeedbackPageProps = {
 
 export default async function FeedbackPage(props: FeedbackPageProps) {
     const searchParams = await props.searchParams;
-    const page = parseInt(searchParams.page?.toString() || '') || 1;
-    const validatedParams = feedbackFilterSchema.safeParse({
-        query: searchParams.query?.toString() || '',
-    });
+    const validatedSearchParams =
+        feedbackSearchParamsSchema.safeParse(searchParams);
 
-    if (!validatedParams.success) return notFound();
+    if (!validatedSearchParams.success) return notFound();
 
-    const {
-        data: { query },
-    } = validatedParams;
-    const feedbackCount = await FeedbackService.getCount(query);
-    const itemCountPerPage =
-        parseInt(searchParams.limit?.toString() || '') || 20;
-    const feedbacks = await db.feedback.findMany({
-        orderBy: {
-            createdAt: 'desc',
-        },
-        where: {
-            ...(query && {
-                email: { contains: query },
-            }),
-        },
-        skip: (page - 1) * itemCountPerPage,
-        take: itemCountPerPage,
-    });
+    const getPaginatedFeedbacksResult =
+        await FeedbackService.getPaginatedFeedbacks(validatedSearchParams.data);
+
+    if (getPaginatedFeedbacksResult.status === Status.Err)
+        return <div>{getPaginatedFeedbacksResult.err}</div>;
 
     return (
         <section className="mt-2" aria-labelledby="feedbacks">
@@ -56,12 +41,19 @@ export default async function FeedbackPage(props: FeedbackPageProps) {
                 Feedback List
             </h1>
             <div className="flex flex-wrap justify-between max-sm:flex-col">
-                <FeedbackFilters validatedFilters={validatedParams.data} />
+                <FeedbackFilters
+                    filters={{
+                        query: validatedSearchParams.data.query,
+                    }}
+                    params={validatedSearchParams.data}
+                />
             </div>
-            <FeedbackList feedbacks={feedbacks} />
+            <FeedbackList
+                feedbacks={getPaginatedFeedbacksResult.data.feedbacks}
+            />
             <Pagination
-                totalCount={feedbackCount}
-                itemCountPerPage={itemCountPerPage}
+                totalCount={getPaginatedFeedbacksResult.data.totalFeedbackCount}
+                itemCountPerPage={validatedSearchParams.data.limit}
             />
         </section>
     );

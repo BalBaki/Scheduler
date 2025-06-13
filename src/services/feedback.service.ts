@@ -5,20 +5,15 @@ import { z } from 'zod/v4';
 import db from './db.service';
 import { Status } from '@/enums';
 import { contactUsFormSchema } from '@/schemas';
-import type { ContactUsForm, CreateFeedbackResult } from '@/types';
+import type {
+    ContactUsForm,
+    CreateFeedbackResult,
+    GetPaginatedFeedbacksParams,
+    GetPaginatedFeedbacksResult,
+} from '@/types';
 
 export class FeedbackService {
-    static getCount = cache(async (email?: string): Promise<number> => {
-        return await db.feedback.count({
-            where: {
-                ...(email && {
-                    email: { contains: email },
-                }),
-            },
-        });
-    });
-
-    static async create(form: ContactUsForm): CreateFeedbackResult {
+    static create = async (form: ContactUsForm): CreateFeedbackResult => {
         try {
             const validatedForm = contactUsFormSchema.safeParse(form);
 
@@ -42,5 +37,50 @@ export class FeedbackService {
                 err: { _form: 'Something went wrong..!' },
             };
         }
-    }
+    };
+
+    static getCount = cache(async (email?: string): Promise<number> => {
+        return db.feedback.count({
+            where: {
+                ...(email && {
+                    email: { contains: email },
+                }),
+            },
+        });
+    });
+
+    static getPaginatedFeedbacks = async ({
+        limit = 20,
+        page,
+        query,
+    }: GetPaginatedFeedbacksParams): GetPaginatedFeedbacksResult => {
+        try {
+            const feedCount = await FeedbackService.getCount(query);
+            const feedbacks = await db.feedback.findMany({
+                orderBy: {
+                    createdAt: 'desc',
+                },
+                where: {
+                    ...(query && {
+                        email: { contains: query },
+                    }),
+                },
+                skip: (page - 1) * limit,
+                take: limit,
+            });
+
+            return {
+                status: Status.Ok,
+                data: {
+                    feedbacks,
+                    totalFeedbackCount: feedCount,
+                },
+            };
+        } catch (error) {
+            return {
+                status: Status.Err,
+                err: 'Something went wrong..!',
+            };
+        }
+    };
 }

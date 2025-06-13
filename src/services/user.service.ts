@@ -15,6 +15,7 @@ import type {
     UserDetailForm,
 } from '@/types';
 
+// TODO add try catch to all
 export class UserService {
     static async getUserByEmail(email: string) {
         return await db.user.findFirst({
@@ -42,6 +43,14 @@ export class UserService {
             },
         });
     });
+
+    static getApprovedDoctors = async () => {
+        return db.user.findMany({
+            where: {
+                AND: [{ role: 'DOCTOR', status: 'APPROVED' }],
+            },
+        });
+    };
 
     static async updateUserDetail(
         formData: UserDetailForm,

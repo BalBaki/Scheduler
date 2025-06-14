@@ -34,7 +34,7 @@ export default function ApproveAll() {
                 },
             );
 
-            isSuccess && router.replace('/dashboard/approve');
+            isSuccess && router.replace('/dashboard/users');
         },
     });
 

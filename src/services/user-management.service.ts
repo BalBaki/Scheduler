@@ -35,7 +35,7 @@ export class UserManagementService {
                 where: { status: 'WAITING' },
             });
 
-            revalidatePath('/dashboard/approve');
+            revalidatePath('/dashboard/users');
             revalidatePath('/doctor');
 
             return { status: Status.Ok, data: {} };

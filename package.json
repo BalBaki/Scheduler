@@ -8,7 +8,9 @@
         "start": "next start",
         "lint": "next lint",
         "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
-        "upgrade": "npx npm-check-updates -u --reject eslint && npm install"
+        "upgrade": "npx npm-check-updates -u --reject eslint && npm install",
+        "seed:user": "tsx ./prisma/seeds/user-seed.ts",
+        "seed:feedback": "tsx ./prisma/seeds/feedback-seed.ts"
     },
     "dependencies": {
         "@auth/core": "^0.39.1",
@@ -76,6 +78,7 @@
         "prettier-plugin-tailwindcss": "^0.6.12",
         "tailwind-scrollbar": "^4.0.2",
         "tailwindcss": "^4.1.8",
+        "ts-node": "^10.9.2",
         "typescript": "^5"
     },
     "overrides": {

@@ -47,7 +47,7 @@ export default function RemoveAppointment({
     return (
         <AlertDialog>
             <AlertDialogTrigger
-                className="flex h-10 w-20 items-center justify-center rounded-md bg-red-500 text-white"
+                className="flex h-10 w-20 items-center justify-center rounded-md bg-red-500 px-8 text-white hover:bg-red-500/60 disabled:cursor-not-allowed disabled:opacity-50"
                 disabled={isPending}
                 aria-label="Confirmation of delete appointment"
             >
@@ -67,6 +67,7 @@ export default function RemoveAppointment({
                     </AlertDialogCancel>
                     <AlertDialogAction
                         onClick={handleContinueClick}
+                        className="bg-red-500 hover:bg-red-500/60"
                         disabled={isPending}
                         aria-label="Confirm remove appointment"
                     >

@@ -47,7 +47,7 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
         <AlertDialog>
             <AlertDialogTrigger asChild>
                 <Button
-                    className="flex h-10 w-20 items-center justify-center rounded-md bg-green-500 text-white"
+                    className="flex h-10 w-20 items-center justify-center rounded-md bg-green-500 text-white hover:bg-green-500/60"
                     disabled={isPending}
                     aria-label={
                         isPending
@@ -72,6 +72,7 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
                         Cancel
                     </AlertDialogCancel>
                     <AlertDialogAction
+                        className="bg-green-500 hover:bg-green-500/60"
                         onClick={handleContinueClick}
                         disabled={isPending}
                         aria-label="Confirm book appointment"

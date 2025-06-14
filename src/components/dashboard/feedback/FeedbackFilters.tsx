@@ -56,7 +56,7 @@ export default function FeedbackFilters({
                                 <FormControl>
                                     <Input
                                         {...field}
-                                        className="w-full sm:w-80"
+                                        className="mb-0 w-full sm:w-80"
                                         placeholder="Search By Email..."
                                     />
                                 </FormControl>

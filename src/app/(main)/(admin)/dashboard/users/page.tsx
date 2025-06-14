@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import ApproveAll from '@/components/dashboard/approve/ApproveAll';
-import UserFilters from '@/components/dashboard/approve/UserFilters';
-import UserList from '@/components/dashboard/approve/UserList';
+import ApproveAll from '@/components/dashboard/users/ApproveAll';
+import UserFilters from '@/components/dashboard/users/UserFilters';
+import UserList from '@/components/dashboard/users/UserList';
 import Pagination from '@/components/Pagination';
 import { Status } from '@/enums';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';

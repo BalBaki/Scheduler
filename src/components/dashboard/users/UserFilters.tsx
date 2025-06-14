@@ -63,7 +63,7 @@ export default function UserFilters({ validatedfilters, params }: UserFilters) {
                                 <FormControl>
                                     <Input
                                         {...field}
-                                        className="w-full sm:w-64"
+                                        className="mb-0 w-full sm:w-64"
                                         placeholder="Search By Email..."
                                     />
                                 </FormControl>
@@ -86,7 +86,7 @@ export default function UserFilters({ validatedfilters, params }: UserFilters) {
                                 >
                                     <FormControl>
                                         <SelectTrigger
-                                            className="w-full sm:w-36"
+                                            className="mb-0 w-full sm:w-36"
                                             aria-label={field.value}
                                             {...field}
                                         >

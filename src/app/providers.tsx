@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SessionProvider } from 'next-auth/react';
-import NProgressBarProvider from '@/providers/NProgressBar';
+import NProgressBar from '@/components/NProgressBar';
 
 type ProvidersProps = {
     children: React.ReactNode;
@@ -17,7 +17,7 @@ export default function Providers({ children }: ProvidersProps) {
             <SessionProvider>
                 {children}
                 <Suspense>
-                    <NProgressBarProvider
+                    <NProgressBar
                         showSpinner={false}
                         easing="ease"
                         speed={300}

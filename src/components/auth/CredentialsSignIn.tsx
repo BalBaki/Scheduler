@@ -112,7 +112,7 @@ export default function CredentialsSignIn() {
                         />
                         <Button
                             type="submit"
-                            className="mt-4 h-12 w-full rounded-md border-black bg-[#622fcf] text-xs tracking-widest uppercase"
+                            className="bg-purple hover:bg-purple/60 mt-4 h-12 w-full rounded-md border-black text-xs tracking-widest uppercase"
                             disabled={isPending || !form.formState.isValid}
                             aria-label={isPending ? 'Logging in' : 'Login'}
                         >

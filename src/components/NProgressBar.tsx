@@ -6,7 +6,7 @@ import NProgress from 'nprogress';
 import type { NProgressOptions } from 'nprogress';
 import type { PropsWithChildren } from 'react';
 
-export default function NProgressBarProvider({
+export default function NProgressBar({
     children,
     ...options
 }: PropsWithChildren<Partial<NProgressOptions>>) {

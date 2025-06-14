@@ -2,11 +2,12 @@ import { z } from 'zod/v4';
 import {
     bookAppointmentSchema,
     cancelAppointmentSchema,
+    createAppointmentClientSchema,
+    createAppointmentServerSchema,
     removeAppointmentSchema,
 } from '@/schemas';
 import type { Appointment, Roles } from '@prisma/client';
 import type { AsyncResult, BaseError, FormState } from './common.type';
-import type { CreateAppointmentServerForm } from './form.type';
 import type { UserWithoutPassword } from './user-without-password';
 
 type CreateAppointment = {};
@@ -57,6 +58,12 @@ export interface AppointmentOverlap {
     endDate: Date;
 }
 
+export type CreateAppointmentServerForm = z.infer<
+    typeof createAppointmentServerSchema
+>;
+export type CreateAppointmentClientForm = z.infer<
+    typeof createAppointmentClientSchema
+>;
 export type RemoveAppointmentPayload = z.infer<typeof removeAppointmentSchema>;
 export type CancelAppointmentPayload = z.infer<typeof cancelAppointmentSchema>;
 export type BookAppointmentPayload = z.infer<typeof bookAppointmentSchema>;

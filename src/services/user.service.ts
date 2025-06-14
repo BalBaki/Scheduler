@@ -2,7 +2,7 @@ import 'server-only';
 import { cache } from 'react';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod/v4';
-import { cloudinaryService } from './cloudinary.service';
+import { CloudinaryService } from './cloudinary.service';
 import { auth } from '@/auth';
 import { Status } from '@/enums';
 import { extractImagePublicId } from '@/lib/extract-image-public-id';
@@ -10,51 +10,77 @@ import { hasPermission } from '@/lib/permissions';
 import { profilePictureSchema, userDetailSchema } from '@/schemas';
 import db from '@/services/db.service';
 import type {
+    ApprovedDoctorsResult,
+    DoctorWithValidAppointmentsResult,
     UpdateProfilePictureResult,
     UpdateUserDetailResult,
     UserDetailForm,
 } from '@/types';
 
-// TODO add try catch to all
 export class UserService {
-    static async getUserByEmail(email: string) {
+    static getUserByEmail = async (email: string) => {
         return await db.user.findFirst({
             where: { email },
         });
-    }
-
-    static getDoctorWithValidAppointmentsById = cache(async (id: string) => {
-        return await db.user.findUnique({
-            omit: {
-                password: true,
-            },
-            where: {
-                id,
-            },
-            include: {
-                doctorAppointments: {
-                    where: {
-                        start: { gte: new Date() },
-                    },
-                    orderBy: {
-                        start: 'asc',
-                    },
-                },
-            },
-        });
-    });
-
-    static getApprovedDoctors = async () => {
-        return db.user.findMany({
-            where: {
-                AND: [{ role: 'DOCTOR', status: 'APPROVED' }],
-            },
-        });
     };
 
-    static async updateUserDetail(
+    static getDoctorWithValidAppointmentsById = cache(
+        async (id: string): DoctorWithValidAppointmentsResult => {
+            try {
+                return {
+                    status: Status.Ok,
+                    data: await db.user.findUnique({
+                        omit: {
+                            password: true,
+                        },
+                        where: {
+                            id,
+                        },
+                        include: {
+                            doctorAppointments: {
+                                where: {
+                                    start: { gte: new Date() },
+                                },
+                                orderBy: {
+                                    start: 'asc',
+                                },
+                            },
+                        },
+                    }),
+                };
+            } catch (error) {
+                return {
+                    status: Status.Err,
+                    err: 'Something went wrong..!',
+                };
+            }
+        },
+    );
+
+    static getApprovedDoctors = async (): ApprovedDoctorsResult => {
+        try {
+            return {
+                status: Status.Ok,
+                data: await db.user.findMany({
+                    omit: {
+                        password: true,
+                    },
+                    where: {
+                        AND: [{ role: 'DOCTOR', status: 'APPROVED' }],
+                    },
+                }),
+            };
+        } catch (error) {
+            return {
+                status: Status.Err,
+                err: 'Something went wrong..!',
+            };
+        }
+    };
+
+    static updateUserDetail = async (
         formData: UserDetailForm,
-    ): UpdateUserDetailResult {
+    ): UpdateUserDetailResult => {
         try {
             const session = await auth();
 
@@ -91,11 +117,11 @@ export class UserService {
                 err: { _form: 'Something went wrong...!' },
             };
         }
-    }
+    };
 
-    static async updateProfilePicture(
+    static updateProfilePicture = async (
         formData: FormData,
-    ): UpdateProfilePictureResult {
+    ): UpdateProfilePictureResult => {
         try {
             const session = await auth();
 
@@ -119,7 +145,7 @@ export class UserService {
                 };
             }
 
-            const uploadImageResponse = await cloudinaryService.uploadFile(
+            const uploadImageResult = await CloudinaryService.uploadFile(
                 validatedPicture.data,
                 {
                     folder: 'profileee',
@@ -133,11 +159,8 @@ export class UserService {
                 },
             );
 
-            if (!uploadImageResponse.upload) {
-                return {
-                    status: Status.Err,
-                    err: uploadImageResponse.error,
-                };
+            if (uploadImageResult.status === Status.Err) {
+                return uploadImageResult;
             }
 
             await db.user.update({
@@ -145,7 +168,7 @@ export class UserService {
                     id: session.user.id,
                 },
                 data: {
-                    imageUrl: uploadImageResponse.data.secure_url,
+                    imageUrl: uploadImageResult.data.secure_url,
                 },
             });
 
@@ -156,5 +179,5 @@ export class UserService {
         } catch (error) {
             return { status: Status.Err, err: 'Something went wrong..!' };
         }
-    }
+    };
 }

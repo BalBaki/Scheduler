@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoPersonCircle } from 'react-icons/io5';
+import { Status } from '@/enums';
 import languages from '@/languages.json';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import { UserService } from '@/services/user.service';
@@ -13,9 +14,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Doctor() {
-    const doctors = await UserService.getApprovedDoctors();
+    const result = await UserService.getApprovedDoctors();
 
-    const renderedDoctors = doctors.map((doctor) => {
+    if (result.status === Status.Err) return <div>Something went wrong..!</div>;
+
+    const renderedDoctors = result.data.map((doctor) => {
         return (
             <div key={doctor.id} role="listitem" className="space-y-16">
                 <div className="mx-[4.5%] flex gap-x-2 px-2 max-md:flex-col max-md:justify-center">

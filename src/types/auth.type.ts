@@ -1,5 +1,9 @@
+import { z } from 'zod/v4';
+import { signInSchema, signUpSchema } from '@/schemas';
 import type { AsyncResult, BaseError, FormState } from './common.type';
-import type { SignInForm, SignUpForm } from './form.type';
+
+export type SignInForm = z.infer<typeof signInSchema>;
+export type SignUpForm = z.infer<typeof signUpSchema>;
 
 type SignUp = {};
 type SignUpError = FormState<SignUpForm>;

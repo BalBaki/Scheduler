@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { IoPersonCircle } from 'react-icons/io5';
 import AppointmentCalendar from '@/components/appointment/Calendar';
 import NextAvailability from '@/components/doctor/NextAvailability';
+import { Status } from '@/enums';
 import languages from '@/languages.json';
 import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import { capitalizeFirstLetter } from '@/lib/utils';
@@ -17,10 +18,14 @@ export async function generateMetadata(
     props: DoctorPageProps,
 ): Promise<Metadata> {
     const params = await props.params;
-    const doctor = await UserService.getDoctorWithValidAppointmentsById(
+    const result = await UserService.getDoctorWithValidAppointmentsById(
         params.id,
     );
-    const doctorFullName = `${capitalizeFirstLetter(doctor?.name || '')} ${capitalizeFirstLetter(doctor?.surname || '')}`;
+
+    const doctorFullName =
+        result.status === Status.Ok && result.data
+            ? `${capitalizeFirstLetter(result.data.name)} ${capitalizeFirstLetter(result.data.surname)}`
+            : 'Doctor';
 
     return {
         title: `${doctorFullName} - ${METADATA_TITLE_SITE_NAME}`,
@@ -31,15 +36,16 @@ export async function generateMetadata(
 export default async function DoctorPage(props: DoctorPageProps) {
     const params = await props.params;
 
-    const { id } = params;
-
-    const doctor = await UserService.getDoctorWithValidAppointmentsById(id);
-
-    const nextAvailableAppointment = doctor?.doctorAppointments.find(
-        (appointment) => !appointment.patientId,
+    const result = await UserService.getDoctorWithValidAppointmentsById(
+        params.id,
     );
 
-    if (!doctor || doctor.role !== 'DOCTOR') return notFound();
+    if (result.status === Status.Err) return <div>Something went wrong..!</div>;
+    if (!result.data || result.data.role !== 'DOCTOR') return notFound();
+
+    const nextAvailableAppointment = result.data.doctorAppointments.find(
+        (appointment) => !appointment.patientId,
+    );
 
     return (
         <div>
@@ -50,10 +56,10 @@ export default async function DoctorPage(props: DoctorPageProps) {
                     className="flex gap-x-2 px-2 max-md:flex-col max-md:justify-center"
                 >
                     <div className="-mt-20 min-w-52 max-md:mx-auto">
-                        {doctor.imageUrl ? (
+                        {result.data.imageUrl ? (
                             <Image
-                                src={doctor.imageUrl}
-                                alt={`${doctor.name} ${doctor.surname}'s profile photo`}
+                                src={result.data.imageUrl}
+                                alt={`${result.data.name} ${result.data.surname}'s profile photo`}
                                 width="0"
                                 height="0"
                                 sizes="100vw"
@@ -68,7 +74,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
                         <h1
                             className="text-xl font-semibold break-all text-[#237a83] capitalize"
                             id="doctor"
-                        >{`${doctor.name} ${doctor.surname}`}</h1>
+                        >{`${result.data.name} ${result.data.surname}`}</h1>
                         <p className="text-base font-medium text-[#237a83]">
                             Psychiatrist
                         </p>
@@ -77,14 +83,14 @@ export default async function DoctorPage(props: DoctorPageProps) {
                                 appointment={nextAvailableAppointment}
                             />
                         )}
-                        {doctor.languages.length > 0 && (
+                        {result.data.languages.length > 0 && (
                             <div className="flex">
                                 <h2 className="text-base font-medium text-[#237a83]">
                                     Languages
                                 </h2>
                                 <span className="mr-1 text-[#237a83]">:</span>
                                 <p>
-                                    {doctor.languages
+                                    {result.data.languages
                                         .map(
                                             (language) =>
                                                 languages.find(
@@ -99,7 +105,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
                         )}
                     </div>
                 </section>
-                {doctor.description && (
+                {result.data.description && (
                     <section
                         className="ql-snow rounded-sm bg-white p-8"
                         aria-labelledby="aboutMe"
@@ -113,7 +119,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
                         <div
                             className="ql-editor scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 mt-2 overflow-x-auto p-0!"
                             dangerouslySetInnerHTML={{
-                                __html: doctor.description,
+                                __html: result.data.description,
                             }}
                         ></div>
                     </section>
@@ -128,7 +134,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
                     >
                         Availability
                     </h2>
-                    <AppointmentCalendar user={doctor} />
+                    <AppointmentCalendar user={result.data} />
                 </section>
             </div>
         </div>

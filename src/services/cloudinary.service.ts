@@ -1,33 +1,21 @@
 import 'server-only';
 import { v2 as cloudinary } from 'cloudinary';
 import { env } from './env.service';
+import { Status } from '@/enums';
 import type { UploadApiOptions, UploadApiResponse } from 'cloudinary';
+import type { UploadFileResult } from '@/types';
 
-type FileUpload =
-    | {
-          upload: true;
-          data: UploadApiResponse;
-          error?: never;
-      }
-    | {
-          upload: false;
-          data?: never;
-          error: string;
-      };
+cloudinary.config({
+    cloud_name: 'schedular',
+    api_key: env.cloudinaryApiKey,
+    api_secret: env.cloudinaryApiSecret,
+});
 
-class CloudinaryService {
-    constructor() {
-        cloudinary.config({
-            cloud_name: 'schedular',
-            api_key: env.cloudinaryApiKey,
-            api_secret: env.cloudinaryApiSecret,
-        });
-    }
-
-    uploadFile = async (
+export class CloudinaryService {
+    static async uploadFile(
         file: File,
         options: UploadApiOptions,
-    ): Promise<FileUpload> => {
+    ): UploadFileResult {
         try {
             const fileAsArrayBuffer = await file.arrayBuffer();
             const fileUploadResponse: UploadApiResponse | undefined =
@@ -43,19 +31,15 @@ class CloudinaryService {
 
             if (!fileUploadResponse) throw new Error('File upload failed..!');
 
-            return { upload: true, data: fileUploadResponse };
+            return { status: Status.Ok, data: fileUploadResponse };
         } catch (error) {
             return {
-                upload: false,
-                error:
+                status: Status.Err,
+                err:
                     error instanceof Error
                         ? error.message
                         : 'File upload failed..!',
             };
         }
-    };
+    }
 }
-
-const cloudinaryService = new CloudinaryService();
-
-export { cloudinaryService };

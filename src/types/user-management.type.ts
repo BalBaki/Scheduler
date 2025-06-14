@@ -1,7 +1,11 @@
 import { UserStatus } from '@prisma/client';
 import { z } from 'zod/v4';
 import { UserWithoutPassword } from './user-without-password';
-import { changeUserStatusSchema, usersSearchParamsSchema } from '@/schemas';
+import {
+    changeUserStatusSchema,
+    userFilterSchema,
+    usersSearchParamsSchema,
+} from '@/schemas';
 import type {
     AsyncResult,
     BaseError,
@@ -37,3 +41,4 @@ export interface GetPaginatedUserParams extends PaginatedDataParams {
 }
 export type ChangeUserStatusPayload = z.infer<typeof changeUserStatusSchema>;
 export type UsersSearchParams = z.infer<typeof usersSearchParamsSchema>;
+export type UserFilterForm = z.infer<typeof userFilterSchema>;

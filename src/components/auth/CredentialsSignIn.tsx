@@ -17,19 +17,19 @@ import {
 } from '@/components/ui/form';
 import { Status } from '@/enums';
 import { triggerClientSessionUpdate } from '@/lib/trigger-client-session-update';
-import { signInSchema } from '@/schemas';
+import { credentialsSignInSchema } from '@/schemas';
 import FormValidationError from '../FormValidationError';
 import LoadingSpinner from '../LoadingSpinner';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import type { SubmitHandler } from 'react-hook-form';
-import type { SignInForm } from '@/types';
+import type { CredentialsSignInForm } from '@/types';
 
 export default function CredentialsSignIn() {
     const router = useRouter();
-    const form = useForm<SignInForm>({
+    const form = useForm<CredentialsSignInForm>({
         mode: 'all',
-        resolver: zodResolver(signInSchema),
+        resolver: zodResolver(credentialsSignInSchema),
         defaultValues: {
             email: '',
             password: '',
@@ -53,7 +53,8 @@ export default function CredentialsSignIn() {
     });
     const isFailure = result && result.status === Status.Err;
 
-    const onSubmit: SubmitHandler<SignInForm> = (data) => mutate(data);
+    const onSubmit: SubmitHandler<CredentialsSignInForm> = (data) =>
+        mutate(data);
 
     return (
         <div className="flex h-full justify-center">

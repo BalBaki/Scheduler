@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FcCheckmark } from 'react-icons/fc';
-import { createFeedBack } from '@/actions/create-feedback';
+import { createFeedBack } from '@/actions/feedback.action';
 import {
     Form,
     FormControl,
@@ -16,22 +16,22 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Status } from '@/enums';
-import { contactUsFormSchema } from '@/schemas';
+import { feedbackFormSchema } from '@/schemas';
 import FormValidationError from '../FormValidationError';
 import LoadingSpinner from '../LoadingSpinner';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import type { ContactUsForm as IContactUsForm } from '@/types';
+import type { FeedbackForm } from '@/types';
 
 const STORAGE_KEY = 'feedback-form-submit-date';
 const STORAGE_MAX_AGE = 3 * 24 * 60 * 60 * 1000;
 
 export default function ContactUsForm() {
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-    const form = useForm<IContactUsForm>({
+    const form = useForm<FeedbackForm>({
         mode: 'all',
-        resolver: zodResolver(contactUsFormSchema),
+        resolver: zodResolver(feedbackFormSchema),
         defaultValues: {
             email: '',
             message: '',
@@ -56,7 +56,7 @@ export default function ContactUsForm() {
     });
     const isFailure = result && result.status === Status.Err;
 
-    const onSubmit: SubmitHandler<IContactUsForm> = (data) => mutate(data);
+    const onSubmit: SubmitHandler<FeedbackForm> = (data) => mutate(data);
 
     useEffect(() => {
         const formSubmitDate = localStorage.getItem(STORAGE_KEY);

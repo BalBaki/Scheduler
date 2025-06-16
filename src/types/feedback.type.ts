@@ -1,7 +1,7 @@
 import { z } from 'zod/v4';
 import {
-    contactUsFormSchema,
     feedbackFilterSchema,
+    feedbackFormSchema,
     feedbackSearchParamsSchema,
 } from '@/schemas';
 import type { Feedback } from '@prisma/client';
@@ -13,7 +13,7 @@ import type {
 } from './common.type';
 
 type CreateFeedback = {};
-type CreateFeedbackError = FormState<ContactUsForm>;
+type CreateFeedbackError = FormState<FeedbackForm>;
 
 type GetPaginatedFeedbacks = {
     feedbacks: Feedback[];
@@ -31,5 +31,5 @@ export type GetPaginatedFeedbacksResult = AsyncResult<
     GetPaginatedFeedbacksError
 >;
 export type FeedbackSearchParams = z.infer<typeof feedbackSearchParamsSchema>;
-export type ContactUsForm = z.infer<typeof contactUsFormSchema>;
+export type FeedbackForm = z.infer<typeof feedbackFormSchema>;
 export type FeedbackFilterForm = z.infer<typeof feedbackFilterSchema>;

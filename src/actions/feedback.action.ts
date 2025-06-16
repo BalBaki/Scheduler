@@ -1,10 +1,10 @@
 'use server';
 
 import { FeedbackService } from '@/services/feedback.service';
-import type { ContactUsForm, CreateFeedbackResult } from '@/types';
+import type { CreateFeedbackResult, FeedbackForm } from '@/types';
 
 export const createFeedBack = async (
-    form: ContactUsForm,
+    form: FeedbackForm,
 ): CreateFeedbackResult => {
     return FeedbackService.create(form);
 };

@@ -8,10 +8,10 @@ import db from './db.service';
 import { UserService } from './user.service';
 import { signIn, signOut } from '@/auth';
 import { Status } from '@/enums';
-import { signInSchema, signUpSchema } from '@/schemas';
+import { credentialsSignInSchema, signUpSchema } from '@/schemas';
 import type {
+    CredentialsSignInForm,
     CredentialsSignInResult,
-    SignInForm,
     SignOutResult,
     SignUpForm,
     SignUpResult,
@@ -71,10 +71,11 @@ export class AuthService {
     }
 
     static async credentialsSignIn(
-        formData: SignInForm,
+        formData: CredentialsSignInForm,
     ): CredentialsSignInResult {
         try {
-            const validatedFormData = signInSchema.safeParse(formData);
+            const validatedFormData =
+                credentialsSignInSchema.safeParse(formData);
 
             if (!validatedFormData.success) {
                 return {

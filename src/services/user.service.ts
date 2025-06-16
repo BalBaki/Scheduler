@@ -78,7 +78,7 @@ export class UserService {
         }
     };
 
-    static updateUserDetail = async (
+    static updateDetail = async (
         formData: UserDetailForm,
     ): UpdateUserDetailResult => {
         try {

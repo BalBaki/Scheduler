@@ -16,7 +16,7 @@ import type {
 } from '@/types';
 
 export class UserManagementService {
-    static async approveAllUsers(): ApproveAllWaitingUsersResult {
+    static async approveAllWaitingUsers(): ApproveAllWaitingUsersResult {
         try {
             const session = await auth();
 
@@ -44,7 +44,7 @@ export class UserManagementService {
         }
     }
 
-    static async updateUserStatus(
+    static async changeUserStatus(
         data: ChangeUserStatusPayload,
     ): ChangeUserStatusResult {
         try {

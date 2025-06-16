@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { approveAllUsers } from '@/actions/user-status.action';
+import { approveAllWaitingUsers } from '@/actions/user-status.action';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import {
     AlertDialog,
@@ -21,7 +21,7 @@ import { Status } from '@/enums';
 export default function ApproveAll() {
     const router = useRouter();
     const { mutate: approveAll, isPending } = useMutation({
-        mutationFn: approveAllUsers,
+        mutationFn: approveAllWaitingUsers,
         onSuccess(result) {
             const isSuccess = result.status === Status.Ok;
 

@@ -1,6 +1,6 @@
 import { z } from 'zod/v4';
 
-export const signInSchema = z.object({
+export const credentialsSignInSchema = z.object({
     email: z.email('Enter valid email'),
     password: z
         .string()

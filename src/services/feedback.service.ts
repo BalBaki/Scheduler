@@ -4,18 +4,18 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod/v4';
 import db from './db.service';
 import { Status } from '@/enums';
-import { contactUsFormSchema } from '@/schemas';
+import { feedbackFormSchema } from '@/schemas';
 import type {
-    ContactUsForm,
     CreateFeedbackResult,
+    FeedbackForm,
     GetPaginatedFeedbacksParams,
     GetPaginatedFeedbacksResult,
 } from '@/types';
 
 export class FeedbackService {
-    static create = async (form: ContactUsForm): CreateFeedbackResult => {
+    static create = async (form: FeedbackForm): CreateFeedbackResult => {
         try {
-            const validatedForm = contactUsFormSchema.safeParse(form);
+            const validatedForm = feedbackFormSchema.safeParse(form);
 
             if (!validatedForm.success) {
                 return {

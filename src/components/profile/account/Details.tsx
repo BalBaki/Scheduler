@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import DescriptionEditor from './DescriptionEditor';
 import Languages from './Languages';
-import { updateUserDetail } from '@/actions/user-profile.action';
+import { updateDetail } from '@/actions/user-profile.action';
 import { Button } from '@/components/ui/button';
 import {
     Form,
@@ -39,7 +39,7 @@ export default function Details() {
         },
     });
     const { mutate, isPending } = useMutation({
-        mutationFn: updateUserDetail,
+        mutationFn: updateDetail,
         onSuccess({ status }) {
             status === Status.Ok && updateSession();
         },

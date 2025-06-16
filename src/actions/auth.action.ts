@@ -1,14 +1,18 @@
 'use server';
 
 import { AuthService } from '@/services/auth.service';
-import type { CredentialsSignInResult, SignInForm, SignUpForm } from '@/types';
+import type {
+    CredentialsSignInForm,
+    CredentialsSignInResult,
+    SignUpForm,
+} from '@/types';
 
 export const signUp = async (formData: SignUpForm) => {
     return await AuthService.signUp(formData);
 };
 
 export const credentialsSignIn = async (
-    formData: SignInForm,
+    formData: CredentialsSignInForm,
 ): CredentialsSignInResult => {
     return await AuthService.credentialsSignIn(formData);
 };

@@ -5,13 +5,10 @@ import intercetionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
 import BookAppoinmentPopup from './BookAppointmentPopUp';
 import { useLocale } from '@/hooks/use-locale';
-import type { UserWithoutPassword } from '@/types';
-import type { Appointment } from '@prisma/client';
+import type { DoctorWithValidAppointments } from '@/types';
 
 type AppointmentCalendarProps = {
-    user: UserWithoutPassword & {
-        doctorAppointments: Appointment[];
-    };
+    user: NonNullable<DoctorWithValidAppointments>;
 };
 
 export default function AppointmentCalendar({

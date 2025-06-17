@@ -9,7 +9,7 @@ type UpdateUserDetailError = FormState<UserDetailForm>;
 type UpdateProfilePicture = {};
 type UpdateProfilePictureError = BaseError;
 
-type DoctorWithValidAppointments = Prisma.UserGetPayload<{
+export type DoctorWithValidAppointments = Prisma.UserGetPayload<{
     omit: { password: true };
     include: { doctorAppointments: true };
 }> | null;

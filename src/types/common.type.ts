@@ -31,3 +31,9 @@ export interface PaginatedDataParams {
     query?: string;
     limit?: number;
 }
+export interface UseDragScrollOptions {
+    horizontal?: boolean;
+    vertical?: boolean;
+    speed?: number;
+    hideScrollbars?: boolean;
+}

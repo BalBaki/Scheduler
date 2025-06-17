@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoPersonCircle } from 'react-icons/io5';
+import { METADATA_TITLE_SITE_NAME } from '@/constants';
 import { Status } from '@/enums';
 import languages from '@/languages.json';
-import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import { UserService } from '@/services/user.service';
 import type { Metadata } from 'next';
 

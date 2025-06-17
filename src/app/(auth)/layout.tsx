@@ -4,7 +4,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <main role="main" className="h-screen">
+        <main role="main" className="grid h-full flex-1">
             {/* <AuthRoute> */}
             {children}
             {/* </AuthRoute> */}

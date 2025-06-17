@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation';
 import FeedbackFilters from '@/components/dashboard/feedback/FeedbackFilters';
 import FeedbackList from '@/components/dashboard/feedback/FeedbackList';
 import Pagination from '@/components/Pagination';
+import { METADATA_TITLE_SITE_NAME } from '@/constants';
 import { Status } from '@/enums';
-import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import { feedbackSearchParamsSchema } from '@/schemas';
 import { FeedbackService } from '@/services/feedback.service';
 import type { Metadata } from 'next';
@@ -50,6 +50,7 @@ export default async function FeedbackPage(props: FeedbackPageProps) {
             </div>
             <FeedbackList
                 feedbacks={getPaginatedFeedbacksResult.data.feedbacks}
+                query={validatedSearchParams.data.query}
             />
             <Pagination
                 totalCount={getPaginatedFeedbacksResult.data.totalFeedbackCount}

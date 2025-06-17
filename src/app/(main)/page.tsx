@@ -6,7 +6,7 @@ import Hero from '@/components/home/Hero';
 import Info from '@/components/home/Info';
 import Issues from '@/components/home/Issues';
 import Services from '@/components/home/Services';
-import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
+import { METADATA_TITLE_SITE_NAME } from '@/constants';
 import type { Metadata } from 'next/types';
 
 export const metadata: Metadata = {

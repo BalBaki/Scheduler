@@ -6,3 +6,4 @@ export const ACCEPTED_IMAGE_TYPES = [
     'image/webp',
 ];
 export const DEFAULT_LOCAL_URL = 'http://localhost:3000/';
+export const METADATA_TITLE_SITE_NAME = 'Scheduler';

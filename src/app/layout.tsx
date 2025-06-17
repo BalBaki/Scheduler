@@ -18,7 +18,9 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className}>
                 <Providers>
-                    <div className="flex min-h-screen flex-col">{children}</div>
+                    <div className="flex h-dvh min-h-svh flex-col">
+                        {children}
+                    </div>
                     <ToastContainer
                         position="bottom-right"
                         autoClose={5000}

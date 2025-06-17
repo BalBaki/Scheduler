@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
+import DraggableContainer from '@/components/DraggableContainer';
 import {
     Table,
     TableBody,
@@ -16,46 +15,43 @@ import type { Feedback } from '@prisma/client';
 
 type UserListProps = {
     feedbacks: Feedback[];
+    query: string;
 };
 
-export default function FeedbackList({ feedbacks }: UserListProps) {
-    const searchParams = useSearchParams();
-    const tableRef = useRef<HTMLTableElement | null>(null);
-
-    useEffect(() => {
-        if (!tableRef.current) return;
-
-        tableRef.current.scrollIntoView({
-            block: 'start',
-            inline: 'start',
-        });
-    }, [searchParams]);
-
-    if (feedbacks.length < 1) return <div>No feedback.</div>;
+export default function FeedbackList({ feedbacks, query }: UserListProps) {
+    if (feedbacks.length < 1)
+        return (
+            <div className="mt-2 text-2xl font-bold break-words">
+                {query
+                    ? `No feedback was found from a writer whose email includes "${query}"`
+                    : 'No feedback was found.'}
+            </div>
+        );
 
     return (
-        <Table
-            containerClassname="h-fit max-h-[calc(100vh-350px)] sm:max-h-[calc(100vh-300px)] overflow-y-auto relative mt-3"
-            ref={tableRef}
-            aria-label="List of feedbacks"
-            tabIndex={0}
-        >
-            <TableCaption></TableCaption>
-            <TableHeader className="sticky top-0 bg-gray-600">
-                <TableRow className="[&_th]:text-white">
-                    <TableHead>Email</TableHead>
-                    <TableHead>Message</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {feedbacks.map((feedBack) => (
-                    <TableRow key={feedBack.id}>
-                        <TableCell>{feedBack.email}</TableCell>
-                        <TableCell>{feedBack.message}</TableCell>
+        <DraggableContainer>
+            <Table
+                containerClassname="min-w-max relative mt-3"
+                aria-label="List of feedbacks"
+                tabIndex={0}
+            >
+                <TableCaption></TableCaption>
+                <TableHeader className="sticky top-0 bg-gray-600">
+                    <TableRow className="[&_th]:text-white">
+                        <TableHead>Email</TableHead>
+                        <TableHead>Message</TableHead>
                     </TableRow>
-                ))}
-            </TableBody>
-            <TableFooter></TableFooter>
-        </Table>
+                </TableHeader>
+                <TableBody>
+                    {feedbacks.map((feedBack) => (
+                        <TableRow key={feedBack.id}>
+                            <TableCell>{feedBack.email}</TableCell>
+                            <TableCell>{feedBack.message}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+                <TableFooter></TableFooter>
+            </Table>
+        </DraggableContainer>
     );
 }

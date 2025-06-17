@@ -3,14 +3,14 @@ import ApproveAll from '@/components/dashboard/users/ApproveAll';
 import UserFilters from '@/components/dashboard/users/UserFilters';
 import UserList from '@/components/dashboard/users/UserList';
 import Pagination from '@/components/Pagination';
+import { METADATA_TITLE_SITE_NAME } from '@/constants';
 import { Status } from '@/enums';
-import { METADATA_TITLE_SITE_NAME } from '@/lib/constants';
 import { usersSearchParamsSchema } from '@/schemas';
 import { UserManagementService } from '@/services/user-management.service';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: `Approve Registered Users - ${METADATA_TITLE_SITE_NAME}`,
+    title: `Users - ${METADATA_TITLE_SITE_NAME}`,
     description:
         'Review and approve new user registrations. Manage access for doctors and patients on your platform.',
 };
@@ -54,7 +54,10 @@ export default async function UsersPage(props: UsersPageProps) {
                 />
                 <ApproveAll />
             </div>
-            <UserList users={getPaginatedUsersResult.data.users} />
+            <UserList
+                users={getPaginatedUsersResult.data.users}
+                query={validatedSearchParams.data.query}
+            />
             <Pagination
                 totalCount={getPaginatedUsersResult.data.userCount}
                 itemCountPerPage={validatedSearchParams.data.limit}

@@ -9,8 +9,10 @@
         "lint": "next lint",
         "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
         "upgrade": "npx npm-check-updates -u --reject eslint && npm install",
-        "seed:user": "tsx ./prisma/seeds/user-seed.ts",
-        "seed:feedback": "tsx ./prisma/seeds/feedback-seed.ts"
+        "scan": "npx react-scan@latest localhost:3000",
+        "seed": "npm run seed:user && npm run seed:feedback",
+        "seed:user": "tsx ./prisma/seeds/user.seed.ts",
+        "seed:feedback": "tsx ./prisma/seeds/feedback.seed.ts"
     },
     "dependencies": {
         "@auth/core": "^0.39.1",

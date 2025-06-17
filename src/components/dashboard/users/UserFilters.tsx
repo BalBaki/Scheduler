@@ -43,7 +43,7 @@ export default function UserFilters({ validatedfilters, params }: UserFilters) {
 
     const onSubmit: SubmitHandler<UserFilterForm> = (data) => {
         replace(
-            `${pathname}?${new URLSearchParams(Object.assign({ ...params, ...data })).toString()}`,
+            `${pathname}?${new URLSearchParams(Object.assign({ ...params, ...data, page: 1 })).toString()}`,
         );
     };
 

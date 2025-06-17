@@ -36,7 +36,7 @@ export default function FeedbackFilters({
 
     const onSubmit: SubmitHandler<FeedbackFilterForm> = (data) => {
         replace(
-            `${pathname}?${new URLSearchParams(Object.assign({ ...params, ...data })).toString()}`,
+            `${pathname}?${new URLSearchParams(Object.assign({ ...params, ...data, page: 1 })).toString()}`,
         );
     };
 

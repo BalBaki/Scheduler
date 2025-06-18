@@ -18,6 +18,7 @@ import type {
     CreateAppointmentResult,
     CreateAppointmentServerForm,
     GetAppointmentsResult,
+    GetValidDoctorAppointmentsByIdResult,
     RemoveAppointmentPayload,
     RemoveAppointmentResult,
 } from '@/types';
@@ -358,5 +359,25 @@ export class AppointmentService {
                 },
             },
         }));
+    }
+
+    static async getValidDoctorAppointmentsById(
+        id: string,
+    ): GetValidDoctorAppointmentsByIdResult {
+        try {
+            return {
+                status: Status.Ok,
+                data: await db.appointment.findMany({
+                    where: {
+                        AND: [{ start: { gte: new Date() }, doctorId: id }],
+                    },
+                    orderBy: {
+                        start: 'asc',
+                    },
+                }),
+            };
+        } catch (error) {
+            return { status: Status.Err, err: 'Something went wrong..!' };
+        }
     }
 }

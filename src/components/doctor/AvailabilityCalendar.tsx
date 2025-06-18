@@ -1,14 +1,42 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
+import { Status } from '@/enums';
+import { ReactQueryService } from '@/services/react-query.service';
 import AppointmentCalendar from '../appointment/Calendar';
-import type { DoctorWithValidAppointments } from '@/types';
+import { Skeleton } from '../ui/skeleton';
 
 type AvailabilityCalendarProps = {
-    data: DoctorWithValidAppointments;
+    userId: string;
 };
 
 export default function AvailabilityCalendar({
-    data,
+    userId,
 }: AvailabilityCalendarProps) {
-    if (!data) return null;
+    const {
+        isPending,
+        isError,
+        data: result,
+    } = useQuery(
+        ReactQueryService.getValidDoctorAppointmentsByIdQueryOptions(userId),
+    );
+
+    if (isPending) {
+        return (
+            <div className="flex flex-col justify-center space-y-3 max-md:mt-2 md:ml-2">
+                {Array.from({ length: 4 }, (_, i) => (
+                    <Skeleton
+                        key={i}
+                        className="h-12 w-full rounded-md bg-gray-200"
+                    />
+                ))}
+            </div>
+        );
+    }
+
+    if (isError || result.status === Status.Err) {
+        return <div>Something went wrong...</div>;
+    }
 
     return (
         <section
@@ -21,7 +49,7 @@ export default function AvailabilityCalendar({
             >
                 Availability Calendar
             </h2>
-            <AppointmentCalendar user={data} />
+            <AppointmentCalendar appointments={result.data} />
         </section>
     );
 }

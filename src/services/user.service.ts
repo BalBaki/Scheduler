@@ -12,6 +12,7 @@ import db from '@/services/db.service';
 import type {
     ApprovedDoctorsResult,
     DoctorWithValidAppointmentsResult,
+    GetDoctorByIdResult,
     UpdateProfilePictureResult,
     UpdateUserDetailResult,
     UserDetailForm,
@@ -22,6 +23,23 @@ export class UserService {
         return await db.user.findFirst({
             where: { email },
         });
+    };
+
+    static getDoctorById = async (id: string): GetDoctorByIdResult => {
+        try {
+            return {
+                status: Status.Ok,
+                data: await db.user.findUnique({
+                    omit: { password: true },
+                    where: { id },
+                }),
+            };
+        } catch (error) {
+            return {
+                status: Status.Err,
+                err: 'Something went wrong..!',
+            };
+        }
     };
 
     static getDoctorWithValidAppointmentsById = cache(

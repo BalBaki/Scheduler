@@ -17,6 +17,7 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Status } from '@/enums';
+import { ReactQueryService } from '@/services/react-query.service';
 
 type CancelAppointmentProps = {
     appointmentId: string;
@@ -28,11 +29,14 @@ export default function CancelAppointment({
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: cancelAppointment,
-        onSuccess: (result) => {
+        onSuccess: async (result) => {
             const isSuccess = result.status === Status.Ok;
 
             if (isSuccess) {
-                queryClient.invalidateQueries({ queryKey: ['appointments'] });
+                await ReactQueryService.multipleInvalidateQueries(queryClient, [
+                    'appointments',
+                    'doctor-appointments',
+                ]);
             }
 
             toast(isSuccess ? 'Successfully Cancelled' : result.err, {

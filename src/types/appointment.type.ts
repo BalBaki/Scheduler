@@ -30,6 +30,9 @@ type GetAppointments = {
 };
 type GetAppointmentsError = BaseError;
 
+type GetValidDoctorAppointmentsById = Appointment[];
+type GetValidDoctorAppointmentsByIdError = string;
+
 export type CreateAppointmentResult = AsyncResult<
     CreateAppointment,
     CreateAppointmentError
@@ -49,6 +52,10 @@ export type BookAppointmentResult = AsyncResult<
 export type GetAppointmentsResult = AsyncResult<
     GetAppointments,
     GetAppointmentsError
+>;
+export type GetValidDoctorAppointmentsByIdResult = AsyncResult<
+    GetValidDoctorAppointmentsById,
+    GetValidDoctorAppointmentsByIdError
 >;
 
 export interface AppointmentOverlap {

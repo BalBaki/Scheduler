@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import AppointmentCalendar from '@/components/appointment/Calendar';
 import AvailabilityCalendar from '@/components/doctor/AvailabilityCalendar';
 import BaseInfo from '@/components/doctor/BaseInfo';
 import Description from '@/components/doctor/Description';
@@ -38,16 +37,10 @@ export async function generateMetadata(
 export default async function DoctorPage(props: DoctorPageProps) {
     const params = await props.params;
 
-    const result = await UserService.getDoctorWithValidAppointmentsById(
-        params.id,
-    );
+    const result = await UserService.getDoctorById(params.id);
 
     if (result.status === Status.Err) return <div>Something went wrong..!</div>;
     if (!result.data || result.data.role !== 'DOCTOR') return notFound();
-
-    const nextAvailableAppointment = result.data.doctorAppointments.find(
-        (appointment) => !appointment.patientId,
-    );
 
     return (
         <div>
@@ -71,15 +64,23 @@ export default async function DoctorPage(props: DoctorPageProps) {
                                 surname: result.data.surname,
                             }}
                         />
-                        <NextAvailability
-                            appointment={nextAvailableAppointment}
-                        />
+                        <NextAvailability userId={result.data.id} />
                         <Languages data={result.data.languages} />
                     </div>
                 </section>
                 <Description data={result.data.description} />
-                <AvailabilityCalendar data={result.data} />
+                <AvailabilityCalendar userId={result.data.id} />
             </div>
         </div>
     );
+}
+
+export async function generateStaticParams() {
+    const result = await UserService.getApprovedDoctors();
+
+    if (result.status === Status.Err) throw new Error(result.err);
+
+    return result.data.map((doctor) => ({
+        id: doctor.id,
+    }));
 }

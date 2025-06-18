@@ -15,6 +15,7 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Status } from '@/enums';
+import { ReactQueryService } from '@/services/react-query.service';
 import LoadingSpinner from '../LoadingSpinner';
 import { Button } from '../ui/button';
 
@@ -26,11 +27,14 @@ export default function BookAppoinment({ id }: BookAppoinmentProps) {
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: bookAppointment,
-        onSuccess(result) {
+        async onSuccess(result) {
             const isSuccess = result.status === Status.Ok;
 
             if (isSuccess) {
-                queryClient.invalidateQueries({ queryKey: ['appointments'] });
+                await ReactQueryService.multipleInvalidateQueries(queryClient, [
+                    'appointments',
+                    'doctor-appointments',
+                ]);
             }
 
             toast(isSuccess ? 'Successfully Booked' : result.err, {

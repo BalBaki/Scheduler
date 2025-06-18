@@ -5,14 +5,14 @@ import intercetionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
 import BookAppoinmentPopup from './BookAppointmentPopUp';
 import { useLocale } from '@/hooks/use-locale';
-import type { DoctorWithValidAppointments } from '@/types';
+import type { Appointment } from '@prisma/client';
 
 type AppointmentCalendarProps = {
-    user: NonNullable<DoctorWithValidAppointments>;
+    appointments: Appointment[];
 };
 
 export default function AppointmentCalendar({
-    user,
+    appointments,
 }: AppointmentCalendarProps) {
     const locale = useLocale();
 
@@ -22,7 +22,7 @@ export default function AppointmentCalendar({
                 locale={locale}
                 plugins={[dayGridPlugin, intercetionPlugin]}
                 initialView="dayGridMonth"
-                events={user.doctorAppointments}
+                events={appointments}
                 eventContent={(arg) => <BookAppoinmentPopup arg={arg} />}
                 buttonText={{ today: '' }}
                 dayHeaderFormat={{ weekday: 'long' }}

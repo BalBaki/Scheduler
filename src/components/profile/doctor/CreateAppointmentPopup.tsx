@@ -30,6 +30,7 @@ import { Input } from '@/components/ui/input';
 import { Status } from '@/enums';
 import { useLocale } from '@/hooks/use-locale';
 import { createAppointmentClientSchema } from '@/schemas';
+import { ReactQueryService } from '@/services/react-query.service';
 import type { Dispatch, SetStateAction } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import type { CreateAppointmentClientForm } from '@/types';
@@ -63,11 +64,14 @@ export default function CreateAppointmentPopup({
         data: result,
     } = useMutation({
         mutationFn: createAppointment,
-        onSuccess: ({ status }) => {
+        onSuccess: async ({ status }) => {
             const isSuccess = status === Status.Ok;
 
             if (isSuccess) {
-                queryClient.invalidateQueries({ queryKey: ['appointments'] });
+                await ReactQueryService.multipleInvalidateQueries(queryClient, [
+                    'appointments',
+                    'doctor-appointments',
+                ]);
 
                 setShow(false);
             }

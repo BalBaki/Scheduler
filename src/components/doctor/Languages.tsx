@@ -6,7 +6,7 @@ type LanguagesProps = {
 };
 
 export default function Languages({ data }: LanguagesProps) {
-    if (languages.length < 1) return null;
+    if (data.length < 1) return null;
 
     return (
         <div className="flex">

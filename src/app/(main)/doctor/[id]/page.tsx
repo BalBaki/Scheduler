@@ -5,6 +5,7 @@ import Description from '@/components/doctor/Description';
 import Languages from '@/components/doctor/Languages';
 import NextAvailability from '@/components/doctor/NextAvailability';
 import ProfilePicture from '@/components/doctor/ProfilePicture';
+import UserProfileBanner from '@/components/UserProfileBanner';
 import { METADATA_TITLE_SITE_NAME } from '@/constants';
 import { Status } from '@/enums';
 import { capitalizeFirstLetter } from '@/lib/utils';
@@ -44,7 +45,7 @@ export default async function DoctorPage(props: DoctorPageProps) {
 
     return (
         <div>
-            <div className="bg-doctor-banner h-52 bg-position-[10%_8%] object-cover"></div>
+            <UserProfileBanner url={result.data.bannerUrl} />
             <div className="space-y-8 bg-[#f9f9f9] px-3 py-8 pt-3 sm:px-8">
                 <section
                     aria-describedby="doctor-info"

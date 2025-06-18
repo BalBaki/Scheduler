@@ -48,6 +48,8 @@
     --background-image-register: url('/assets/register.png');
     --background-image-doctor-banner: url('/assets/doctor-banner.jpg');
 
+    --color-profile: #f5f9fc;
+
     @keyframes accordion-down {
         from {
             height: 0;

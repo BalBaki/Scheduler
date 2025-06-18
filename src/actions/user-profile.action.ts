@@ -10,3 +10,7 @@ export const updateDetail = async (formData: UserDetailForm) => {
 export const updateProfilePicture = async (formData: FormData) => {
     return UserService.updateProfilePicture(formData);
 };
+
+export const updateBannerPicture = async (formData: FormData) => {
+    return UserService.updateProfileBanner(formData);
+};

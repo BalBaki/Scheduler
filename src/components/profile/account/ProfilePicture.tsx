@@ -10,6 +10,7 @@ import ImageCrop from './ImageCrop';
 import { updateProfilePicture } from '@/actions/user-profile.action';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { Status } from '@/enums';
+import { cn } from '@/lib/utils';
 import { Button } from '../../ui/button';
 
 export default function ProfilePicture() {
@@ -43,7 +44,7 @@ export default function ProfilePicture() {
 
         setImage(event.target.files[0]);
     };
-    const handleCancelClick = () => {
+    const handleCancelClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setImage(null);
     };
 
@@ -52,10 +53,14 @@ export default function ProfilePicture() {
     }, [image]);
 
     return (
-        <div className="flex gap-x-3 rounded-lg bg-white px-3 py-3 shadow-md max-sm:flex-col max-sm:items-center">
-            <div className="flex max-w-56 flex-col items-center justify-center">
+        <div
+            className={cn('relative z-10 flex w-fit items-center gap-x-3', {
+                '-mt-18 ml-2': session?.user.role !== 'PATIENT',
+            })}
+        >
+            <div className="flex flex-col">
                 <label htmlFor={isPending ? '' : 'profilePicture'}>
-                    <div className="relative size-28 overflow-hidden">
+                    <div className="border-profile relative size-36 overflow-hidden rounded-full border-12">
                         {image || session?.user.imageUrl ? (
                             <Image
                                 src={
@@ -72,7 +77,7 @@ export default function ProfilePicture() {
                                 priority
                             />
                         ) : (
-                            <CgProfile className="h-full w-full" />
+                            <CgProfile className="bg-profile size-full" />
                         )}
                     </div>
                 </label>
@@ -124,10 +129,6 @@ export default function ProfilePicture() {
                         </Button>
                     </div>
                 )}
-            </div>
-            <div>
-                <p className="text-md font-semibold capitalize">{`${session?.user.name} ${session?.user.surname}`}</p>
-                <p className="text-md">{`${session?.user.email}`}</p>
             </div>
         </div>
     );

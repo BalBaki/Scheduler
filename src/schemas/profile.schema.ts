@@ -2,7 +2,7 @@ import { z } from 'zod/v4';
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from '@/constants';
 import languages from '@/languages.json';
 
-export const profilePictureSchema = z
+export const profileImageSchema = z
     .instanceof(File)
     .refine((file) => file.size <= MAX_FILE_SIZE, 'Max image size is 5 MB')
     .refine(

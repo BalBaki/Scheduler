@@ -22,6 +22,7 @@ model User {
   password    String
   phoneNumber String
   imageUrl    String?
+  bannerUrl   String?
   description String?
   languages   String[]
   role        Roles      @default(PATIENT)

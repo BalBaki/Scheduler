@@ -7,7 +7,7 @@ import { auth } from '@/auth';
 import { Status } from '@/enums';
 import { extractImagePublicId } from '@/lib/extract-image-public-id';
 import { hasPermission } from '@/lib/permissions';
-import { profilePictureSchema, userDetailSchema } from '@/schemas';
+import { profileImageSchema, userDetailSchema } from '@/schemas';
 import db from '@/services/db.service';
 import type {
     ApprovedDoctorsResult,
@@ -150,7 +150,7 @@ export class UserService {
                 };
             }
 
-            const validatedPicture = profilePictureSchema.safeParse(
+            const validatedPicture = profileImageSchema.safeParse(
                 formData.get('profilePicture'),
             );
 
@@ -192,6 +192,70 @@ export class UserService {
 
             // TODO: will delete after doctor page new design
             if (session.user.role === 'DOCTOR') revalidatePath('/doctor');
+
+            return { status: Status.Ok, data: {} };
+        } catch (error) {
+            return { status: Status.Err, err: 'Something went wrong..!' };
+        }
+    };
+
+    static updateProfileBanner = async (
+        formData: FormData,
+    ): UpdateProfilePictureResult => {
+        try {
+            const session = await auth();
+
+            if (
+                !session ||
+                !hasPermission(session.user, 'user', 'moreDetail')
+            ) {
+                return {
+                    status: Status.Err,
+                    err: 'You have no authorization..!',
+                };
+            }
+
+            const validatedPicture = profileImageSchema.safeParse(
+                formData.get('bannerPicture'),
+            );
+
+            if (!validatedPicture.success) {
+                return {
+                    status: Status.Err,
+                    err: z
+                        .flattenError(validatedPicture.error)
+                        .formErrors.join(' '),
+                };
+            }
+
+            const uploadImageResult = await CloudinaryService.uploadFile(
+                validatedPicture.data,
+                {
+                    folder: 'banner',
+                    resource_type: 'image',
+                    filename_override: session.user.id,
+                    use_filename: true,
+                    ...(session.user.bannerUrl && {
+                        overwrite: true,
+                        public_id: extractImagePublicId(session.user.bannerUrl),
+                    }),
+                },
+            );
+
+            if (uploadImageResult.status === Status.Err) {
+                return uploadImageResult;
+            }
+
+            await db.user.update({
+                where: {
+                    id: session.user.id,
+                },
+                data: {
+                    bannerUrl: uploadImageResult.data.secure_url,
+                },
+            });
+
+            revalidatePath(`/doctor/${session.user.id}`);
 
             return { status: Status.Ok, data: {} };
         } catch (error) {

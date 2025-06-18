@@ -13,22 +13,22 @@ type NextAvailabilityProps = {
 export default function NextAvailability({ userId }: NextAvailabilityProps) {
     const locale = useLocale();
     const {
-        isPending,
+        isFetching,
         isError,
         data: result,
     } = useQuery(
         ReactQueryService.getValidDoctorAppointmentsByIdQueryOptions(userId),
     );
 
-    if (isPending) {
+    if (isFetching) {
         return <Skeleton className="h-8 max-w-124 rounded-md bg-gray-200" />;
     }
 
-    if (isError || result.status === Status.Err) {
+    if (isError || (result && result.status === Status.Err)) {
         return <div>Something went wrong...</div>;
     }
 
-    const unBookedAppointment = result.data.find(
+    const unBookedAppointment = result?.data.find(
         (appointment) => !appointment.patientId,
     );
 

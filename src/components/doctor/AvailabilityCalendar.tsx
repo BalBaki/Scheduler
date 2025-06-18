@@ -14,14 +14,14 @@ export default function AvailabilityCalendar({
     userId,
 }: AvailabilityCalendarProps) {
     const {
-        isPending,
+        isFetching,
         isError,
         data: result,
     } = useQuery(
         ReactQueryService.getValidDoctorAppointmentsByIdQueryOptions(userId),
     );
 
-    if (isPending) {
+    if (isFetching) {
         return (
             <div className="flex flex-col justify-center space-y-3 max-md:mt-2 md:ml-2">
                 {Array.from({ length: 4 }, (_, i) => (
@@ -34,22 +34,26 @@ export default function AvailabilityCalendar({
         );
     }
 
-    if (isError || result.status === Status.Err) {
+    if (isError || (result && result.status === Status.Err)) {
         return <div>Something went wrong...</div>;
     }
 
     return (
-        <section
-            className="rounded-sm bg-white p-8"
-            aria-labelledby="availability-calendar"
-        >
-            <h2
-                id="availability-calendar"
-                className="text-3xl font-bold text-[#4e788f]"
-            >
-                Availability Calendar
-            </h2>
-            <AppointmentCalendar appointments={result.data} />
-        </section>
+        <>
+            {result && (
+                <section
+                    className="rounded-sm bg-white p-8"
+                    aria-labelledby="availability-calendar"
+                >
+                    <h2
+                        id="availability-calendar"
+                        className="text-3xl font-bold text-[#4e788f]"
+                    >
+                        Availability Calendar
+                    </h2>
+                    <AppointmentCalendar appointments={result.data} />
+                </section>
+            )}
+        </>
     );
 }

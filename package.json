@@ -83,6 +83,7 @@
         "tailwind-scrollbar": "^4.0.2",
         "tailwindcss": "^4.1.8",
         "ts-node": "^10.9.2",
+        "tsx": "^4.20.3",
         "typescript": "^5"
     },
     "overrides": {

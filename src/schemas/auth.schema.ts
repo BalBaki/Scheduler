@@ -1,4 +1,4 @@
-import { z } from 'zod/v4';
+import { toLowerCase, z } from 'zod/v4';
 
 export const credentialsSignInSchema = z.object({
     email: z.email('Enter valid email'),
@@ -12,12 +12,14 @@ export const signUpSchema = z
         name: z
             .string()
             .min(1, 'Name required')
-            .max(30, 'Max character Count is 30..!'),
+            .max(30, 'Max character Count is 30..!')
+            .toLowerCase(),
         surname: z
             .string()
             .min(1, 'Surname required')
-            .max(30, 'Max character Count is 30..!'),
-        email: z.email('Enter valid email'),
+            .max(30, 'Max character Count is 30..!')
+            .toLowerCase(),
+        email: z.email('Enter valid email').toLowerCase(),
         password: z
             .string()
             .min(8, 'Password must contain at least 8 character(s)'),

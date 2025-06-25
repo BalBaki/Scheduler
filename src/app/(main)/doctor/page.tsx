@@ -69,7 +69,7 @@ export default async function Doctor() {
                             </div>
                         )}
                         <Link
-                            href={`/doctor/${doctor.id}`}
+                            href={`/doctor/${doctor.slug}`}
                             className="mt-6 w-fit rounded-2xl border-[3px] border-[#237a83] p-2 font-medium text-[#237a83]"
                         >
                             Book an appointment

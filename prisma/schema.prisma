@@ -24,6 +24,7 @@ model User {
   imageUrl    String?
   bannerUrl   String?
   description String?
+  slug        String?
   languages   String[]
   role        Roles      @default(PATIENT)
   status      UserStatus @default(WAITING)

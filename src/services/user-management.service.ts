@@ -2,6 +2,7 @@ import 'server-only';
 import { cache } from 'react';
 import { revalidatePath } from 'next/cache';
 import db from './db.service';
+import { SlugifyService } from './slugify.service';
 import { auth } from '@/auth';
 import { Status } from '@/enums';
 import { hasPermission } from '@/lib/permissions';
@@ -30,6 +31,7 @@ export class UserManagementService {
                 };
             }
 
+            await SlugifyService.generatePendingDoctorSlugs();
             await db.user.updateMany({
                 data: { status: 'APPROVED' },
                 where: { status: 'WAITING' },
@@ -79,7 +81,17 @@ export class UserManagementService {
             }
 
             const updatedUser = await db.user.update({
-                data: { status: validatedPayload.data.status },
+                data: {
+                    status: validatedPayload.data.status,
+                    ...(user.role === 'DOCTOR' &&
+                        validatedPayload.data.status === 'APPROVED' &&
+                        !user.slug && {
+                            slug: await SlugifyService.createDoctorSlug(
+                                user.name,
+                                user.surname,
+                            ),
+                        }),
+                },
                 where: { id: user.id },
                 omit: { password: true },
             });

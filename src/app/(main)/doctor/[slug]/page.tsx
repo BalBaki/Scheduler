@@ -13,15 +13,15 @@ import { UserService } from '@/services/user.service';
 import type { Metadata } from 'next';
 
 type DoctorPageProps = {
-    params: Promise<{ id: string }>;
+    params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata(
     props: DoctorPageProps,
 ): Promise<Metadata> {
     const params = await props.params;
-    const result = await UserService.getDoctorWithValidAppointmentsById(
-        params.id,
+    const result = await UserService.getDoctorWithValidAppointmentsBySlug(
+        params.slug,
     );
 
     const doctorFullName =
@@ -37,11 +37,10 @@ export async function generateMetadata(
 
 export default async function DoctorPage(props: DoctorPageProps) {
     const params = await props.params;
-
-    const result = await UserService.getDoctorById(params.id);
+    const result = await UserService.getDoctorBySlug(params.slug);
 
     if (result.status === Status.Err) return <div>Something went wrong..!</div>;
-    if (!result.data || result.data.role !== 'DOCTOR') return notFound();
+    if (!result.data) return notFound();
 
     return (
         <div>
@@ -82,6 +81,6 @@ export async function generateStaticParams() {
     if (result.status === Status.Err) throw new Error(result.err);
 
     return result.data.map((doctor) => ({
-        id: doctor.id,
+        slug: doctor.slug,
     }));
 }

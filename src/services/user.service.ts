@@ -12,7 +12,7 @@ import db from '@/services/db.service';
 import type {
     ApprovedDoctorsResult,
     DoctorWithValidAppointmentsResult,
-    GetDoctorByIdResult,
+    GetDoctorBySlugResult,
     UpdateProfilePictureResult,
     UpdateUserDetailResult,
     UserDetailForm,
@@ -25,13 +25,13 @@ export class UserService {
         });
     };
 
-    static getDoctorById = async (id: string): GetDoctorByIdResult => {
+    static getDoctorBySlug = async (slug: string): GetDoctorBySlugResult => {
         try {
             return {
                 status: Status.Ok,
-                data: await db.user.findUnique({
+                data: await db.user.findFirst({
                     omit: { password: true },
-                    where: { id },
+                    where: { slug, role: 'DOCTOR', status: 'APPROVED' },
                 }),
             };
         } catch (error) {
@@ -42,17 +42,17 @@ export class UserService {
         }
     };
 
-    static getDoctorWithValidAppointmentsById = cache(
-        async (id: string): DoctorWithValidAppointmentsResult => {
+    static getDoctorWithValidAppointmentsBySlug = cache(
+        async (slug: string): DoctorWithValidAppointmentsResult => {
             try {
                 return {
                     status: Status.Ok,
-                    data: await db.user.findUnique({
+                    data: await db.user.findFirst({
                         omit: {
                             password: true,
                         },
                         where: {
-                            id,
+                            slug,
                         },
                         include: {
                             doctorAppointments: {
@@ -125,7 +125,7 @@ export class UserService {
 
             if (session.user.role === 'DOCTOR') {
                 revalidatePath('/doctor');
-                revalidatePath(`/doctor/${session.user.id}`);
+                revalidatePath(`doctor/${session.user.slug}`);
             }
 
             return { status: Status.Ok, data: {} };

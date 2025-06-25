@@ -15,10 +15,10 @@ export type DoctorWithValidAppointments = Prisma.UserGetPayload<{
 }> | null;
 type DoctorWithValidAppointmentsError = BaseError;
 
-type GetDoctorById = Prisma.UserGetPayload<{
+type GetDoctorBySlug = Prisma.UserGetPayload<{
     omit: { password: true };
 }> | null;
-type GetDoctorByIdError = BaseError;
+type GetDoctorBySlugError = BaseError;
 
 type ApprovedDoctors = Prisma.UserGetPayload<{ omit: { password: true } }>[];
 type ApprovedDoctorsError = BaseError;
@@ -39,8 +39,8 @@ export type ApprovedDoctorsResult = AsyncResult<
     ApprovedDoctors,
     ApprovedDoctorsError
 >;
-export type GetDoctorByIdResult = AsyncResult<
-    GetDoctorById,
-    GetDoctorByIdError
+export type GetDoctorBySlugResult = AsyncResult<
+    GetDoctorBySlug,
+    GetDoctorBySlugError
 >;
 export type UserDetailForm = z.infer<typeof userDetailSchema>;

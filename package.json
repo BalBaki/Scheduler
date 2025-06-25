@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev --turbopack",
-        "build": "npx prisma generate --no-engine && next build",
+        "build": "npx prisma generate --no-engine && npm run seed:admin &&  next build",
         "start": "next start",
         "lint": "next lint",
         "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
@@ -12,7 +12,8 @@
         "scan": "npx react-scan@latest localhost:3000",
         "seed": "npm run seed:user && npm run seed:feedback",
         "seed:user": "tsx ./prisma/seeds/user.seed.ts",
-        "seed:feedback": "tsx ./prisma/seeds/feedback.seed.ts"
+        "seed:feedback": "tsx ./prisma/seeds/feedback.seed.ts",
+        "seed:admin": "tsx ./prisma/seeds/admin.seed.ts"
     },
     "dependencies": {
         "@auth/core": "^0.39.1",
@@ -60,6 +61,7 @@
         "react-toastify": "^11.0.5",
         "server-only": "^0.0.1",
         "sharp": "^0.34.2",
+        "slugify": "^1.6.6",
         "tailwind-merge": "^3.3.1",
         "tailwindcss-animate": "^1.0.7",
         "uuid": "^11.1.0",

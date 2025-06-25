@@ -137,6 +137,7 @@ export default function SignUp() {
                                     <FormControl>
                                         <Input
                                             type="password"
+                                            autoComplete="new-password"
                                             {...field}
                                             onChange={(e) =>
                                                 handlePasswordChange(
@@ -163,7 +164,11 @@ export default function SignUp() {
                                 <FormItem>
                                     <FormLabel>Confirm Password</FormLabel>
                                     <FormControl>
-                                        <Input type="password" {...field} />
+                                        <Input
+                                            type="password"
+                                            autoComplete="new-password"
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
